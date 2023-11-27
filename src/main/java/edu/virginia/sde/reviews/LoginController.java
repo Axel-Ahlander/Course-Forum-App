@@ -26,22 +26,20 @@ public class LoginController {
 
     public void usernameLogin(ActionEvent e){
         String username = usernameTextField.getText();
-        System.out.println("Username: " + username);
         passwordField.requestFocus();
     }
     public void passwordLogin(ActionEvent e){
         String password = passwordField.getText();
-        System.out.println("Password: " + password);
         loginButton.fire();
     }
 
     public void loginButton(ActionEvent e) throws IOException {
 
         if(!authenticateLogin()){
-            System.out.println("Bad username");
+          //  System.out.println("Bad username");
         }
         else {
-            System.out.println("login");
+          //  System.out.println("login");
             /*
             Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
@@ -65,7 +63,6 @@ public class LoginController {
         Platform.exit();
     }
 
-    //visible="false"
     private boolean authenticateLogin(){
         errorLabel.setText("");
 
@@ -75,10 +72,6 @@ public class LoginController {
             errorLabel.setText("Error: no username entered. Enter a registered username or create a new account");
             return false;
         }
-        //other error handling, probably should break down into diff methods
-        //no input for username or password
-        //- username doesn't exist
-        //password doesn't match username
         return validInput();
     }
 

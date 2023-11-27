@@ -32,7 +32,7 @@ public class CreateAccountController {
     }
     public void passwordLogin(ActionEvent e){
         String password = passwordField.getText();
-        // createAccountButton.fire();
+        //createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
@@ -72,11 +72,6 @@ public class CreateAccountController {
         }
         return true;
     }
-    //check that user input something
-    //check that username doesn't already exist in database
-    //check that password is valid-- 8 characters or more
-
-    //then can do actual business logic or whatever database operations.. in separate class?
 
     private boolean isUsernameValid(String username){
         if (username != null && !username.trim().isEmpty()){
