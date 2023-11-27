@@ -53,8 +53,7 @@ public class CreateAccountController {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        boolean usernameExist = true; //replace true with -> //Interact with database to see if username existsdatabase.usernameExist(username);
-        if (isUsernameValid(username) && isPasswordValid(password) && !usernameExist){
+        if (isUsernameValid(username) && isPasswordValid(password)){
             return true;
         }
         else {
@@ -72,9 +71,8 @@ public class CreateAccountController {
         if (username != null && !username.trim().isEmpty()){
             return true;
         }
-        else {
-            return false;
-        }
+        boolean usernameExist = database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
+        return !usernameExist;
     }
 
     private boolean isPasswordValid(String password){
