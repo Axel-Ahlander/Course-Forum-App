@@ -1,0 +1,84 @@
+package edu.virginia.sde.reviews;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+public class LoginController {
+    @FXML
+    TextField usernameTextField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    Button loginButton;
+    @FXML
+    Label errorLabel;
+
+    public void usernameLogin(ActionEvent e){
+        String username = usernameTextField.getText();
+        System.out.println("Username: " + username);
+        passwordField.requestFocus();
+    }
+    public void passwordLogin(ActionEvent e){
+        String password = passwordField.getText();
+        System.out.println("Password: " + password);
+        loginButton.fire();
+    }
+
+    public void loginButton(ActionEvent e) throws IOException {
+
+        if(!authenticateLogin()){
+            System.out.println("Bad username");
+        }
+        else {
+            System.out.println("login");
+            /*
+            Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
+            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Course Search Screen");
+            stage.setScene(scene);
+            stage.show();*/
+        }
+    }
+
+    public void createNewAccountClick(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("CreateAccount.fxml"));
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Create Account");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void quitClick(ActionEvent e){
+        Platform.exit();
+    }
+
+    //visible="false"
+    private boolean authenticateLogin(){
+        errorLabel.setText("");
+
+        String username = usernameTextField.getText();
+        //         String password = passwordField.getText();
+        if (username.isEmpty()) {
+            errorLabel.setText("Error: no username entered. Enter a registered username or create a new account");
+            return false;
+        }
+        //other error handling, probably should break down into diff methods
+        //no input for username or password
+        //- username doesn't exist
+        //password doesn't match username
+        return true;
+    }
+}
