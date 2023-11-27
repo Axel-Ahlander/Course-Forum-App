@@ -2,6 +2,9 @@ package edu.virginia.sde.reviews;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "COURSES", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 // unique needed?
@@ -11,7 +14,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (name = "ID")
-    private long id;
+    private int id;
 
     @Column(name = "COURSE_NAME", nullable = false, length = 128)
     // unique = true would've went in above line, check on if nullable is effective or not as well
@@ -26,14 +29,11 @@ public class Course {
     @Column(name = "Title", nullable = false)
     private String title;
 
-    // TODO: have rating field in course class or Review class?
-    // TODO: Have instructor or not?
-    @Column(name = "INSTRUCTOR", nullable = false)
-    private String instructor;
+    @OneToMany(mappedBy = "course")
+    private Set<Review> reviews = new HashSet<>();
 
-    public Course(String courseName, String instructor) {
+    public Course(String courseName) {
         this.courseName = courseName;
-        this.instructor = instructor;
     }
 
     public Course() {
@@ -45,14 +45,13 @@ public class Course {
         this.subject = subject;
         this.number = number;
         this.title = title;
-        this.instructor = instructor;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -88,13 +87,7 @@ public class Course {
         this.title = title;
     }
 
-    public String getInstructor() {
-        return instructor;
-    }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
 
     // equals should only be equal if same subject, number, and title
 
