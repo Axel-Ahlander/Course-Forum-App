@@ -11,6 +11,8 @@ import java.util.Set;
 public class Course {
     // TODO: make sure id is unique, see hibernate lecture, unique = true in line does not enforce, still double check
     // TODO: equals method
+
+    // TODO: double check course name still needs to exist????
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (name = "ID")
