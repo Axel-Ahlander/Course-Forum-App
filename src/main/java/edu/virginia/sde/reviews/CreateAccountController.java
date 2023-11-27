@@ -50,7 +50,17 @@ public class CreateAccountController {
     }
 
     private boolean validLogin(){
-        return true;
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+
+        boolean usernameExist = true; //replace true with -> //Interact with database to see if username existsdatabase.usernameExist(username);
+        if (isUsernameValid(username) && isPasswordValid(password) && !usernameExist){
+            return true;
+        }
+        else {
+            //Move into error screen - invalid passsword
+            return false; //Change to error screen
+        }
     }
     //check that user input something
     //check that username doesn't already exist in database
@@ -58,4 +68,24 @@ public class CreateAccountController {
 
     //then can do actual business logic or whatever database operations.. in separate class?
 
+    private boolean isUsernameValid(String username){
+        if (username != null && !username.trim().isEmpty()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean isPasswordValid(String password){
+        if (password != null && password.length() >= 8){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }
+
