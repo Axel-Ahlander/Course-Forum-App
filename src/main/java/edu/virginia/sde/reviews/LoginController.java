@@ -79,6 +79,24 @@ public class LoginController {
         //no input for username or password
         //- username doesn't exist
         //password doesn't match username
-        return true;
+        return validInput();
     }
+
+    private boolean usernamePasswordMatches(){
+        return true; //database.getID.contains(usernameTextField.getText()) && database.getID.contains(passwordField.getText())
+    }
+
+    private boolean validInput(){
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+
+    return username != null && password != null && password.length() >= 8 && usernameExists() && usernamePasswordMatches();
+
+
+    }
+
+    private boolean usernameExists(){
+        return true; //database.userNameExists(usernameTextField.getText());
+    }
+
 }
