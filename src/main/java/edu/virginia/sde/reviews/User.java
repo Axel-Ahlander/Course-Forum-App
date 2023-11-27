@@ -10,7 +10,6 @@ import java.util.Set;
 @Entity
 @Table(name = "USERS", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class User {
-    // TODO: equals
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
@@ -89,12 +88,25 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", reviews=" + reviews +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    // equals?
-    // based on name and pw?
+        User user = (User) o;
+        return id == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
 }
