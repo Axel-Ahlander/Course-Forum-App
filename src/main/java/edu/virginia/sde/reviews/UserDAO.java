@@ -32,7 +32,7 @@ public class UserDAO {
      * @param id
      * @return
      */
-    public static User findById(int id) {
+    public User findById(int id) {
         User user = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();

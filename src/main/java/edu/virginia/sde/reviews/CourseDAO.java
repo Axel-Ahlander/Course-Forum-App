@@ -1,53 +1,82 @@
 package edu.virginia.sde.reviews;
 
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+
+import java.util.List;
 
 public class CourseDAO {
-    void save(Course course){
-        Transaction transaction = null;
+    public void save(Course course){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start transaction
-            transaction = session.beginTransaction();
-            // save the user object
+            session.beginTransaction();
+            // save the course object
             session.persist(course);
             // commit transaction
-            transaction.commit();
+            session.getTransaction().commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
 
-
-    void delete(Course course) {
-        Transaction transaction = null;
+    public void delete(Course course) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start transaction
-            transaction = session.beginTransaction();
-            // save the user object
+            session.beginTransaction();
+            // delete the course object
             session.remove(course);
             // commit transaction
-            transaction.commit();
+            session.getTransaction().commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
 
-    Course findById(int id) {
-
+    public Course findById(int id) {
+        Course course = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            course = session.get(Course.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return course;
     }
 
-    Course findBySubject() {
-
+    public List<Course> findBySubject(String subject) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT c FROM Course c WHERE c.subject = :CourseSubject";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("CourseSubject", subject);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    Course findByTitle(String name) {
+    public List<Course> findByNumber(int number) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT c FROM Course c WHERE c.number = :CourseNumber";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("CourseNumber", number);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public List<Course> findByTitle(String title) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT c FROM Course c WHERE c.title = :CourseTitle";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("CourseTitle", title);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
