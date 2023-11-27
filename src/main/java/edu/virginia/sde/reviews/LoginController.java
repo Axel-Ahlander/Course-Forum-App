@@ -43,7 +43,7 @@ public class LoginController {
         else {
             System.out.println("login");
             /*
-            Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch6.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Search Screen");
@@ -59,16 +59,6 @@ public class LoginController {
         stage.setTitle("Create Account");
         stage.setScene(scene);
         stage.show();
-
-        /*
-            var fxmlLoader = new FXMLLoader(HotDogBarGraphController.class.getResource("taco-vote.fxml"));
-            var newScene = new Scene(fxmlLoader.load());
-            var controller = (HotDogVotesController) fxmlLoader.getController();
-            controller.setPrimaryStage(primaryStage);
-            controller.setHotDogVotes(hotDogVotes);
-            primaryStage.setScene(newScene);
-            primaryStage.show();
-         */
     }
 
     public void quitClick(ActionEvent e){
@@ -81,7 +71,7 @@ public class LoginController {
 
         String username = usernameTextField.getText();
         //         String password = passwordField.getText();
-        if (username.equals("")) {
+        if (username.isEmpty()) {
             errorLabel.setText("Error: no username entered. Enter a registered username or create a new account");
             return false;
         }
@@ -92,10 +82,3 @@ public class LoginController {
         return true;
     }
 }
-
-/*
-    private boolean authenticateUser(String username, String password) {
-        // Add authentication logic here
-        return userDatabase.containsKey(username) && userDatabase.get(username).equals(password);
-    }
- */

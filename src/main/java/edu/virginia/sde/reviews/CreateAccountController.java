@@ -28,18 +28,16 @@ public class CreateAccountController {
 
     public void usernameLogin(ActionEvent e){
         String username = usernameTextField.getText();
-        System.out.println("Username: " + username);
         passwordField.requestFocus();
     }
     public void passwordLogin(ActionEvent e){
         String password = passwordField.getText();
-        System.out.println("Password: " + password);
         // createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
         if (validLogin()) {
-            Parent root = FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
