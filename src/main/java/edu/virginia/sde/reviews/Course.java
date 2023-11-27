@@ -18,10 +18,6 @@ public class Course {
     @Column (name = "ID")
     private int id;
 
-    @Column(name = "COURSE_NAME", nullable = false, length = 128)
-    // unique = true would've went in above line, check on if nullable is effective or not as well
-    private String courseName;
-
     @Column(name = "SUBJECT", nullable = false)
     private String subject;
 
@@ -34,19 +30,15 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Set<Review> reviews = new HashSet<>();
 
-    public Course(String courseName) {
-        this.courseName = courseName;
-    }
-
     public Course() {
         // required by Hibernate, do not delete
     }
 
-    public Course(String courseName, String subject, int number, String title, String instructor) {
-        this.courseName = courseName;
+    public Course(int id, String subject, int number, String title) {
         this.subject = subject;
         this.number = number;
         this.title = title;
+        this.id = id;
     }
 
     public long getId() {
@@ -55,14 +47,6 @@ public class Course {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
     }
 
     public String getSubject() {
@@ -89,8 +73,19 @@ public class Course {
         this.title = title;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Course course = (Course) o;
+        return subject.equals(course.subject) &&
+                number == course.number &&
+                title.equals(course.title);
+    }
 
-    // equals should only be equal if same subject, number, and title
-
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

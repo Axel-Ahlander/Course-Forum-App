@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Entity
+@Table(name = "REVIEWS")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -87,4 +89,19 @@ public class Review {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review review = (Review) o;
+        return id == review.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
 }

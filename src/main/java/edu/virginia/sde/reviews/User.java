@@ -101,12 +101,11 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
-        return id == user.getId();
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
         return id;
     }
-
 }
