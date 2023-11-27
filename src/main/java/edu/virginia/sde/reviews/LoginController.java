@@ -82,20 +82,29 @@ public class LoginController {
         return validInput();
     }
 
-    private boolean usernamePasswordMatches(){
-        return true; //database.getID.contains(usernameTextField.getText()) && database.getID.contains(passwordField.getText())
+    private boolean usernamePasswordMatches(String username, String password){
+        if (usernameExists(username)){
+            if (true){//database.getID.contains(usernameTextField.getText()) && database.getID.contains(passwordField.getText()))){
+                return true;
+            }
+        }
+        errorLabel.setText("Wrong password, please try again");
+        return false;
     }
 
     private boolean validInput(){
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-    return username != null && password != null && password.length() >= 8 && usernameExists() && usernamePasswordMatches();
+    return usernamePasswordMatches(username, password);
 
 
     }
 
-    private boolean usernameExists(){
+    private boolean usernameExists(String username){
+        if (false){ //!database.contains(username) {
+            errorLabel.setText("The username you provided doesn't exist, please create a new account");
+        }
         return true; //database.userNameExists(usernameTextField.getText());
     }
 
