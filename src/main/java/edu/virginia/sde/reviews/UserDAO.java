@@ -1,48 +1,60 @@
 package edu.virginia.sde.reviews;
 
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 public class UserDAO {
-    void save(User user){
-            Transaction transaction = null;
+    public void save(User user) {
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 // start transaction
-                transaction = session.beginTransaction();
+                session.beginTransaction();
                 // save the user object
                 session.persist(user);
                 // commit transaction
-                transaction.commit();
+                session.getTransaction().commit();
             } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
                 e.printStackTrace();
             }
     }
 
-
-    void delete(User user) {
-        Transaction transaction = null;
+    public void delete(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start transaction
-            transaction = session.beginTransaction();
-            // save the user object
+            session.beginTransaction();
             session.remove(user);
-            // commit transaction
-            transaction.commit();
+            session.getTransaction().commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
 
-    User findById(int id) {
-
+    /**
+     * uses default session method to get id rather than hql query
+     * @param id
+     * @return
+     */
+    public static User findById(int id) {
+        User user = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            user = session.get(User.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
-    User findByName(String name) {
-
+    // should search by partial name or whole?
+    public User findByName(String name) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT u FROM User u WHERE u.name = :Username";
+            TypedQuery<User> idQuery = session.createQuery(hql, User.class);
+            idQuery.setParameter("Username", name);
+            return idQuery.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        // not a list since username should be unique and case insensitive
     }
 }
