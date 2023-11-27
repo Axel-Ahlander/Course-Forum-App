@@ -53,13 +53,24 @@ public class CreateAccountController {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        if (isUsernameValid(username) && isPasswordValid(password)){
-            return true;
+        if (!isUsernameValid(username)){
+            if (username == null){
+                errorLabel.setText("You need to provide a username");
+            }
+            else {
+                errorLabel.setText("The username is already in use");
+            }
         }
-        else {
-            //Move into error screen - invalid passsword
-            return false; //Change to error screen
+        if (!isPasswordValid(password)){
+            if (password.length() < 8){
+                errorLabel.setText("The password is too short! You need at least 8 characters");
+            }
+            else {
+                errorLabel.setText("You need to provide a password");
+            }
+
         }
+        return true;
     }
     //check that user input something
     //check that username doesn't already exist in database
