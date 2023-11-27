@@ -42,17 +42,18 @@ public class LoginController {
         }
         else {
             System.out.println("login");
+            /*
             Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch6.fxml"));
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Search Screen");
             stage.setScene(scene);
-            stage.show();
+            stage.show();*/
         }
     }
 
     public void createNewAccountClick(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("CreateAccount2.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("CreateAccount.fxml"));
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Create Account");
