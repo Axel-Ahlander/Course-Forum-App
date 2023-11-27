@@ -55,18 +55,18 @@ public class CreateAccountController {
 
         if (!isUsernameValid(username)){
             if (username == null){
-                errorLabel.setText("You need to provide a username");
+                errorLabel.setText("You need to provide a username.");
             }
             else {
-                errorLabel.setText("The username is already in use");
+                errorLabel.setText("The username is already in use.");
             }
         }
         if (!isPasswordValid(password)){
             if (password.length() < 8){
-                errorLabel.setText("The password is too short! You need at least 8 characters");
+                errorLabel.setText("The password is too short! You need at least 8 characters.");
             }
             else {
-                errorLabel.setText("You need to provide a password");
+                errorLabel.setText("You need to provide a password.");
             }
 
         }
@@ -82,7 +82,7 @@ public class CreateAccountController {
         if (username != null && !username.trim().isEmpty()){
             return true;
         }
-        boolean usernameExist = database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
+        boolean usernameExist = true; //database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
         return !usernameExist;
     }
 
