@@ -32,7 +32,7 @@ public class CreateAccountController {
     }
     public void passwordLogin(ActionEvent e){
         String password = passwordField.getText();
-        //createAccountButton.fire();
+        // createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
@@ -53,43 +53,32 @@ public class CreateAccountController {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        if (!isUsernameValid(username)){
-            if (username == null){
-                errorLabel.setText("You need to provide a username.");
-            }
-            else {
-                errorLabel.setText("The username is already in use.");
-            }
+        if (username.trim().isEmpty()){
+            errorLabel.setText("You need to provide a username.");
+            return false;
         }
-        if (!isPasswordValid(password)){
-            if (password.length() < 8){
-                errorLabel.setText("The password is too short! You need at least 8 characters.");
-            }
-            else {
-                errorLabel.setText("You need to provide a password.");
-            }
-
+        if (isUsernameTaken(username)){
+            errorLabel.setText("This username is already in use.");
+            return false;
+        }
+        if (password.trim().isEmpty()){
+            errorLabel.setText("You need to provide a password.");
+            return false;
+        }
+        if (password.length() < 8){ //password.trim().length() < 8
+            errorLabel.setText("The password is too short! You need at least 8 characters.");
+            return false;
         }
         return true;
     }
 
-    private boolean isUsernameValid(String username){
+    private boolean isUsernameTaken(String username){
         if (username != null && !username.trim().isEmpty()){
-            return true;
+            return false;
         }
         boolean usernameExist = true; //database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
         return !usernameExist;
     }
-
-    private boolean isPasswordValid(String password){
-        if (password != null && password.length() >= 8){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
 
 }
 
