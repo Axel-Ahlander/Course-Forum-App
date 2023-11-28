@@ -21,42 +21,43 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
     <SplitPane dividerPositions="0.6769311064718163" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="620.0">
-            <children>
-                <Label layoutX="16.0" layoutY="24.0" text="Course Search" textFill="NAVY">
-                    <font>
-                        <Font name="Adelle Sans Devanagari Regular" size="40.0" />
-                    </font>
-                </Label>
-                <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0" startX="-158.5655517578125" startY="-7.62939453125E-6" />
-                <Label fx:id="Username" layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
-                    <font>
-                        <Font name="Andale Mono" size="20.0" />
-                    </font>
-                </Label>
-                <Hyperlink fx:id="logOutLink" layoutX="577.0" layoutY="40.0" onAction="#logOutAccountClick" text="Log out">
-                    <font>
-                        <Font name="Andale Mono" size="13.0" />
-                    </font>
-                </Hyperlink>
-                <Line endX="81.0" endY="-7.62939453125E-6" layoutX="571.0" layoutY="39.0" startX="-58.0" />
-                <ScrollPane layoutX="-3.0" layoutY="142.0" prefHeight="582.0" prefWidth="627.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
-                            <children>
-                                <TableView layoutX="-42.0" prefHeight="575.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columns>
-                                        <TableColumn prefWidth="103.41456413269043" text="Subject" />
-                                        <TableColumn prefWidth="114.99205780029297" text="Number" />
-                                        <TableColumn prefWidth="322.6321563720703" text="Title" />
-                                        <TableColumn prefWidth="82.36785888671875" text="Rating" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </ScrollPane>
-            <Label layoutX="79.0" layoutY="113.0" text="Label" />
-            </children>
+            <Label layoutX="16.0" layoutY="24.0" text="Course Search" textFill="NAVY">
+                <font>
+                    <Font name="Adelle Sans Devanagari Regular" size="40.0"/>
+                </font>
+            </Label>
+            <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0"
+                  startX="-158.5655517578125" startY="-7.62939453125E-6"/>
+            <Label layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
+                <font>
+                    <Font name="Andale Mono" size="20.0"/>
+                </font>
+            </Label>
+            <Hyperlink fx:id="logOutLink" layoutX="577.0" layoutY="40.0" onAction="#logOutAccountClick" text="Log out">
+                <font>
+                    <Font name="Andale Mono" size="13.0"/>
+                </font>
+            </Hyperlink>
+            <Line endX="81.0" endY="-7.62939453125E-6" layoutX="571.0" layoutY="39.0" startX="-58.0"/>
+            <ScrollPane layoutX="-3.0" layoutY="142.0" prefHeight="582.0" prefWidth="627.0"
+                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
+                        <children>
+                            <TableView layoutX="-42.0" prefHeight="575.0" prefWidth="626.0"
+                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0"
+                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                    <TableColumn prefWidth="103.41456413269043" text="Subject"/>
+                                    <TableColumn prefWidth="114.99205780029297" text="Number"/>
+                                    <TableColumn prefWidth="322.6321563720703" text="Title"/>
+                                    <TableColumn prefWidth="82.36785888671875" text="Rating"/>
+                                </columns>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </ScrollPane>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
@@ -143,6 +144,11 @@
                                                             <Font name="Andale Mono" size="24.0" />
                                                         </font>
                                                     </Button>
+                                       <Label fx:id="searchErrorLabel" layoutY="64.0" text="Search Error Label" textFill="RED">
+                                          <font>
+                                             <Font name="System Bold" size="13.0" />
+                                          </font>
+                                       </Label>
                                                 </children>
                                             </AnchorPane>
                                         </children>
@@ -175,7 +181,7 @@
                                                             <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="2-4 letters">
+                                                    <TextField fx:id="addCourseSubjectTextField" prefHeight="27.0" prefWidth="160.0" promptText="2-4 letters">
                                                         <font>
                                                             <Font name="Andale Mono" size="13.0" />
                                                         </font>
@@ -191,7 +197,7 @@
                                                             <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="Exactly 4 digits">
+                                                    <TextField fx:id="addCourseNumberTextField" prefHeight="27.0" prefWidth="160.0" promptText="Exactly 4 digits">
                                                         <font>
                                                             <Font name="Andale Mono" size="13.0" />
                                                         </font>
@@ -207,7 +213,7 @@
                                                             <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="1-50 characters">
+                                                    <TextField fx:id="addCourseTitleTextField" prefHeight="27.0" prefWidth="160.0" promptText="1-50 characters">
                                                         <font>
                                                             <Font name="Andale Mono" size="13.0" />
                                                         </font>
@@ -217,7 +223,7 @@
                                                     </TextField>
                                                 </children>
                                             </VBox>
-                                            <Button layoutX="108.0" layoutY="354.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" text="Add Course">
+                                            <Button layoutX="108.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleAddCourseButtonClick" prefHeight="26.0" prefWidth="101.0" text="Add Course">
                                                 <font>
                                                     <Font name="Andale Mono" size="13.0" />
                                                 </font>
@@ -232,6 +238,11 @@
                                                     <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
+                                 <Label fx:id="addCourseErrorLabel" layoutX="17.0" layoutY="66.0" text="Add course error label" textFill="RED">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
                                         </children>
                                     </AnchorPane>
                                 </content>
