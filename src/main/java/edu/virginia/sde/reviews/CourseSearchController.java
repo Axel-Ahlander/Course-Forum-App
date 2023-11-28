@@ -24,6 +24,9 @@ public class CourseSearchController {
     @FXML
     private Button selectSearchTabButton;
 
+    @FXML
+    private Button myReviewsButton;
+
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab("Add Course"));
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
@@ -38,6 +41,15 @@ public class CourseSearchController {
 
     public void logOutAccountClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Log in");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void myReviewsButtonClick(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MyReviews.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Log in");
