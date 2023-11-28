@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+//import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,19 +20,17 @@ public class CreateAccountController {
     @FXML
     TextField usernameTextField;
     @FXML
-    PasswordField passwordField;
+    TextField passwordField;
     @FXML
     Button createAccountButton;
     @FXML
     Label errorLabel;
 
-    public void usernameLogin(ActionEvent e){
-        String username = usernameTextField.getText();
+    public void usernameLogin(){
         passwordField.requestFocus();
     }
-    public void passwordLogin(ActionEvent e){
-        String password = passwordField.getText();
-        // createAccountButton.fire();
+    public void passwordLogin(){
+   //     createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
@@ -45,7 +43,7 @@ public class CreateAccountController {
         }
 
     }
-    public void quitClick(ActionEvent e){
+    public void quitClick(){
         Platform.exit();
     }
 
