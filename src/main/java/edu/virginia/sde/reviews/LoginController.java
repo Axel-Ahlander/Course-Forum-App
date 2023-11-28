@@ -25,20 +25,14 @@ public class LoginController {
     Label errorLabel;
 
     public void usernameLogin(ActionEvent e){
-        String username = usernameTextField.getText();
         passwordField.requestFocus();
     }
     public void passwordLogin(ActionEvent e){
-        String password = passwordField.getText();
         loginButton.fire();
     }
 
     public void loginButton(ActionEvent e) throws IOException {
-
-        if(!authenticateLogin()){
-          //  System.out.println("Bad username");
-        }
-        else {
+        if(validLogin()){
           //  System.out.println("login");
             /*
             Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
@@ -63,16 +57,16 @@ public class LoginController {
         Platform.exit();
     }
 
-    private boolean authenticateLogin(){
+    private boolean validLogin(){
         errorLabel.setText("");
 
         String username = usernameTextField.getText();
-        //         String password = passwordField.getText();
+        String password = passwordField.getText();
         if (username.isEmpty()) {
             errorLabel.setText("Error: no username entered. Enter a registered username or create a new account");
             return false;
         }
-        return validInput();
+        return usernamePasswordMatches(username, password);
     }
 
     private boolean usernamePasswordMatches(String username, String password){
@@ -84,7 +78,7 @@ public class LoginController {
         errorLabel.setText("Wrong password, please try again");
         return false;
     }
-
+    /*
     private boolean validInput(){
         String username = usernameTextField.getText();
         String password = passwordField.getText();
@@ -93,7 +87,7 @@ public class LoginController {
 
 
     }
-
+*/
     private boolean usernameExists(String username){
         if (false){ //!database.contains(username) {
             errorLabel.setText("The username you provided doesn't exist, please create a new account");
