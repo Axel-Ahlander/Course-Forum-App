@@ -24,7 +24,7 @@ public class Course {
     @Column(name = "Title", nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
     public Course() {
@@ -68,6 +68,17 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
+                ", number=" + number +
+                ", title='" + title + '\'' +
+                ", reviews=" + reviews +
+                '}';
     }
 
     @Override

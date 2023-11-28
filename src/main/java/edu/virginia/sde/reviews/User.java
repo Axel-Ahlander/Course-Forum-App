@@ -24,7 +24,7 @@ public class User {
 //    @OneToMany(mappedBy = "")
 //    private List<Course> courses;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
     public User(int id, String name, String password) {
