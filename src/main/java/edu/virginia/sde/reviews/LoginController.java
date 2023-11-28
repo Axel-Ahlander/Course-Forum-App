@@ -24,10 +24,10 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
-    public void usernameLogin(ActionEvent e){
+    public void usernameLogin(){
         passwordField.requestFocus();
     }
-    public void passwordLogin(ActionEvent e){
+    public void passwordLogin(){
         loginButton.fire();
     }
 
@@ -53,7 +53,7 @@ public class LoginController {
         stage.show();
     }
 
-    public void quitClick(ActionEvent e){
+    public void quitClick(){
         Platform.exit();
     }
 
