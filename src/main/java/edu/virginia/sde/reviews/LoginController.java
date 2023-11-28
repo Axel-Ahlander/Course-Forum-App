@@ -12,8 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import edu.virginia.sde.reviews.HibernateUtil;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import java.io.IOException;
+import java.util.List;
+
 public class LoginController {
     @FXML
     TextField usernameTextField;
@@ -23,6 +29,7 @@ public class LoginController {
     Button loginButton;
     @FXML
     Label errorLabel;
+
 
     public void usernameLogin(){
         passwordField.requestFocus();
@@ -67,15 +74,38 @@ public class LoginController {
         return usernamePasswordMatches(username, password);
     }
 
-    private boolean usernamePasswordMatches(String username, String password){
-        if (usernameExists(username)){
-            if (true){//database.getID.contains(usernameTextField.getText()) && database.getID.contains(passwordField.getText()))){
+    private boolean usernamePasswordMatches(String username, String password) {
+        Session localSession = null;
+        try {
+            localSession = HibernateUtil.getSessionFactory().openSession();
+            localSession.beginTransaction();
+
+            String hql = "FROM User WHERE name = :username AND password = :password"; // Consider hashing the password
+            Query<User> query = localSession.createQuery(hql, User.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            List<User> results = query.list();
+
+            localSession.getTransaction().commit();
+
+            if (!results.isEmpty()) {
                 return true;
             }
+        } catch (HibernateException e) {
+            if (localSession != null) {
+                localSession.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (localSession != null) {
+                localSession.close();
+            }
         }
-        errorLabel.setText("Wrong password, please try again");
+
+        errorLabel.setText("Wrong username or password, please try again");
         return false;
     }
+
     /*
     private boolean validInput(){
         String username = usernameTextField.getText();
@@ -86,11 +116,38 @@ public class LoginController {
 
     }
 */
-    private boolean usernameExists(String username){
-        if (false){ //!database.contains(username) {
-            errorLabel.setText("The username you provided doesn't exist, please create a new account");
+    private boolean usernameExists(String username) {
+        Session localSession = null;
+        try {
+
+            localSession = HibernateUtil.getSessionFactory().openSession();
+            localSession.beginTransaction();
+
+            String hql = "FROM User WHERE name = :username";
+            Query<User> query = localSession.createQuery(hql, User.class);
+            query.setParameter("username", username);
+            List<User> results = query.list();
+
+            localSession.getTransaction().commit();
+
+            if (!results.isEmpty()) {
+                return true;
+            } else {
+                errorLabel.setText("The username you provided doesn't exist, please create a new account");
+                return false;
+            }
+        } catch (HibernateException e) {
+            if (localSession != null) {
+                localSession.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (localSession != null) {
+                localSession.close();
+            }
         }
-        return true; //database.userNameExists(usernameTextField.getText());
+        return false;
     }
+
 
 }
