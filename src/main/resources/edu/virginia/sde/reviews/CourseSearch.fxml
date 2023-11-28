@@ -18,167 +18,129 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
-            prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.virginia.sde.reviews.CourseSearchController">
-    <SplitPane dividerPositions="0.6769311064718163" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+    <SplitPane dividerPositions="0.6769311064718163" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="620.0">
             <children>
                 <Label layoutX="16.0" layoutY="24.0" text="Course Search" textFill="NAVY">
                     <font>
-                        <Font name="Adelle Sans Devanagari Regular" size="40.0"/>
+                        <Font name="Adelle Sans Devanagari Regular" size="40.0" />
                     </font>
                 </Label>
-                <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0"
-                      startX="-158.5655517578125" startY="-7.62939453125E-6"/>
-                <Label layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
+                <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0" startX="-158.5655517578125" startY="-7.62939453125E-6" />
+                <Label fx:id="Username" layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
                     <font>
-                        <Font name="Andale Mono" size="20.0"/>
+                        <Font name="Andale Mono" size="20.0" />
                     </font>
                 </Label>
-                <Hyperlink fx:id="logOutLink" layoutX="577.0" layoutY="40.0" onAction="#logOutAccountClick"
-                           text="Log out">
+                <Hyperlink fx:id="logOutLink" layoutX="577.0" layoutY="40.0" onAction="#logOutAccountClick" text="Log out">
                     <font>
-                        <Font name="Andale Mono" size="13.0"/>
+                        <Font name="Andale Mono" size="13.0" />
                     </font>
                 </Hyperlink>
-                <Line endX="81.0" endY="-7.62939453125E-6" layoutX="571.0" layoutY="39.0" startX="-58.0"/>
-                <ScrollPane layoutX="-3.0" layoutY="142.0" prefHeight="582.0" prefWidth="627.0"
-                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <Line endX="81.0" endY="-7.62939453125E-6" layoutX="571.0" layoutY="39.0" startX="-58.0" />
+                <ScrollPane layoutX="-3.0" layoutY="142.0" prefHeight="582.0" prefWidth="627.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
                             <children>
-                                <TableView layoutX="-42.0" prefHeight="575.0" prefWidth="626.0"
-                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView layoutX="-42.0" prefHeight="575.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn prefWidth="103.41456413269043" text="Subject"/>
-                                        <TableColumn prefWidth="114.99205780029297" text="Number"/>
-                                        <TableColumn prefWidth="322.6321563720703" text="Title"/>
-                                        <TableColumn prefWidth="82.36785888671875" text="Rating"/>
+                                        <TableColumn prefWidth="103.41456413269043" text="Subject" />
+                                        <TableColumn prefWidth="114.99205780029297" text="Number" />
+                                        <TableColumn prefWidth="322.6321563720703" text="Title" />
+                                        <TableColumn prefWidth="82.36785888671875" text="Rating" />
                                     </columns>
                                 </TableView>
                             </children>
                         </AnchorPane>
                     </content>
                 </ScrollPane>
+            <Label layoutX="79.0" layoutY="113.0" text="Label" />
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
-                <AnchorPane layoutX="2.0" layoutY="2.0" minHeight="0.0" minWidth="0.0" prefHeight="686.0"
-                            prefWidth="328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <TabPane fx:id="tabPane" layoutX="-9.0" layoutY="-5.0" prefHeight="721.0" prefWidth="313.0"
-                             tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                             AnchorPane.topAnchor="0.0">
+                <AnchorPane layoutX="2.0" layoutY="2.0" minHeight="0.0" minWidth="0.0" prefHeight="686.0" prefWidth="328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <TabPane fx:id="tabPane" layoutX="-9.0" layoutY="-5.0" prefHeight="721.0" prefWidth="313.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <tabs>
                             <Tab text="     Search     ">
                                 <content>
                                     <AnchorPane prefHeight="690.0" prefWidth="294.0">
                                         <children>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0"
-                                                        prefWidth="288.0" AnchorPane.rightAnchor="0.0">
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="288.0" AnchorPane.rightAnchor="0.0">
                                                 <children>
-                                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE"
-                                                               height="312.0" layoutX="32.0" layoutY="89.0"
-                                                               stroke="#b5b5b5" strokeType="INSIDE"
-                                                               width="263.0" AnchorPane.leftAnchor="0.0"
-                                                               AnchorPane.rightAnchor="25.0"/>
-                                                    <Label layoutX="38.0" layoutY="103.0"
-                                                           text="Selective Search">
+                                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="312.0" layoutX="32.0" layoutY="89.0" stroke="#b5b5b5" strokeType="INSIDE" width="263.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="25.0" />
+                                                    <Label layoutX="38.0" layoutY="103.0" text="Selective Search">
                                                         <font>
-                                                            <Font name="Adelle Sans Devanagari Regular"
-                                                                  size="24.0"/>
+                                                            <Font name="Adelle Sans Devanagari Regular" size="24.0" />
                                                         </font>
                                                     </Label>
-                                                    <Separator layoutX="32.0" layoutY="156.0" prefHeight="1.0"
-                                                               prefWidth="200.0" AnchorPane.leftAnchor="32.0"
-                                                               AnchorPane.rightAnchor="56.0"/>
-                                                    <VBox layoutX="31.0" layoutY="170.0" prefHeight="177.0"
-                                                          prefWidth="201.0">
+                                                    <Separator layoutX="32.0" layoutY="156.0" prefHeight="1.0" prefWidth="200.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="56.0" />
+                                                    <VBox layoutX="31.0" layoutY="170.0" prefHeight="177.0" prefWidth="201.0">
                                                         <children>
                                                             <Label text="Subject" textAlignment="CENTER">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="14.0"/>
+                                                                    <Font name="Andale Mono" size="14.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="5.0"/>
+                                                                    <Insets bottom="5.0" />
                                                                 </VBox.margin>
                                                             </Label>
-                                                            <TextField prefHeight="27.0" prefWidth="160.0">
+                                                            <TextField fx:id="searchSubjectTextField" prefHeight="27.0" prefWidth="160.0">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="13.0"/>
+                                                                    <Font name="Andale Mono" size="13.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="10.0"/>
+                                                                    <Insets bottom="10.0" />
                                                                 </VBox.margin>
                                                             </TextField>
                                                             <Label text="Number">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="13.0"/>
+                                                                    <Font name="Andale Mono" size="13.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="5.0"/>
+                                                                    <Insets bottom="5.0" />
                                                                 </VBox.margin>
                                                             </Label>
-                                                            <TextField prefHeight="27.0" prefWidth="160.0">
+                                                            <TextField fx:id="searchNumberTextField" prefHeight="27.0" prefWidth="160.0">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="13.0"/>
+                                                                    <Font name="Andale Mono" size="13.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="10.0"/>
+                                                                    <Insets bottom="10.0" />
                                                                 </VBox.margin>
                                                             </TextField>
                                                             <Label text="Title">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="13.0"/>
+                                                                    <Font name="Andale Mono" size="13.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="5.0"/>
+                                                                    <Insets bottom="5.0" />
                                                                 </VBox.margin>
                                                             </Label>
-                                                            <TextField prefHeight="27.0" prefWidth="160.0">
+                                                            <TextField fx:id="searchTitleTextField" prefHeight="27.0" prefWidth="160.0">
                                                                 <font>
-                                                                    <Font name="Andale Mono" size="13.0"/>
+                                                                    <Font name="Andale Mono" size="13.0" />
                                                                 </font>
                                                                 <VBox.margin>
-                                                                    <Insets bottom="10.0"/>
+                                                                    <Insets bottom="10.0" />
                                                                 </VBox.margin>
                                                             </TextField>
                                                         </children>
                                                     </VBox>
-                                                    <Button layoutX="80.0" layoutY="355.0"
-                                                            mnemonicParsing="false" prefHeight="26.0"
-                                                            prefWidth="101.0" text="Search"
-                                                            AnchorPane.bottomAnchor="309.0"
-                                                            AnchorPane.leftAnchor="80.0">
+                                                    <Button layoutX="80.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleSearchButtonClick" prefHeight="26.0" prefWidth="101.0" text="Search" AnchorPane.bottomAnchor="309.0" AnchorPane.leftAnchor="80.0">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                     </Button>
-                                                    <Button fx:id="myReviewsButton" layoutX="46.0"
-                                                            layoutY="561.0" mnemonicParsing="false"
-                                                            onAction="#myReviewsButtonClick" prefHeight="64.0"
-                                                            prefWidth="231.0"
-                                                            style="-fx-background-color: #000080;"
-                                                            text="My Reviews" textFill="WHITE"
-                                                            AnchorPane.rightAnchor="43.0">
+                                                    <Button layoutX="46.0" layoutY="561.0" mnemonicParsing="false" onAction="#myReviewsButtonClick" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="My Reviews" textFill="WHITE" AnchorPane.rightAnchor="43.0">
                                                         <font>
-                                                            <Font name="Andale Mono" size="24.0"/>
+                                                            <Font name="Andale Mono" size="24.0" />
                                                         </font>
                                                     </Button>
-                                                    <Button fx:id="addCourseTabButton" layoutX="14.0"
-                                                            layoutY="451.0" mnemonicParsing="false"
-                                                            prefHeight="64.0" prefWidth="231.0"
-                                                            style="-fx-background-color: #0f155b;"
-                                                            text="Add a course" textFill="WHITE"
-                                                            AnchorPane.leftAnchor="14.0"
-                                                            AnchorPane.rightAnchor="43.0">
+                                                    <Button fx:id="addCourseTabButton" layoutX="14.0" layoutY="451.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="Add a course" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="43.0">
                                                         <font>
-                                                            <Font name="Andale Mono" size="24.0"/>
+                                                            <Font name="Andale Mono" size="24.0" />
                                                         </font>
                                                     </Button>
                                                 </children>
@@ -189,106 +151,85 @@
                             </Tab>
                             <Tab text="Add Course">
                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0"
-                                                prefWidth="269.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="269.0">
                                         <children>
-                                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE"
-                                                       height="312.0" layoutX="25.0" layoutY="89.0"
-                                                       stroke="#b5b5b5" strokeType="INSIDE" width="263.0"
-                                                       AnchorPane.leftAnchor="25.0"
-                                                       AnchorPane.rightAnchor="18.0"/>
+                                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="312.0" layoutX="25.0" layoutY="89.0" stroke="#b5b5b5" strokeType="INSIDE" width="263.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="18.0" />
                                             <Label layoutX="87.0" layoutY="102.0" text="Add a course">
                                                 <font>
-                                                    <Font name="Adelle Sans Devanagari Regular" size="24.0"/>
+                                                    <Font name="Adelle Sans Devanagari Regular" size="24.0" />
                                                 </font>
                                             </Label>
-                                            <Button layoutX="65.0" layoutY="435.0" mnemonicParsing="false"
-                                                    prefHeight="64.0" prefWidth="231.0" text="Modify Search"
-                                                    textFill="#0f155b" AnchorPane.leftAnchor="50.0"
-                                                    AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="454.0">
+                                            <Button layoutX="65.0" layoutY="435.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="231.0" text="Modify Search" textFill="#0f155b" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="454.0">
                                                 <font>
-                                                    <Font name="Andale Mono" size="24.0"/>
+                                                    <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
-                                            <Separator layoutX="66.0" layoutY="157.0" prefWidth="200.0"/>
-                                            <VBox layoutX="64.0" layoutY="173.0" prefHeight="177.0"
-                                                  prefWidth="201.0">
+                                            <Separator layoutX="66.0" layoutY="157.0" prefWidth="200.0" />
+                                            <VBox layoutX="64.0" layoutY="173.0" prefHeight="177.0" prefWidth="201.0">
                                                 <children>
                                                     <Label text="Subject" textAlignment="CENTER">
                                                         <font>
-                                                            <Font name="Andale Mono" size="14.0"/>
+                                                            <Font name="Andale Mono" size="14.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="5.0"/>
+                                                            <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0"
-                                                               promptText="2-4 letters">
+                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="2-4 letters">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="10.0"/>
+                                                            <Insets bottom="10.0" />
                                                         </VBox.margin>
                                                     </TextField>
                                                     <Label text="Number">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="5.0"/>
+                                                            <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0"
-                                                               promptText="Exactly 4 digits">
+                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="Exactly 4 digits">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="10.0"/>
+                                                            <Insets bottom="10.0" />
                                                         </VBox.margin>
                                                     </TextField>
                                                     <Label text="Title">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="5.0"/>
+                                                            <Insets bottom="5.0" />
                                                         </VBox.margin>
                                                     </Label>
-                                                    <TextField prefHeight="27.0" prefWidth="160.0"
-                                                               promptText="1-50 characters">
+                                                    <TextField prefHeight="27.0" prefWidth="160.0" promptText="1-50 characters">
                                                         <font>
-                                                            <Font name="Andale Mono" size="13.0"/>
+                                                            <Font name="Andale Mono" size="13.0" />
                                                         </font>
                                                         <VBox.margin>
-                                                            <Insets bottom="10.0"/>
+                                                            <Insets bottom="10.0" />
                                                         </VBox.margin>
                                                     </TextField>
                                                 </children>
                                             </VBox>
-                                            <Button layoutX="108.0" layoutY="354.0" mnemonicParsing="false"
-                                                    prefHeight="26.0" prefWidth="101.0" text="Add Course">
+                                            <Button layoutX="108.0" layoutY="354.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" text="Add Course">
                                                 <font>
-                                                    <Font name="Andale Mono" size="13.0"/>
+                                                    <Font name="Andale Mono" size="13.0" />
                                                 </font>
                                             </Button>
-                                            <Button layoutX="44.0" layoutY="568.0" mnemonicParsing="false"
-                                                    prefHeight="64.0" prefWidth="231.0"
-                                                    style="-fx-background-color: #ff6a00;" text="My Reviews"
-                                                    textFill="WHITE" AnchorPane.leftAnchor="44.0"
-                                                    AnchorPane.rightAnchor="31.0">
+                                            <Button layoutX="44.0" layoutY="568.0" mnemonicParsing="false" onAction="#myReviewsButtonClick" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="My Reviews" textFill="WHITE" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="31.0">
                                                 <font>
-                                                    <Font name="Andale Mono" size="24.0"/>
+                                                    <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
-                                            <Button fx:id="selectSearchTabButton" layoutX="41.0" layoutY="454.0"
-                                                    mnemonicParsing="false" prefHeight="64.0" prefWidth="235.0"
-                                                    style="-fx-background-color: #0f155b;" text="Select Search"
-                                                    textFill="WHITE" AnchorPane.leftAnchor="41.0"
-                                                    AnchorPane.rightAnchor="30.0">
+                                            <Button fx:id="selectSearchTabButton" layoutX="41.0" layoutY="454.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="235.0" style="-fx-background-color: #000080;" text="Select Search" textFill="WHITE" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="30.0">
                                                 <font>
-                                                    <Font name="Andale Mono" size="24.0"/>
+                                                    <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
                                         </children>
@@ -298,9 +239,8 @@
                         </tabs>
                     </TabPane>
                 </AnchorPane>
-                <Line endX="100.0" layoutX="164.0" layoutY="572.0" startX="-100.0" AnchorPane.leftAnchor="63.5"
-                      AnchorPane.rightAnchor="60.0"/>
-                <Line endX="100.0" layoutX="161.0" layoutY="680.0" startX="-100.0"/>
+                <Line endX="100.0" layoutX="164.0" layoutY="572.0" startX="-100.0" AnchorPane.leftAnchor="63.5" AnchorPane.rightAnchor="60.0" />
+                <Line endX="100.0" layoutX="161.0" layoutY="680.0" startX="-100.0" />
             </children>
         </AnchorPane>
     </SplitPane>
