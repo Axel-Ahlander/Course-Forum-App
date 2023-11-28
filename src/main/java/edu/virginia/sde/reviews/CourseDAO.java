@@ -68,12 +68,13 @@ public class CourseDAO {
         }
     }
 
-    public List<Course> findByTitle(String title) {
+    // assume course title is unique*?*
+    public Course findByTitle(String title) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "SELECT c FROM Course c WHERE c.title = :CourseTitle";
             TypedQuery<Course> query = session.createQuery(hql, Course.class);
             query.setParameter("CourseTitle", title);
-            return query.getResultList();
+            return query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
