@@ -37,7 +37,9 @@ public class Review {
         setDate();
     }
 
-    public Review(){}
+    public Review(){
+        setDate();
+    }
 
     public int getId() {
         return id;
@@ -52,10 +54,7 @@ public class Review {
     }
 
     public void setDate() {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        String formattedDate = date.format(format);
-        LocalDate convertedDate = LocalDate.parse(formattedDate, format);
-        this.date = convertedDate;
+        this.date = LocalDate.now();
     }
 
     public int getRating() {
@@ -88,6 +87,18 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", date=" + date +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                ", course=" + course +
+                ", user=" + user +
+                '}';
     }
 
     @Override
