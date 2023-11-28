@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+//import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,19 +20,17 @@ public class CreateAccountController {
     @FXML
     TextField usernameTextField;
     @FXML
-    PasswordField passwordField;
+    TextField passwordField;
     @FXML
     Button createAccountButton;
     @FXML
     Label errorLabel;
 
-    public void usernameLogin(ActionEvent e){
-        String username = usernameTextField.getText();
+    public void usernameLogin(){
         passwordField.requestFocus();
     }
-    public void passwordLogin(ActionEvent e){
-        String password = passwordField.getText();
-        // createAccountButton.fire();
+    public void passwordLogin(){
+   //     createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
@@ -45,17 +43,40 @@ public class CreateAccountController {
         }
 
     }
-    public void quitClick(ActionEvent e){
+    public void quitClick(){
         Platform.exit();
     }
 
     private boolean validLogin(){
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+
+        if (username.trim().isEmpty()){
+            errorLabel.setText("You need to provide a username.");
+            return false;
+        }
+        if (isUsernameTaken(username)){
+            errorLabel.setText("This username is already in use.");
+            return false;
+        }
+        if (password.trim().isEmpty()){
+            errorLabel.setText("You need to provide a password.");
+            return false;
+        }
+        if (password.length() < 8){ //password.trim().length() < 8
+            errorLabel.setText("The password is too short! You need at least 8 characters.");
+            return false;
+        }
         return true;
     }
-    //check that user input something
-    //check that username doesn't already exist in database
-    //check that password is valid-- 8 characters or more
 
-    //then can do actual business logic or whatever database operations.. in separate class?
+    private boolean isUsernameTaken(String username){
+        if (username != null && !username.trim().isEmpty()){
+            return false;
+        }
+        boolean usernameExist = true; //database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
+        return !usernameExist;
+    }
 
 }
+

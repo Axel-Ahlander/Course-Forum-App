@@ -24,31 +24,21 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
-    public void usernameLogin(ActionEvent e){
-        String username = usernameTextField.getText();
-        System.out.println("Username: " + username);
+    public void usernameLogin(){
         passwordField.requestFocus();
     }
-    public void passwordLogin(ActionEvent e){
-        String password = passwordField.getText();
-        System.out.println("Password: " + password);
+    public void passwordLogin(){
         loginButton.fire();
     }
 
     public void loginButton(ActionEvent e) throws IOException {
-
-        if(!authenticateLogin()){
-            System.out.println("Bad username");
-        }
-        else {
-            System.out.println("login");
-            /*
-            Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
+        if(validLogin()){
+            Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Course Search Screen");
+            stage.setTitle("Course Search");
             stage.setScene(scene);
-            stage.show();*/
+            stage.show();
         }
     }
 
@@ -61,24 +51,46 @@ public class LoginController {
         stage.show();
     }
 
-    public void quitClick(ActionEvent e){
+    public void quitClick(){
         Platform.exit();
     }
 
-    //visible="false"
-    private boolean authenticateLogin(){
+    private boolean validLogin(){
         errorLabel.setText("");
 
         String username = usernameTextField.getText();
-        //         String password = passwordField.getText();
+        String password = passwordField.getText();
         if (username.isEmpty()) {
             errorLabel.setText("Error: no username entered. Enter a registered username or create a new account");
             return false;
         }
-        //other error handling, probably should break down into diff methods
-        //no input for username or password
-        //- username doesn't exist
-        //password doesn't match username
-        return true;
+        return usernamePasswordMatches(username, password);
     }
+
+    private boolean usernamePasswordMatches(String username, String password){
+        if (usernameExists(username)){
+            if (true){//database.getID.contains(usernameTextField.getText()) && database.getID.contains(passwordField.getText()))){
+                return true;
+            }
+        }
+        errorLabel.setText("Wrong password, please try again");
+        return false;
+    }
+    /*
+    private boolean validInput(){
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+
+    return usernamePasswordMatches(username, password);
+
+
+    }
+*/
+    private boolean usernameExists(String username){
+        if (false){ //!database.contains(username) {
+            errorLabel.setText("The username you provided doesn't exist, please create a new account");
+        }
+        return true; //database.userNameExists(usernameTextField.getText());
+    }
+
 }
