@@ -2,20 +2,18 @@ package edu.virginia.sde.reviews;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "COURSES", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 // unique needed?
 public class Course {
     // TODO: make sure id is unique, see hibernate lecture, unique = true in line does not enforce, still double check
-    // TODO: equals method
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (name = "ID")
-    private long id;
-
-    @Column(name = "COURSE_NAME", nullable = false, length = 128)
-    // unique = true would've went in above line, check on if nullable is effective or not as well
-    private String courseName;
+    private int id;
 
     @Column(name = "SUBJECT", nullable = false)
     private String subject;
@@ -26,42 +24,26 @@ public class Course {
     @Column(name = "Title", nullable = false)
     private String title;
 
-    // TODO: have rating field in course class or Review class?
-    // TODO: Have instructor or not?
-    @Column(name = "INSTRUCTOR", nullable = false)
-    private String instructor;
-
-    public Course(String courseName, String instructor) {
-        this.courseName = courseName;
-        this.instructor = instructor;
-    }
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+    private Set<Review> reviews = new HashSet<>();
 
     public Course() {
         // required by Hibernate, do not delete
     }
 
-    public Course(String courseName, String subject, int number, String title, String instructor) {
-        this.courseName = courseName;
+    public Course(int id, String subject, int number, String title) {
         this.subject = subject;
         this.number = number;
         this.title = title;
-        this.instructor = instructor;
+        this.id = id;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
     }
 
     public String getSubject() {
@@ -88,14 +70,30 @@ public class Course {
         this.title = title;
     }
 
-    public String getInstructor() {
-        return instructor;
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
+                ", number=" + number +
+                ", title='" + title + '\'' +
+                ", reviews=" + reviews +
+                '}';
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+        return subject.equals(course.subject) &&
+                number == course.number &&
+                title.equals(course.title);
     }
 
-    // equals should only be equal if same subject, number, and title
-
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
