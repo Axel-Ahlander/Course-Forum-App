@@ -33,14 +33,12 @@ public class LoginController {
 
     public void loginButton(ActionEvent e) throws IOException {
         if(validLogin()){
-          //  System.out.println("login");
-            /*
-            Parent root = FXMLLoader.load(getClass().getResource("CourseReviews1.fxml")); // ("CourseSearch.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Course Search Screen");
+            stage.setTitle("Course Search");
             stage.setScene(scene);
-            stage.show();*/
+            stage.show();
         }
     }
 
