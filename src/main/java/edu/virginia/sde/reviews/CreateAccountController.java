@@ -90,6 +90,5 @@ public class CreateAccountController {
         User foundUser = dao.findByName(username);
         return foundUser != null && foundUser.getName().equalsIgnoreCase(username);
     }
-
 }
 

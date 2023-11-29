@@ -47,7 +47,7 @@ public class UserDAO {
     // should search by partial name or whole?
     public User findByName(String name) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT u FROM User u WHERE u.name = :Username";
+            String hql = "SELECT u FROM User u WHERE lower(u.name) = lower(:Username)";
             TypedQuery<User> idQuery = session.createQuery(hql, User.class);
             idQuery.setParameter("Username", name);
             return idQuery.getSingleResult();
