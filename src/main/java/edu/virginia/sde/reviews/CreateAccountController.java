@@ -91,7 +91,7 @@ public class CreateAccountController {
         User temp = new User();
         temp.setName(username);
         UserDAO dao = new UserDAO();
-        if (dao.findByName(username).equals(temp)){
+        if (dao.findByName(username).getName().equals(temp.getName())){
             usernameExist = true;
         }
         return usernameExist;
