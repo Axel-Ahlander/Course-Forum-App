@@ -41,7 +41,6 @@ public class CreateAccountController {
             stage.setScene(scene);
             stage.show();
         }
-
     }
     public void quitClick(){
         Platform.exit();
