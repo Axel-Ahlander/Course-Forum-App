@@ -9,7 +9,6 @@ import java.util.Set;
 @Table(name = "COURSES", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 // unique needed?
 public class Course {
-    // TODO: make sure id is unique, see hibernate lecture, unique = true in line does not enforce, still double check
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (name = "ID")
@@ -40,10 +39,6 @@ public class Course {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSubject() {
