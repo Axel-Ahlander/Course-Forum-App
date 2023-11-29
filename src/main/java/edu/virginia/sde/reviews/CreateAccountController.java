@@ -56,7 +56,7 @@ public class CreateAccountController {
         user.setName(username);
         user.setPassword(password);
         CreateUserService createUser = new CreateUserService(user);
-        createUser.saveUser(user);
+        createUser.saveUser();
     }
 
     private boolean validNewUser() {
