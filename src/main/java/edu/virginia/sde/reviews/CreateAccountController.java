@@ -35,7 +35,7 @@ public class CreateAccountController {
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
-        if (validLogin()) {
+        if (validNewUser()) {
             createNewUser();
             Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -59,7 +59,7 @@ public class CreateAccountController {
         createUser.saveUser(user);
     }
 
-    private boolean validLogin() {
+    private boolean validNewUser() {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
