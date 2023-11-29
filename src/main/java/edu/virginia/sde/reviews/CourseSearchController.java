@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class CourseSearchController {
     private Button addCourseTabButton, selectSearchTabButton;
 
     @FXML
-    private Label username, searchErrorLabel, addCourseErrorLabel;
+    private Label username, searchErrorLabel, addCourseErrorLabel, addCourseSuccessLabel;
 
     @FXML
     private TextField searchSubjectTextField, searchNumberTextField, searchTitleTextField, addCourseSubjectTextField, addCourseNumberTextField, addCourseTitleTextField;
@@ -40,6 +41,7 @@ public class CourseSearchController {
 
         searchErrorLabel.setText("");
         addCourseErrorLabel.setText("");
+        addCourseSuccessLabel.setText("");
     }
 
     private void selectTab() {
@@ -71,6 +73,7 @@ public class CourseSearchController {
 
     public void handleAddCourseButtonClick() {
         addCourseErrorLabel.setText("");
+        addCourseSuccessLabel.setText("");
         //subject-- 2-4 characters
 
         //number-- 4 digits exactly
@@ -236,7 +239,7 @@ public class CourseSearchController {
             course.setTitle(addCourseTitleTextField.getText());
             CreateCourseService createCourse = new CreateCourseService(course);
             createCourse.saveCourse();
-            addCourseErrorLabel.setText("Course successfully added.");
+            addCourseSuccessLabel.setText("Course successfully added.");
         } catch (NumberFormatException e) {
             addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
         } catch (Exception e) {
