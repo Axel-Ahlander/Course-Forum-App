@@ -74,7 +74,19 @@ public class User {
         this.password = password;
     }
 
-//    public boolean contains(Course course) {
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    //    public boolean contains(Course course) {
 //        return courses.contains(course);
 //    }
 //    public boolean remove(Course course) {
