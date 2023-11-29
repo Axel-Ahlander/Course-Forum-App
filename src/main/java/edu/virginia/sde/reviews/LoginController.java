@@ -17,6 +17,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -31,17 +32,18 @@ public class LoginController {
     Label errorLabel;
 
 
-    public void usernameLogin(){
+    public void usernameLogin() {
         passwordField.requestFocus();
     }
-    public void passwordLogin(){
+
+    public void passwordLogin() {
         loginButton.fire();
     }
 
     public void loginButton(ActionEvent e) throws IOException {
-        if(validLogin()){
+        if (validLogin()) {
             Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Search");
             stage.setScene(scene);
@@ -51,18 +53,18 @@ public class LoginController {
 
     public void createNewAccountClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CreateAccount.fxml"));
-        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Create Account");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void quitClick(){
+    public void quitClick() {
         Platform.exit();
     }
 
-    private boolean validLogin(){
+    private boolean validLogin() {
         errorLabel.setText("");
 
         String username = usernameTextField.getText();

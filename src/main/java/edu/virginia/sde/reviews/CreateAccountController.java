@@ -26,52 +26,64 @@ public class CreateAccountController {
     @FXML
     Label errorLabel;
 
-    public void usernameLogin(){
+    public void usernameLogin() {
         passwordField.requestFocus();
     }
-    public void passwordLogin(){
-   //     createAccountButton.fire();
+
+    public void passwordLogin() {
+        //     createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {
         if (validLogin()) {
+            createNewUser();
             Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
-
     }
-    public void quitClick(){
+
+    public void quitClick() {
         Platform.exit();
     }
 
-    private boolean validLogin(){
+    private void createNewUser() {
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+        User user = new User();
+        user.setName(username);
+        user.setPassword(password);
+        CreateUserService createUser = new CreateUserService(user);
+        createUser.saveUser(user);
+    }
+
+    private boolean validLogin() {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        if (username.trim().isEmpty()){
+        if (username.trim().isEmpty()) {
             errorLabel.setText("You need to provide a username.");
             return false;
         }
-        if (isUsernameTaken(username)){
+        if (isUsernameTaken(username)) {
             errorLabel.setText("This username is already in use.");
             return false;
         }
-        if (password.trim().isEmpty()){
+        if (password.trim().isEmpty()) {
             errorLabel.setText("You need to provide a password.");
             return false;
         }
-        if (password.length() < 8){ //password.trim().length() < 8
+        if (password.length() < 8) { //password.trim().length() < 8
             errorLabel.setText("The password is too short! You need at least 8 characters.");
             return false;
         }
         return true;
     }
 
-    private boolean isUsernameTaken(String username){
-        if (username != null && !username.trim().isEmpty()){
+    private boolean isUsernameTaken(String username) {
+        if (username != null && !username.trim().isEmpty()) {
             return false;
         }
         boolean usernameExist = true; //database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
