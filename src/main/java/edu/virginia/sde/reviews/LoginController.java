@@ -77,36 +77,21 @@ public class LoginController {
     }
 
     private boolean usernamePasswordMatches(String username, String password) {
-        Session localSession = null;
-        try {
-            localSession = HibernateUtil.getSessionFactory().openSession();
-            localSession.beginTransaction();
-
-            String hql = "FROM User WHERE name = :username AND password = :password"; // Consider hashing the password
-            Query<User> query = localSession.createQuery(hql, User.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            List<User> results = query.list();
-
-            localSession.getTransaction().commit();
-
-            if (!results.isEmpty()) {
-                return true;
+        UserDAO dao = new UserDAO();
+        User user = dao.findByName(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return true;
+        } else {
+            if (!usernameExists(username)){
+                errorLabel.setText("Error: There is no user with this username, please create a new account");
             }
-        } catch (HibernateException e) {
-            if (localSession != null) {
-                localSession.getTransaction().rollback();
+            else {
+                errorLabel.setText("Error: The password provided is wrong, please try again");
             }
-            e.printStackTrace();
-        } finally {
-            if (localSession != null) {
-                localSession.close();
-            }
+            return false;
         }
-
-        errorLabel.setText("Wrong username or password, please try again");
-        return false;
     }
+
 
     /*
     private boolean validInput(){
@@ -119,36 +104,15 @@ public class LoginController {
     }
 */
     private boolean usernameExists(String username) {
-        Session localSession = null;
-        try {
+        UserDAO dao = new UserDAO();
+        User user = dao.findByName(username);
 
-            localSession = HibernateUtil.getSessionFactory().openSession();
-            localSession.beginTransaction();
-
-            String hql = "FROM User WHERE name = :username";
-            Query<User> query = localSession.createQuery(hql, User.class);
-            query.setParameter("username", username);
-            List<User> results = query.list();
-
-            localSession.getTransaction().commit();
-
-            if (!results.isEmpty()) {
-                return true;
-            } else {
-                errorLabel.setText("The username you provided doesn't exist, please create a new account");
-                return false;
-            }
-        } catch (HibernateException e) {
-            if (localSession != null) {
-                localSession.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (localSession != null) {
-                localSession.close();
-            }
+        if (user != null){
+            return true;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
 
