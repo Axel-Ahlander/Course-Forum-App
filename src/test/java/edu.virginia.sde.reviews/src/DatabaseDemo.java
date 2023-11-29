@@ -23,6 +23,10 @@ public class DatabaseDemo {
         s.setPassword("12345");
         userDAO.save(s);
         System.out.println("added user: " + s);
+
+        User j = new User();
+        j.setName("Jack");
+
     }
 
     private static void addCourse() {
@@ -44,7 +48,6 @@ public class DatabaseDemo {
         User user = userDAO.findByName("Samuel");
         // may cause potential issues returning list???? -> changed title to return single course
         Course course = courseDAO.findByTitle("Software Development Essentials");
-
 
         Review review = new Review();
         review.setCourse(course);
