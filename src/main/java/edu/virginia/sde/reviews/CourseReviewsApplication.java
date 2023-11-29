@@ -4,10 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.util.logging.Level;
 
 public class CourseReviewsApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
+        // handle logging info; SEVERE will still show us any meaningful exceptions, even when we catch and handle them
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Log in");
