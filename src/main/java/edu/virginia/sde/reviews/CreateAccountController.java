@@ -83,11 +83,15 @@ public class CreateAccountController {
     }
 
     private boolean isUsernameTaken(String username) {
+        boolean usernameExist = false;
         if (username != null && !username.trim().isEmpty()) {
             return false;
         }
-        boolean usernameExist = true; //database.userNameExists(username); //replace true with -> //Interact with database to see if username exists -> database.usernameExist(username);
-        return !usernameExist;
+        UserDAO dao = new UserDAO();
+        if (username.equals(dao.findByName(username))){
+            usernameExist = true;
+        }
+        return usernameExist;
     }
 
 }
