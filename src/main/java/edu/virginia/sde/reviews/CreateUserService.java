@@ -6,9 +6,9 @@ public class CreateUserService {
         this.user = user;
     }
 
-    public void saveUser(User user){
+    public void saveUser(){
         UserDAO DAO = new UserDAO();
-        DAO.save(user);
+        DAO.save(this.user);
     }
 
 }

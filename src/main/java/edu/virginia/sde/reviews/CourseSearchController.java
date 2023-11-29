@@ -78,7 +78,8 @@ public class CourseSearchController {
 
         //check if course already is in table
         if (validAddCourseInput()) {
-            System.out.println("Valid");
+            createNewCourse();
+            //System.out.println("Valid");
             //code to search for and display courses that fit search criteria
             //for title look for matching substrings (i.e., don't require exact titles
             //for subject and number, require exact letter matches
@@ -112,6 +113,7 @@ public class CourseSearchController {
         }
         //number-- 4 digits exactly
         //title-- 1-50 characters
+
         return true;
     }
 
@@ -224,6 +226,22 @@ public class CourseSearchController {
             return false;
         }
         return true;
+    }
+
+    private void createNewCourse() {
+        try {
+            Course course = new Course();
+            course.setSubject(addCourseSubjectTextField.getText());
+            course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
+            course.setTitle(addCourseTitleTextField.getText());
+            CreateCourseService createCourse = new CreateCourseService(course);
+            createCourse.saveCourse();
+            addCourseErrorLabel.setText("Course successfully added.");
+        } catch (NumberFormatException e) {
+            addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
+        } catch (Exception e) {
+            addCourseErrorLabel.setText("An error occurred while adding the course.");
+        }
     }
 
 }
