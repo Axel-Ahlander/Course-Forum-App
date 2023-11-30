@@ -68,7 +68,7 @@ public class CourseSearchController {
         Parent root = FXMLLoader.load(getClass().getResource("MyReviews.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setTitle("Log in");
+        stage.setTitle("My Reviews");
         stage.setScene(scene);
         stage.show();
         stage.centerOnScreen();
