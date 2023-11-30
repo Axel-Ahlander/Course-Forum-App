@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -22,8 +20,6 @@ public class CourseReviewsController {
     @FXML
     Label subjectLabel, numberLabel, ratingLabel;
     @FXML
-    Hyperlink logOutLink;
-    @FXML
     TableColumn<Review, LocalDate> dateColumn;
     @FXML
     TableColumn<Review, Integer> ratingColumn;
@@ -34,18 +30,24 @@ public class CourseReviewsController {
     TableView<Review> tableView;
 
     @FXML
-    private Hyperlink backLink;
+    Hyperlink backLink;
 
     @FXML
-    private ChoiceBox<Integer> ratingChoiceBox;
+    ChoiceBox<Integer> ratingChoiceBox;
+
+    @FXML
+    TextArea commentTextArea;
+    @FXML
+    Label errorLabel;
 
     public void initialize(){
-        for (int i = 1; i <= 5; i++) {
-            ratingChoiceBox.getItems().add(i);
-        }
+        errorLabel.setText("");
+        ratingChoiceBox.getItems().add(1);
+        ratingChoiceBox.getItems().add(2);
+        ratingChoiceBox.getItems().add(3);
+        ratingChoiceBox.getItems().add(4);
+        ratingChoiceBox.getItems().add(5);
 
-        // Set default value (optional)
-        ratingChoiceBox.setValue(1);
         //subjectLabel = (course subject)
         //numberLabel = (course label)
         //ratingLabel = (
@@ -80,6 +82,12 @@ public class CourseReviewsController {
         stage.setTitle("Course Search");
         stage.setScene(scene);
         stage.show();
+    }
+    public void handleSubmitReviewButton(ActionEvent e) throws IOException {
+        errorLabel.setText("");
+        if (ratingChoiceBox.getValue() == null){
+            errorLabel.setText("Must select a rating!");
+        }
     }
 
 }

@@ -36,6 +36,7 @@ public class CreateAccountController {
 
     public void createAccountButton(ActionEvent e) throws IOException {
         if (validNewUser()) {
+
             createNewUser();
             Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();

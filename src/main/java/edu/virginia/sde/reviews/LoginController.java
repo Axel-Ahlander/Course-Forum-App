@@ -94,15 +94,6 @@ public class LoginController {
         }
     }
 
-
-    /*
-    private boolean validInput(){
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
-
-    return usernamePasswordMatches(username, password);
-    }
-*/
     private boolean usernameExists(String username) {
         UserDAO dao = new UserDAO();
         User user = dao.findByName(username);

@@ -89,28 +89,8 @@ public class CourseSearchController {
     public void handleAddCourseButtonClick() {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
-        //subject-- 2-4 characters
-
-        //number-- 4 digits exactly
-        //title-- 1-50 characters
-
-        //check if course already is in table
         if (validAddCourseInput()) {
             createNewCourse();
-            //System.out.println("Valid");
-            //code to search for and display courses that fit search criteria
-            //for title look for matching substrings (i.e., don't require exact titles
-            //for subject and number, require exact letter matches
-
-        /*    if(doesCourseExistAlready){ //check if course exists, and add it
-                //add course
-            }
-            else{
-                //error message about the course already being added
-            }
-         */
-
-
         }
     }
 
@@ -119,7 +99,6 @@ public class CourseSearchController {
         String subject = addCourseSubjectTextField.getText();
         String number = addCourseNumberTextField.getText();
         String title = addCourseTitleTextField.getText();
-        //subject-- 2-4 characters
         if (!validAddCourseSubject(subject)) {
             return false;
         }
@@ -129,9 +108,6 @@ public class CourseSearchController {
         if (!validAddCourseTitle(title)) {
             return false;
         }
-        //number-- 4 digits exactly
-        //title-- 1-50 characters
-
         return true;
     }
 
