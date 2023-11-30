@@ -49,6 +49,7 @@ public class CourseSearchController {
     TableView<Course> tableView;
 
     public void initialize() {
+        //tableFill();
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
 
@@ -59,6 +60,7 @@ public class CourseSearchController {
         addCourseSuccessLabel.setText("");
 
         tableFill();
+        //  CourseSearchService CSS = new CourseSearchService();
 
     }
 
@@ -284,11 +286,7 @@ public class CourseSearchController {
         CourseDAO courseDAO = new CourseDAO();
         List<Course> courseList = courseDAO.getAllCourses();
 
-        //  courseList = courseDAO.findBySubject("CS");
-
-        //    courseList.add(new Course(1, "TestSubject", 101, "TestTitle"));
-        //   courseList = courseDAO.findBySubject("TestSubject");
-        //System.out.println("Course List: " + courseList);
+  //      courseList = courseDAO.findBySubject("CS");
 
         tableView.getItems().clear();
         tableView.getItems().addAll(courseList);

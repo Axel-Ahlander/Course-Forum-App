@@ -12,14 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import edu.virginia.sde.reviews.HibernateUtil;
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+
 
 import java.io.IOException;
-import java.util.List;
 
 public class LoginController {
     @FXML
@@ -31,6 +26,7 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
+    public static User activeUser;
 
     public void usernameLogin() {
         passwordField.requestFocus();
@@ -42,6 +38,14 @@ public class LoginController {
 
     public void loginButton(ActionEvent e) throws IOException {
         if (validLogin()) {
+            UserDAO dao = new UserDAO();
+          //  CourseSearchController csc = new CourseSearchController();
+          //  System.out.println("THIS: " + dao.findByName(usernameTextField.getText()));
+            setActiveUser(dao.findByName(usernameTextField.getText()));
+
+       //     System.out.println("USer: " + csc.getActiveUser().getName() + activeUser.getName());
+
+
             Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -104,5 +108,12 @@ public class LoginController {
         else {
             return false;
         }
+    }
+
+    //why not just use a static variable for user? prof did an instance var, and said singleton would
+    //also work...
+    //temporary way to keep track of the active user
+    public static void setActiveUser(User user){
+        activeUser = user;
     }
 }
