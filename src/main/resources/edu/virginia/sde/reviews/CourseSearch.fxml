@@ -42,12 +42,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
                         <children>
-                            <TableView layoutX="-42.0" prefHeight="575.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <TableView fx:id="tableView" layoutX="-42.0" prefHeight="575.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                    <TableColumn prefWidth="103.41456413269043" text="Subject" />
-                                    <TableColumn prefWidth="114.99205780029297" text="Number" />
-                                    <TableColumn prefWidth="322.6321563720703" text="Title" />
-                                    <TableColumn prefWidth="82.36785888671875" text="Rating" />
+                                    <TableColumn fx:id="courseSubjectColumn" prefWidth="103.41456413269043" text="Subject" />
+                                    <TableColumn fx:id="courseNumberColumn" prefWidth="114.99205780029297" text="Number" />
+                                    <TableColumn fx:id="courseTitleColumn" prefWidth="322.6321563720703" text="Title" />
+                                    <TableColumn fx:id="courseRatingColumn" prefWidth="82.36785888671875" text="Rating" />
                                 </columns>
                             </TableView>
                         </children>

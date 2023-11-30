@@ -7,9 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -34,25 +36,30 @@ public class CourseSearchController {
 
     @FXML
     private TextField searchSubjectTextField, searchNumberTextField, searchTitleTextField, addCourseSubjectTextField, addCourseNumberTextField, addCourseTitleTextField;
+    @FXML
+    TableColumn<Course, String> courseSubjectColumn;
+    @FXML
+    TableColumn<Course, Integer> courseNumberColumn;
+    @FXML
+    TableColumn<Course, String> courseTitleColumn;
+    @FXML
+    TableColumn<Course, Float> courseRatingColumn;
 
+    @FXML
+    TableView<Course> tableView;
 
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
 
-     // setUsernameLabel();
-   //   String username = activeUser.getName();
-    //    //System.out.println("Username: " + username);
-//    //    usernameLabel.setText("");
-   //     String username = activeUser.getName();
-   //     System.out.println("Username: " + username);
-//        usernameLabel.setText(username);
-   //     System.out.println(getActiveUser().getName());
-  //      System.out.println(getActiveUser());
-  //      usernameLabel.setText(activeUser.getName());
+        usernameLabel.setText(activeUser.getName());
+
         searchErrorLabel.setText("");
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
+
+        tableFill();
+
     }
 
     public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {
@@ -69,9 +76,11 @@ public class CourseSearchController {
     public void searchSubjectTextField() {
         searchNumberTextField.requestFocus();
     }
+
     public void searchNumberTextField() {
         searchTitleTextField.requestFocus();
     }
+
     public void searchTitleTextField() {
         searchButton.fire();
     }
@@ -79,9 +88,11 @@ public class CourseSearchController {
     public void addCourseSubjectTextField() {
         addCourseNumberTextField.requestFocus();
     }
+
     public void addCourseNumberTextField() {
         addCourseTitleTextField.requestFocus();
     }
+
     public void addCourseTitleTextField() {
         addCourseButton.fire();
     }
@@ -184,7 +195,6 @@ public class CourseSearchController {
     public void handleSearchButtonClick() {
         searchErrorLabel.setText("");
         if (validSearchInput()) {
-            System.out.println("Valid");
             //code to search for and display courses that fit search criteria
             //for title look for matching substrings (i.e., don't require exact titles
             //for subject and number, require exact letter matches
@@ -199,12 +209,10 @@ public class CourseSearchController {
         String title = searchTitleTextField.getText();
 
         if (!validSearchSubject(subject)) {
-            System.out.println("Bad subject");
             return false;
 
         }
         if (!validSearchNumber(number)) {
-            System.out.println("Bad number");
             return false;
         }
         return validSearchTitle(title);
@@ -257,17 +265,6 @@ public class CourseSearchController {
             course.setSubject(addCourseSubjectTextField.getText());
             course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
             course.setTitle(addCourseTitleTextField.getText());
-
-            CourseDAO courseDAO = new CourseDAO();
-            // check if course above is already in database
-            // TODO: ask this logic, if course already exists do we do nothing?, we are only adding to db here not tying to user or review
-            // if course exists, do nothing? , otherwise create course
-//           // function that checks if course exists and if null, create it, otherwise
-
-            Course existingCourse = courseDAO.findCourseByAll(course.getSubject(),course.getNumber(), course.getTitle());
-            if (existingCourse == null) {
-                addCourseErrorLabel.setText("Course already exists in list of courses");
-            }
             CreateCourseService createCourse = new CreateCourseService(course);
             createCourse.saveCourse();
             addCourseSuccessLabel.setText("Course successfully added.");
@@ -278,10 +275,27 @@ public class CourseSearchController {
         }
     }
 
-    private void setUsernameLabel(){
-        usernameLabel.setText(activeUser.getName());
+    private void tableFill() {
+        courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
+        CourseDAO courseDAO = new CourseDAO();
+        List<Course> courseList = courseDAO.getAllCourses();
+
+        //  courseList = courseDAO.findBySubject("CS");
+
+        //    courseList.add(new Course(1, "TestSubject", 101, "TestTitle"));
+        //   courseList = courseDAO.findBySubject("TestSubject");
+        //System.out.println("Course List: " + courseList);
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(courseList);
+        tableView.refresh();
     }
 
-}
+    public void selectiveSearchTableFill() {
 
+    }
+}
