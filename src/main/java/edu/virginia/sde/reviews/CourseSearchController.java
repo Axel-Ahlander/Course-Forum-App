@@ -257,6 +257,17 @@ public class CourseSearchController {
             course.setSubject(addCourseSubjectTextField.getText());
             course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
             course.setTitle(addCourseTitleTextField.getText());
+
+            CourseDAO courseDAO = new CourseDAO();
+            // check if course above is already in database
+            // TODO: ask this logic, if course already exists do we do nothing?, we are only adding to db here not tying to user or review
+            // if course exists, do nothing? , otherwise create course
+//           // function that checks if course exists and if null, create it, otherwise
+
+            Course existingCourse = courseDAO.findCourseByAll(course.getSubject(),course.getNumber(), course.getTitle());
+            if (existingCourse == null) {
+                addCourseErrorLabel.setText("Course already exists in list of courses");
+            }
             CreateCourseService createCourse = new CreateCourseService(course);
             createCourse.saveCourse();
             addCourseSuccessLabel.setText("Course successfully added.");

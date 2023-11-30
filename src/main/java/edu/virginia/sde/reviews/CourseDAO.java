@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class CourseDAO {
-    public void save(Course course){
+    public void save(Course course) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start transaction
             session.beginTransaction();
@@ -75,6 +75,34 @@ public class CourseDAO {
             TypedQuery<Course> query = session.createQuery(hql, Course.class);
             query.setParameter("CourseTitle", title);
             return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * used to find if course exists in database if so, returns Course object, otherwise null
+     */
+    public Course findCourseByAll(String subject, int number, String title) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Course c WHERE c.subject = :subject AND c.number = :number AND c.title = :CourseTitle";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("subject", subject);
+            query.setParameter("number", number);
+            query.setParameter("CourseTitle", title);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Course> getAllCourses() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Course";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

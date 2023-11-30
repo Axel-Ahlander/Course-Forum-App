@@ -3,6 +3,8 @@ package edu.virginia.sde.reviews;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class UserDAO {
     public void save(User user) {
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -29,8 +31,6 @@ public class UserDAO {
 
     /**
      * uses default session method to get id rather than hql query
-     * @param id
-     * @return
      */
     public User findById(int id) {
         User user = null;
@@ -50,8 +50,15 @@ public class UserDAO {
             String hql = "SELECT u FROM User u WHERE lower(u.name) = lower(:Username)";
             TypedQuery<User> idQuery = session.createQuery(hql, User.class);
             idQuery.setParameter("Username", name);
-            return idQuery.getSingleResult();
+            // originally had getSingleResult, but this throws exception if user is not in db
+            List<User> userList = idQuery.getResultList();
+            if (!userList.isEmpty()) {
+                return userList.get(0); // should only ever have 1 if any matches but see above for reason
+            }
+            return null; // no user exists
         } catch (Exception e) {
+            //TODO: research this
+            // is this good to print out stacktrace if user tries logging in with username that DNE?
             e.printStackTrace();
             return null;
         }

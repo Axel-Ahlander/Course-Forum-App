@@ -65,6 +65,18 @@ public class Course {
         this.title = title;
     }
 
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+    }
+
     @Override
     public String toString() {
         return "Course{" +
