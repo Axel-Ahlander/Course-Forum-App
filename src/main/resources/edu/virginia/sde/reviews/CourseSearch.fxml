@@ -54,6 +54,7 @@
                     </AnchorPane>
                 </content>
             </ScrollPane>
+         <Button fx:id="temporaryCourseReviewsButton" layoutX="399.0" layoutY="70.0" mnemonicParsing="false" onAction="#temporaryCourseReviewsButton" text="(course reviews)" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
@@ -140,7 +141,7 @@
                                                             <Font name="Andale Mono" size="24.0" />
                                                         </font>
                                                     </Button>
-                                       <Label fx:id="searchErrorLabel" layoutY="64.0" text="Search Error Label" textFill="RED">
+                                       <Label fx:id="searchErrorLabel" alignment="CENTER" layoutX="78.0" layoutY="65.0" text="Search Error Label" textAlignment="CENTER" textFill="RED">
                                           <font>
                                              <Font name="System Bold" size="13.0" />
                                           </font>
@@ -234,7 +235,7 @@
                                                     <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
-                                 <Label fx:id="addCourseErrorLabel" layoutX="17.0" layoutY="66.0" text="Add course error label" textFill="RED">
+                                 <Label fx:id="addCourseErrorLabel" alignment="CENTER" layoutX="97.0" layoutY="66.0" text="Add course error label" textFill="RED">
                                     <font>
                                        <Font name="System Bold" size="13.0" />
                                     </font>

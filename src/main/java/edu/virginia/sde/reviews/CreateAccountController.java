@@ -31,7 +31,7 @@ public class CreateAccountController {
     }
 
     public void passwordLogin() {
-        //     createAccountButton.fire();
+        createAccountButton.fire();
     }
 
     public void createAccountButton(ActionEvent e) throws IOException {

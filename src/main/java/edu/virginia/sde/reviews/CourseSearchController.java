@@ -29,11 +29,13 @@ public class CourseSearchController {
     private Button addCourseTabButton, selectSearchTabButton;
 
     @FXML
+    private Button temporaryCourseReviewsButton;
+
+    @FXML
     private Label username, searchErrorLabel, addCourseErrorLabel, addCourseSuccessLabel;
 
     @FXML
     private TextField searchSubjectTextField, searchNumberTextField, searchTitleTextField, addCourseSubjectTextField, addCourseNumberTextField, addCourseTitleTextField;
-
 
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
@@ -43,6 +45,17 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
     }
+
+    public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("CourseReviews.fxml"));
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Course Reviews");
+        stage.setScene(scene);
+        stage.show();
+        stage.centerOnScreen();
+    }
+
 
     private void selectTab() {
         tabPane.getTabs().stream()
@@ -58,6 +71,7 @@ public class CourseSearchController {
         stage.setTitle("Log in");
         stage.setScene(scene);
         stage.show();
+        stage.centerOnScreen();
     }
 
 
@@ -68,6 +82,7 @@ public class CourseSearchController {
         stage.setTitle("Log in");
         stage.setScene(scene);
         stage.show();
+        stage.centerOnScreen();
     }
 
 
