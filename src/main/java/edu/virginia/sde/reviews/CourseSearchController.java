@@ -7,17 +7,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.io.IOException;
-import java.util.List;
+
+import static edu.virginia.sde.reviews.LoginController.activeUser;
 
 public class CourseSearchController {
 
+    @FXML
     private Label usernameLabel;
     @FXML
     Hyperlink logOutLink;
@@ -26,7 +24,7 @@ public class CourseSearchController {
     private TabPane tabPane;
 
     @FXML
-    private Button addCourseTabButton, selectSearchTabButton;
+    private Button addCourseTabButton, selectSearchTabButton, searchButton, addCourseButton;
 
     @FXML
     private Button temporaryCourseReviewsButton;
@@ -37,10 +35,21 @@ public class CourseSearchController {
     @FXML
     private TextField searchSubjectTextField, searchNumberTextField, searchTitleTextField, addCourseSubjectTextField, addCourseNumberTextField, addCourseTitleTextField;
 
+
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
 
+     // setUsernameLabel();
+   //   String username = activeUser.getName();
+    //    //System.out.println("Username: " + username);
+//    //    usernameLabel.setText("");
+   //     String username = activeUser.getName();
+   //     System.out.println("Username: " + username);
+//        usernameLabel.setText(username);
+   //     System.out.println(getActiveUser().getName());
+  //      System.out.println(getActiveUser());
+  //      usernameLabel.setText(activeUser.getName());
         searchErrorLabel.setText("");
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
@@ -56,6 +65,26 @@ public class CourseSearchController {
         stage.centerOnScreen();
     }
 
+
+    public void searchSubjectTextField() {
+        searchNumberTextField.requestFocus();
+    }
+    public void searchNumberTextField() {
+        searchTitleTextField.requestFocus();
+    }
+    public void searchTitleTextField() {
+        searchButton.fire();
+    }
+
+    public void addCourseSubjectTextField() {
+        addCourseNumberTextField.requestFocus();
+    }
+    public void addCourseNumberTextField() {
+        addCourseTitleTextField.requestFocus();
+    }
+    public void addCourseTitleTextField() {
+        addCourseButton.fire();
+    }
 
     private void selectTab() {
         tabPane.getTabs().stream()
@@ -237,5 +266,11 @@ public class CourseSearchController {
             addCourseErrorLabel.setText("An error occurred while adding the course.");
         }
     }
+
+    private void setUsernameLabel(){
+        usernameLabel.setText(activeUser.getName());
+
+    }
+
 }
 
