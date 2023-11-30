@@ -22,6 +22,6 @@ public class MyReviewsController {
         stage.setTitle("Log in");
         stage.setScene(scene);
         stage.show();
+        stage.centerOnScreen();
     }
-
 }

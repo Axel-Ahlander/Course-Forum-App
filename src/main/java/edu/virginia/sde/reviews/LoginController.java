@@ -48,6 +48,7 @@ public class LoginController {
             stage.setTitle("Course Search");
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
         }
     }
 
@@ -58,6 +59,7 @@ public class LoginController {
         stage.setTitle("Create Account");
         stage.setScene(scene);
         stage.show();
+        stage.centerOnScreen();
     }
 
     public void quitClick() {
@@ -99,8 +101,6 @@ public class LoginController {
         String password = passwordField.getText();
 
     return usernamePasswordMatches(username, password);
-
-
     }
 */
     private boolean usernameExists(String username) {
@@ -114,6 +114,4 @@ public class LoginController {
             return false;
         }
     }
-
-
 }
