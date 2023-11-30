@@ -97,4 +97,15 @@ public class CourseDAO {
             return null;
         }
     }
+
+    public List<Course> getAllCourses() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Course";
+            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
