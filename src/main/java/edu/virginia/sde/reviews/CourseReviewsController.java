@@ -47,8 +47,6 @@ public class CourseReviewsController {
     @FXML
     Label errorLabel;
 
-
-
     public void initialize(){
         errorLabel.setText("");
         ratingChoiceBox.getItems().add(1);
@@ -108,12 +106,17 @@ public class CourseReviewsController {
                 review.setUser(activeUser);
                 review.setComment(commentTextArea.getText());
                 review.setRating(ratingChoiceBox.getValue());
-
+                //need to update this so it's set to the right course
                 CourseDAO courseDAO = new CourseDAO();
-                List<Course> courseList = courseDAO.getAllCourses();
-
+                ObservableList<Course> courseList = courseDAO.getAllCourses();
                 review.setCourse(courseList.get(1));
-                ReviewDAO reviewDAO = new ReviewDAO();
+
+//                List<Course> courseList = courseDAO.getAllCourses();
+//                review.setCourse(courseList.get(1));
+                        //if above isn't working right, can have 2 getAllCourses, one which
+                        //returns observable list and another that returns a normal one
+                //^
+
 
                 // Save the review
                 CourseReviewsService createReview = new CourseReviewsService(review);
@@ -125,6 +128,7 @@ public class CourseReviewsController {
 //                tableView.setItems(updatedReviews);
 //                tableView.refresh();
 
+                ReviewDAO reviewDAO = new ReviewDAO();
                 // Refresh the TableView with the updated reviews
                 ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
                 tableView.setItems(updatedReviews);

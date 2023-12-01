@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +61,21 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
 
-        tableFill();
+
+        courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+
+        CourseDAO courseDAO = new CourseDAO();
+        List<Course> courseList = courseDAO.getAllCourses();
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(courseList);
+        tableView.setItems(FXCollections.observableList(courseList));
+        tableView.refresh();
+
+   //     tableFill();
 
 // need to cite McBurneys piazza post here probably
 /*
@@ -151,13 +167,38 @@ public class CourseSearchController {
     }
 
 
+    /*
+        private void createNewCourse() {
+        try {
+            Course course = new Course();
+            course.setSubject(addCourseSubjectTextField.getText());
+            course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
+            course.setTitle(addCourseTitleTextField.getText());
+            CreateCourseService createCourse = new CreateCourseService(course);
+            createCourse.saveCourse();
+            addCourseSuccessLabel.setText("Course successfully added.");
+        } catch (NumberFormatException e) {
+            addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
+        } catch (Exception e) {
+            addCourseErrorLabel.setText("An error occurred while adding the course.");
+        }
+    }
+     */
     public void handleAddCourseButtonClick() {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {
             createNewCourse();
+            CourseDAO courseDAO = new CourseDAO();
+            // Refresh the TableView with the updated reviews
+            ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
+            tableView.setItems(updatedCourses);
+            tableView.refresh();
+
+            //refresh table
         }
     }
+
 
 
     private boolean validAddCourseInput() {
@@ -299,7 +340,7 @@ public class CourseSearchController {
         }
     }
 
-    private void tableFill() {
+  //  private void tableFill() {
 //could also put lambda here...
 /*        courseTitleColumn.setCellFactory(column -> {
             var cell = new TableCell<Course, String>() {
@@ -315,6 +356,7 @@ public class CourseSearchController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });*/
+        /*
         courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
         courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -323,13 +365,13 @@ public class CourseSearchController {
         CourseDAO courseDAO = new CourseDAO();
         List<Course> courseList = courseDAO.getAllCourses();
 
-        //      courseList = courseDAO.findBySubject("CS");
+  //      courseList = courseDAO.findBySubject("CS");
 
         tableView.getItems().clear();
         tableView.getItems().addAll(courseList);
         tableView.refresh();
     }
-
+*/
     public void selectiveSearchTableFill() {
 
     }

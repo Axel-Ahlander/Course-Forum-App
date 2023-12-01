@@ -1,6 +1,8 @@
 package edu.virginia.sde.reviews;
 
 import jakarta.persistence.TypedQuery;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -98,14 +100,30 @@ public class CourseDAO {
         }
     }
 
-    public List<Course> getAllCourses() {
+//    public List<Course> getAllCourses() {
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            String hql = "FROM Course";
+//            TypedQuery<Course> query = session.createQuery(hql, Course.class);
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+
+        public ObservableList<Course> getAllCourses() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Course";
             TypedQuery<Course> query = session.createQuery(hql, Course.class);
-            return query.getResultList();
+
+            // Convert the result to an ObservableList
+            List<Course> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return FXCollections.observableArrayList(); // or return an empty ObservableList
         }
     }
+
 }
