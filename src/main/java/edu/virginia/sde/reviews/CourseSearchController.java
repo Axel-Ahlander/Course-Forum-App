@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -49,7 +50,6 @@ public class CourseSearchController {
     TableView<Course> tableView;
 
     public void initialize() {
-        //tableFill();
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
 
@@ -60,7 +60,31 @@ public class CourseSearchController {
         addCourseSuccessLabel.setText("");
 
         tableFill();
-        //  CourseSearchService CSS = new CourseSearchService();
+
+// need to cite McBurneys piazza post here probably
+/*
+    var cell = new TableCell<ReviewTableRow, String>();
+    Text text = new Text();
+    cell.setGraphic(text);
+    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+    text.textProperty().bind(cell.itemProperty());
+    return cell;
+ });*/
+        courseTitleColumn.setCellFactory(column -> {
+            var cell = new TableCell<Course, String>() {
+                Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
 
     }
 
@@ -73,7 +97,6 @@ public class CourseSearchController {
         stage.show();
         stage.centerOnScreen();
     }
-
 
     public void searchSubjectTextField() {
         searchNumberTextField.requestFocus();
@@ -202,7 +225,6 @@ public class CourseSearchController {
             //for subject and number, require exact letter matches
 
         }
-
     }
 
     private boolean validSearchInput() {
@@ -278,10 +300,26 @@ public class CourseSearchController {
     }
 
     private void tableFill() {
+        //could also put lambda here...
+/*        courseTitleColumn.setCellFactory(column -> {
+            var cell = new TableCell<Course, String>() {
+                Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });*/
         courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
         courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+
 
         CourseDAO courseDAO = new CourseDAO();
         List<Course> courseList = courseDAO.getAllCourses();
