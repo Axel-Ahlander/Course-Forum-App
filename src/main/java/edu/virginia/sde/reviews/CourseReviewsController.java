@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,11 +45,7 @@ public class CourseReviewsController {
     public void initialize(){
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
-        ratingChoiceBox.getItems().add(1);
-        ratingChoiceBox.getItems().add(2);
-        ratingChoiceBox.getItems().add(3);
-        ratingChoiceBox.getItems().add(4);
-        ratingChoiceBox.getItems().add(5);
+        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
 
         //subjectLabel = (course subject)
         //numberLabel = (course label)
@@ -64,6 +61,22 @@ public class CourseReviewsController {
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
+
+        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        commentColumn.setCellFactory(tc -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
     }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
@@ -74,7 +87,7 @@ public class CourseReviewsController {
         stage.setScene(scene);
         stage.show();
     }
-    public void handleSubmitReviewButton(ActionEvent e) throws IOException {
+    public void handleSubmitReviewButton() throws IOException {
             errorLabel.setText("");
             if (ratingChoiceBox.getValue() == null) {
                 errorLabel.setText("Must select a rating!");
