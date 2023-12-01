@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,8 +57,35 @@ public class CourseSearchController {
         searchErrorLabel.setText("");
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
-
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Course>() {
+            @Override
+            public void changed(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
+                if (newValue != null) {
+                    handleRowSelection(newValue);
+                }
+            }
+        });
         tableViewAllCourses();
+    }
+    private void handleRowSelection(Course selectedCourse) {
+        // Do something with the selected course, for example, pass it to another scene
+        // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
+
+        // Example: Pass selectedCourse to a method that creates a new scene
+        System.out.println(selectedCourse.getSubject());
+       // openNewScene(selectedCourse);
+    }
+
+    private void openNewScene(Course selectedCourse) {
+        // Implement the logic to create and show a new scene using the selected course
+        // You can use FXMLLoader to load the FXML for the new scene
+        // Example:
+        // FXMLLoader loader = new FXMLLoader(getClass().getResource("NewScene.fxml"));
+        // Parent root = loader.load();
+        // NewSceneController controller = loader.getController();
+        // controller.initialize(selectedCourse);
+        // ...
+        // Show the new scene
     }
 
     public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {

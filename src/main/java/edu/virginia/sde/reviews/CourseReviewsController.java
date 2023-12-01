@@ -62,8 +62,7 @@ public class CourseReviewsController {
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
 
-        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
-        commentColumn.setCellFactory(tc -> {
+        commentColumn.setCellFactory(column -> {
             TableCell<Review, String> cell = new TableCell<>() {
                 final Text text = new Text();
                 @Override

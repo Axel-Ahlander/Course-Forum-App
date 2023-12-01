@@ -48,7 +48,7 @@
                                     <TableColumn fx:id="courseNumberColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Number" />
                                     <TableColumn fx:id="courseTitleColumn" prefWidth="235.0" style="-fx-alignment: CENTER;; -fx-font-family: Andale Mono;" text="Title" />
                                     <TableColumn fx:id="courseRatingColumn" prefWidth="100.0" text="Rating" />
-                           <TableColumn prefWidth="100.0" text="Column X" />
+                           <TableColumn prefWidth="100.0" text="Course Page" />
                                 </columns>
                             </TableView>
                         </children>
