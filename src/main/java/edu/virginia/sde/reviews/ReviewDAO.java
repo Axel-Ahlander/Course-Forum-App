@@ -1,12 +1,16 @@
 package edu.virginia.sde.reviews;
 
 import jakarta.persistence.TypedQuery;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class ReviewDAO {
+    private ObservableList<Review> reviews;
+
     public void save(Review review){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -65,15 +69,29 @@ public class ReviewDAO {
 
     // add findByRating? but rating will not be int?
 
+//
+//    public List<Review> getAllReviews() {
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            String hql = "FROM Review";
+//            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
-    public List<Review> getAllReviews() {
+    public ObservableList<Review> getAllReviews() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Review";
             TypedQuery<Review> query = session.createQuery(hql, Review.class);
-            return query.getResultList();
+
+            // Convert the result to an ObservableList
+            List<Review> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return FXCollections.observableArrayList(); // or return an empty ObservableList
         }
     }
 }

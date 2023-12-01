@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,9 @@ public class CourseReviewsController {
     TableColumn<Review, Integer> ratingColumn;
     @FXML
     TableColumn<Review, String> commentColumn;
+
+    @FXML
+    TableColumn<Review, Hyperlink> coursePageLink;
 
     @FXML
     TableView<Review> tableView;
@@ -67,8 +72,22 @@ public class CourseReviewsController {
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
-
+        tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
+
+        /*
+              //  tableview.setItems()
+        //getAllReviews() {
+        ReviewDAO dao = new ReviewDAO();
+
+        ReviewDAO reviewDAO = new ReviewDAO();
+       List<Review> reviewList = reviewDAO.getAllReviews();
+     //  ObservableList<Review> reviewList = (ObservableList<Review>) reviewDAO.getAllReviews();
+     //   tableView.setItems(FXCollections.observableList(reviewList));
+        tableView.getItems().clear();
+        tableView.setItems(FXCollections.observableList(reviewList));
+        tableView.getItems().addAll(reviewList);
+         */
 
     }
 
@@ -81,27 +100,36 @@ public class CourseReviewsController {
         stage.show();
     }
     public void handleSubmitReviewButton(ActionEvent e) throws IOException {
-        errorLabel.setText("");
-        if (ratingChoiceBox.getValue() == null){
-            errorLabel.setText("Must select a rating!");
+            errorLabel.setText("");
+            if (ratingChoiceBox.getValue() == null) {
+                errorLabel.setText("Must select a rating!");
+            } else {
+                Review review = new Review();
+                review.setUser(activeUser);
+                review.setComment(commentTextArea.getText());
+                review.setRating(ratingChoiceBox.getValue());
+
+                CourseDAO courseDAO = new CourseDAO();
+                List<Course> courseList = courseDAO.getAllCourses();
+
+                review.setCourse(courseList.get(1));
+                ReviewDAO reviewDAO = new ReviewDAO();
+
+                // Save the review
+                CourseReviewsService createReview = new CourseReviewsService(review);
+                createReview.saveReview();
+
+                // Refresh the TableView with the updated reviews
+//                ObservableList<Review> updatedReviews = (ObservableList<Review>) reviewDAO.getAllReviews();
+//                tableView.getItems().clear();
+//                tableView.setItems(updatedReviews);
+//                tableView.refresh();
+
+                // Refresh the TableView with the updated reviews
+                ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
+                tableView.setItems(updatedReviews);
+                tableView.refresh();
+            }
         }
-        else{
-            Review review = new Review();
-            review.setUser(activeUser);
-            review.setComment(commentTextArea.getText());
-            review.setRating(ratingChoiceBox.getValue());
-
-            CourseDAO courseDAO = new CourseDAO();
-            List<Course> courseList = courseDAO.getAllCourses();
-
-            review.setCourse(courseList.get(1));
-            ReviewDAO reviewDAO = new ReviewDAO();
-            System.out.println(reviewDAO);
-
-            CourseReviewsService createReview = new CourseReviewsService(review);
-            createReview.saveReview();
-         //   refreshTable(); //
-        }
-    }
 
 }
