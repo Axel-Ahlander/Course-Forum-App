@@ -300,7 +300,7 @@ public class CourseSearchController {
     }
 
     private void tableFill() {
-        //could also put lambda here...
+//could also put lambda here...
 /*        courseTitleColumn.setCellFactory(column -> {
             var cell = new TableCell<Course, String>() {
                 Text text = new Text();

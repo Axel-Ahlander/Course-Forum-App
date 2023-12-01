@@ -26,7 +26,7 @@
                     <Font name="Adelle Sans Devanagari Regular" size="40.0" />
                 </font>
             </Label>
-            <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0" startX="-158.5655517578125" startY="-7.62939453125E-6" />
+            <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0" startX="-166.0" />
             <Label fx:id="usernameLabel" layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
                 <font>
                     <Font name="Andale Mono" size="20.0" />
@@ -42,12 +42,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
                         <children>
-                            <TableView fx:id="tableView" layoutX="-42.0" prefHeight="575.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <TableView fx:id="tableView" prefHeight="575.0" prefWidth="621.0" style="-fx-background-color: #000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                    <TableColumn fx:id="courseSubjectColumn" text="Subject" />
-                                    <TableColumn fx:id="courseNumberColumn" text="Number" />
-                                    <TableColumn fx:id="courseTitleColumn" prefWidth="350.0" text="Title" />
-                                    <TableColumn fx:id="courseRatingColumn" prefWidth="82.36785888671875" text="Rating" />
+                                    <TableColumn fx:id="courseSubjectColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Subject" />
+                                    <TableColumn fx:id="courseNumberColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Number" />
+                                    <TableColumn fx:id="courseTitleColumn" prefWidth="320.0" style="-fx-alignment: CENTER;; -fx-font-family: Andale Mono;" text="Title" />
+                                    <TableColumn fx:id="courseRatingColumn" prefWidth="100.0" text="Rating" />
                                 </columns>
                             </TableView>
                         </children>
@@ -68,12 +68,12 @@
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="288.0" AnchorPane.rightAnchor="0.0">
                                                 <children>
                                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="312.0" layoutX="32.0" layoutY="89.0" stroke="#b5b5b5" strokeType="INSIDE" width="263.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="25.0" />
-                                                    <Label layoutX="38.0" layoutY="103.0" text="Selective Search">
+                                                    <Label layoutX="43.0" layoutY="103.0" text="Selective Search">
                                                         <font>
                                                             <Font name="Adelle Sans Devanagari Regular" size="24.0" />
                                                         </font>
                                                     </Label>
-                                                    <Separator layoutX="32.0" layoutY="156.0" prefHeight="1.0" prefWidth="200.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="56.0" />
+                                                    <Separator layoutX="32.0" layoutY="157.0" prefHeight="1.0" prefWidth="200.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="56.0" />
                                                     <VBox layoutX="31.0" layoutY="170.0" prefHeight="177.0" prefWidth="201.0">
                                                         <children>
                                                             <Label text="Subject" textAlignment="CENTER">
@@ -136,7 +136,7 @@
                                                             <Font name="Andale Mono" size="24.0" />
                                                         </font>
                                                     </Button>
-                                                    <Button fx:id="addCourseTabButton" layoutX="14.0" layoutY="451.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="Add a course" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="43.0">
+                                                    <Button fx:id="addCourseTabButton" layoutX="14.0" layoutY="451.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="232.0" style="-fx-background-color: #000080;" text="Add a course" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="42.0">
                                                         <font>
                                                             <Font name="Andale Mono" size="24.0" />
                                                         </font>
@@ -156,19 +156,14 @@
                                 <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="269.0">
                                         <children>
-                                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="312.0" layoutX="25.0" layoutY="89.0" stroke="#b5b5b5" strokeType="INSIDE" width="263.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="18.0" />
-                                            <Label layoutX="87.0" layoutY="102.0" text="Add a course">
+                                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="312.0" layoutX="18.0" layoutY="89.0" stroke="#b5b5b5" strokeType="INSIDE" width="263.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="25.0" />
+                                            <Label layoutX="77.0" layoutY="102.0" text="Add a course">
                                                 <font>
                                                     <Font name="Adelle Sans Devanagari Regular" size="24.0" />
                                                 </font>
                                             </Label>
-                                            <Button layoutX="65.0" layoutY="435.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="231.0" text="Modify Search" textFill="#0f155b" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="454.0">
-                                                <font>
-                                                    <Font name="Andale Mono" size="24.0" />
-                                                </font>
-                                            </Button>
-                                            <Separator layoutX="66.0" layoutY="157.0" prefWidth="200.0" />
-                                            <VBox layoutX="64.0" layoutY="173.0" prefHeight="177.0" prefWidth="201.0">
+                                            <Separator layoutX="51.0" layoutY="157.0" prefWidth="200.0" />
+                                            <VBox layoutX="49.0" layoutY="170.0" prefHeight="177.0" prefWidth="201.0">
                                                 <children>
                                                     <Label text="Subject" textAlignment="CENTER">
                                                         <font>
@@ -220,17 +215,17 @@
                                                     </TextField>
                                                 </children>
                                             </VBox>
-                                            <Button fx:id="addCourseButton" layoutX="108.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleAddCourseButtonClick" prefHeight="26.0" prefWidth="101.0" text="Add Course">
+                                            <Button fx:id="addCourseButton" layoutX="98.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleAddCourseButtonClick" prefHeight="26.0" prefWidth="101.0" text="Add Course">
                                                 <font>
                                                     <Font name="Andale Mono" size="13.0" />
                                                 </font>
                                             </Button>
-                                            <Button layoutX="44.0" layoutY="568.0" mnemonicParsing="false" onAction="#myReviewsButtonClick" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="My Reviews" textFill="WHITE" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="31.0">
+                                            <Button layoutX="32.0" layoutY="561.0" mnemonicParsing="false" onAction="#myReviewsButtonClick" prefHeight="64.0" prefWidth="231.0" style="-fx-background-color: #000080;" text="My Reviews" textFill="WHITE" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="43.0">
                                                 <font>
                                                     <Font name="Andale Mono" size="24.0" />
                                                 </font>
                                             </Button>
-                                            <Button fx:id="selectSearchTabButton" layoutX="41.0" layoutY="454.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="235.0" style="-fx-background-color: #000080;" text="Select Search" textFill="WHITE" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="30.0">
+                                            <Button fx:id="selectSearchTabButton" layoutX="32.0" layoutY="451.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="232.0" style="-fx-background-color: #000080;" text="Select Search" textFill="WHITE" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="42.0">
                                                 <font>
                                                     <Font name="Andale Mono" size="24.0" />
                                                 </font>

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static edu.virginia.sde.reviews.LoginController.activeUser;
+
 public class CourseReviewsController {
     @FXML
     Button submitReviewButton;
@@ -87,6 +89,23 @@ public class CourseReviewsController {
         errorLabel.setText("");
         if (ratingChoiceBox.getValue() == null){
             errorLabel.setText("Must select a rating!");
+        }
+        else{
+            //int id, int rating, String comment, Course course, User user)
+            Review review = new Review();
+            review.setUser(activeUser);
+            course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
+            course.setTitle(addCourseTitleTextField.getText());
+            CreateCourseService createCourse = new CreateCourseService(course);
+            createCourse.saveCourse();
+            addCourseSuccessLabel.setText("Course successfully added.");
+        } catch (NumberFormatException e) {
+            addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
+        } catch (Exception e) {
+            addCourseErrorLabel.setText("An error occurred while adding the course.");
+        }
+
+
         }
     }
 
