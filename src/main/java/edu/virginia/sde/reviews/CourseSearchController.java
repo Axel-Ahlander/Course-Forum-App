@@ -320,11 +320,10 @@ public class CourseSearchController {
         courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-
         CourseDAO courseDAO = new CourseDAO();
         List<Course> courseList = courseDAO.getAllCourses();
 
-  //      courseList = courseDAO.findBySubject("CS");
+        //      courseList = courseDAO.findBySubject("CS");
 
         tableView.getItems().clear();
         tableView.getItems().addAll(courseList);

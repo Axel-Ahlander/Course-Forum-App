@@ -65,4 +65,15 @@ public class ReviewDAO {
 
     // add findByRating? but rating will not be int?
 
+
+    public List<Review> getAllReviews() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Review";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

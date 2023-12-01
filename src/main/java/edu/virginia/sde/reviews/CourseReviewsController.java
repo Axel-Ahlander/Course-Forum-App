@@ -42,6 +42,8 @@ public class CourseReviewsController {
     @FXML
     Label errorLabel;
 
+
+
     public void initialize(){
         errorLabel.setText("");
         ratingChoiceBox.getItems().add(1);
@@ -52,23 +54,16 @@ public class CourseReviewsController {
 
         //subjectLabel = (course subject)
         //numberLabel = (course label)
-        //ratingLabel = (
+        //ratingLabel = (calculateRating
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
-        //
 
-
-//        List<Review> listOfStuff = List.of(
-//                new Review(1,
-//                        2,
-//                        "comment",
-//                        new Course(0, "sub", 3, "string"),
-//                        new User()
-//                )
-//        );
+        //getAllReviews() {
         ReviewDAO dao = new ReviewDAO();
-        List<Review> reviewList = dao.findByCourse( new Course(152, "CS", 3140, "Software Development Essentials" ));
+
+        ReviewDAO reviewDAO = new ReviewDAO();
+        List<Review> reviewList = reviewDAO.getAllReviews();
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -91,21 +86,21 @@ public class CourseReviewsController {
             errorLabel.setText("Must select a rating!");
         }
         else{
-            //int id, int rating, String comment, Course course, User user)
             Review review = new Review();
             review.setUser(activeUser);
-            course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
-            course.setTitle(addCourseTitleTextField.getText());
-            CreateCourseService createCourse = new CreateCourseService(course);
-            createCourse.saveCourse();
-            addCourseSuccessLabel.setText("Course successfully added.");
-        } catch (NumberFormatException e) {
-            addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
-        } catch (Exception e) {
-            addCourseErrorLabel.setText("An error occurred while adding the course.");
-        }
+            review.setComment(commentTextArea.getText());
+            review.setRating(ratingChoiceBox.getValue());
 
+            CourseDAO courseDAO = new CourseDAO();
+            List<Course> courseList = courseDAO.getAllCourses();
 
+            review.setCourse(courseList.get(1));
+            ReviewDAO reviewDAO = new ReviewDAO();
+            System.out.println(reviewDAO);
+
+            CourseReviewsService createReview = new CourseReviewsService(review);
+            createReview.saveReview();
+         //   refreshTable(); //
         }
     }
 
