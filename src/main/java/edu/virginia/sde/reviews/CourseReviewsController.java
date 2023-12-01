@@ -22,33 +22,28 @@ public class CourseReviewsController {
     @FXML
     Button submitReviewButton;
     @FXML
-    Label subjectLabel, numberLabel, ratingLabel;
+    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel;
+
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
     @FXML
     TableColumn<Review, Integer> ratingColumn;
     @FXML
     TableColumn<Review, String> commentColumn;
-
-    @FXML
-    TableColumn<Review, Hyperlink> coursePageLink;
-
     @FXML
     TableView<Review> tableView;
 
     @FXML
     Hyperlink backLink;
-
     @FXML
     ChoiceBox<Integer> ratingChoiceBox;
-
     @FXML
     TextArea commentTextArea;
-    @FXML
-    Label errorLabel;
+
 
     public void initialize(){
         errorLabel.setText("");
+        addReviewSuccessLabel.setText("");
         ratingChoiceBox.getItems().add(1);
         ratingChoiceBox.getItems().add(2);
         ratingChoiceBox.getItems().add(3);
@@ -62,9 +57,6 @@ public class CourseReviewsController {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
-        //getAllReviews() {
-        ReviewDAO dao = new ReviewDAO();
-
         ReviewDAO reviewDAO = new ReviewDAO();
         List<Review> reviewList = reviewDAO.getAllReviews();
 
@@ -72,21 +64,6 @@ public class CourseReviewsController {
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
-
-        /*
-              //  tableview.setItems()
-        //getAllReviews() {
-        ReviewDAO dao = new ReviewDAO();
-
-        ReviewDAO reviewDAO = new ReviewDAO();
-       List<Review> reviewList = reviewDAO.getAllReviews();
-     //  ObservableList<Review> reviewList = (ObservableList<Review>) reviewDAO.getAllReviews();
-     //   tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.getItems().clear();
-        tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.getItems().addAll(reviewList);
-         */
-
     }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
@@ -110,29 +87,17 @@ public class CourseReviewsController {
                 CourseDAO courseDAO = new CourseDAO();
                 ObservableList<Course> courseList = courseDAO.getAllCourses();
                 review.setCourse(courseList.get(1));
-
-//                List<Course> courseList = courseDAO.getAllCourses();
-//                review.setCourse(courseList.get(1));
-                        //if above isn't working right, can have 2 getAllCourses, one which
-                        //returns observable list and another that returns a normal one
                 //^
 
-
-                // Save the review
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
-
-                // Refresh the TableView with the updated reviews
-//                ObservableList<Review> updatedReviews = (ObservableList<Review>) reviewDAO.getAllReviews();
-//                tableView.getItems().clear();
-//                tableView.setItems(updatedReviews);
-//                tableView.refresh();
 
                 ReviewDAO reviewDAO = new ReviewDAO();
                 // Refresh the TableView with the updated reviews
                 ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
+                addReviewSuccessLabel.setText("Review successfully added.");
             }
         }
 

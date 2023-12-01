@@ -191,7 +191,7 @@ public class CourseSearchController {
             //code to search for and display courses that fit search criteria
             //for title look for matching substrings (i.e., don't require exact titles
             //for subject and number, require exact letter matches
-
+            selectiveSearchTableView();
         }
     }
 
@@ -305,7 +305,7 @@ public class CourseSearchController {
           return cell;
       });
   }
-    public void selectiveSearchTableFill() {
+    public void selectiveSearchTableView() {
 
     }
 }

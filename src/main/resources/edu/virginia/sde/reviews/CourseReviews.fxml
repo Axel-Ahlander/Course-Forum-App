@@ -130,10 +130,14 @@
             <Font name="Andale Mono" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="744.0" layoutY="519.0" text="Must select a rating!" textFill="RED">
+      <Label fx:id="errorLabel" layoutX="743.0" layoutY="165.0" text="Must select a rating!" textFill="RED">
          <font>
             <Font name="Adelle Sans Devanagari Bold" size="14.0" />
          </font>
       </Label>
+      <Label fx:id="addReviewSuccessLabel" layoutX="725.0" layoutY="165.0" text="Course sucessfully added." textFill="#00805e">
+         <font>
+            <Font name="Adelle Sans Devanagari Bold" size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

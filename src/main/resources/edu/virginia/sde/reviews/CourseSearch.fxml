@@ -27,7 +27,7 @@
                 </font>
             </Label>
             <Line endX="136.37850952148438" endY="-7.62939453125E-6" layoutX="182.0" layoutY="95.0" startX="-166.0" />
-            <Label fx:id="usernameLabel" layoutX="510.0" layoutY="10.0" prefHeight="21.0" prefWidth="123.0" text="(Username)">
+            <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="10.0" prefHeight="24.0" prefWidth="630.0" text="(Username)">
                 <font>
                     <Font name="Andale Mono" size="20.0" />
                 </font>
@@ -40,14 +40,15 @@
             <Line endX="81.0" endY="-7.62939453125E-6" layoutX="571.0" layoutY="39.0" startX="-58.0" />
             <ScrollPane layoutX="-3.0" layoutY="142.0" prefHeight="582.0" prefWidth="627.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="628.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="637.0">
                         <children>
                             <TableView fx:id="tableView" prefHeight="575.0" prefWidth="621.0" style="-fx-background-color: #000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                     <TableColumn fx:id="courseSubjectColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Subject" />
                                     <TableColumn fx:id="courseNumberColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Number" />
-                                    <TableColumn fx:id="courseTitleColumn" prefWidth="320.0" style="-fx-alignment: CENTER;; -fx-font-family: Andale Mono;" text="Title" />
+                                    <TableColumn fx:id="courseTitleColumn" prefWidth="235.0" style="-fx-alignment: CENTER;; -fx-font-family: Andale Mono;" text="Title" />
                                     <TableColumn fx:id="courseRatingColumn" prefWidth="100.0" text="Rating" />
+                           <TableColumn prefWidth="100.0" text="Column X" />
                                 </columns>
                             </TableView>
                         </children>
