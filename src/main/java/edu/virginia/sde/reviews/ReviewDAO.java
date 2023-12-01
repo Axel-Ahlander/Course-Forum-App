@@ -9,8 +9,6 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class ReviewDAO {
-    private ObservableList<Review> reviews;
-
     public void save(Review review){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();

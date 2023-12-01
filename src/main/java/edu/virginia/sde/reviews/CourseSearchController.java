@@ -21,8 +21,6 @@ import static edu.virginia.sde.reviews.LoginController.activeUser;
 public class CourseSearchController {
 
     @FXML
-    private Label usernameLabel;
-    @FXML
     Hyperlink logOutLink;
 
     @FXML
@@ -32,10 +30,7 @@ public class CourseSearchController {
     private Button addCourseTabButton, selectSearchTabButton, searchButton, addCourseButton;
 
     @FXML
-    private Button temporaryCourseReviewsButton;
-
-    @FXML
-    private Label username, searchErrorLabel, addCourseErrorLabel, addCourseSuccessLabel;
+    private Label usernameLabel, searchErrorLabel, addCourseErrorLabel, addCourseSuccessLabel;
 
     @FXML
     private TextField searchSubjectTextField, searchNumberTextField, searchTitleTextField, addCourseSubjectTextField, addCourseNumberTextField, addCourseTitleTextField;
@@ -61,47 +56,7 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
 
-
-        courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-        courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
-
-        CourseDAO courseDAO = new CourseDAO();
-        List<Course> courseList = courseDAO.getAllCourses();
-
-        tableView.getItems().clear();
-        tableView.getItems().addAll(courseList);
-        tableView.setItems(FXCollections.observableList(courseList));
-        tableView.refresh();
-
-   //     tableFill();
-
-// need to cite McBurneys piazza post here probably
-/*
-    var cell = new TableCell<ReviewTableRow, String>();
-    Text text = new Text();
-    cell.setGraphic(text);
-    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
-    text.textProperty().bind(cell.itemProperty());
-    return cell;
- });*/
-        courseTitleColumn.setCellFactory(column -> {
-            var cell = new TableCell<Course, String>() {
-                Text text = new Text();
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    text.setText(item);
-                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                    setGraphic(text);
-                }
-            };
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            return cell;
-        });
-
+        tableViewAllCourses();
     }
 
     public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {
@@ -134,9 +89,7 @@ public class CourseSearchController {
         addCourseTitleTextField.requestFocus();
     }
 
-    public void addCourseTitleTextField() {
-        addCourseButton.fire();
-    }
+    public void addCourseTitleTextField() { addCourseButton.fire(); }
 
     private void selectTab() {
         tabPane.getTabs().stream()
@@ -155,7 +108,6 @@ public class CourseSearchController {
         stage.centerOnScreen();
     }
 
-
     public void logOutAccountClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -166,24 +118,6 @@ public class CourseSearchController {
         stage.centerOnScreen();
     }
 
-
-    /*
-        private void createNewCourse() {
-        try {
-            Course course = new Course();
-            course.setSubject(addCourseSubjectTextField.getText());
-            course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
-            course.setTitle(addCourseTitleTextField.getText());
-            CreateCourseService createCourse = new CreateCourseService(course);
-            createCourse.saveCourse();
-            addCourseSuccessLabel.setText("Course successfully added.");
-        } catch (NumberFormatException e) {
-            addCourseErrorLabel.setText("Invalid number format. Please enter a valid course number.");
-        } catch (Exception e) {
-            addCourseErrorLabel.setText("An error occurred while adding the course.");
-        }
-    }
-     */
     public void handleAddCourseButtonClick() {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
@@ -194,12 +128,8 @@ public class CourseSearchController {
             ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
             tableView.setItems(updatedCourses);
             tableView.refresh();
-
-            //refresh table
         }
     }
-
-
 
     private boolean validAddCourseInput() {
         String subject = addCourseSubjectTextField.getText();
@@ -211,10 +141,7 @@ public class CourseSearchController {
         if (!validAddCourseNumber(number)) {
             return false;
         }
-        if (!validAddCourseTitle(title)) {
-            return false;
-        }
-        return true;
+        return validAddCourseTitle(title);
     }
 
     private boolean validAddCourseSubject(String subject) {
@@ -340,38 +267,44 @@ public class CourseSearchController {
         }
     }
 
-  //  private void tableFill() {
-//could also put lambda here...
-/*        courseTitleColumn.setCellFactory(column -> {
-            var cell = new TableCell<Course, String>() {
-                Text text = new Text();
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    text.setText(item);
-                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                    setGraphic(text);
-                }
-            };
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            return cell;
-        });*/
-        /*
-        courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-        courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+    private void tableViewAllCourses(){
+      courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+      courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+      courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+      courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-        CourseDAO courseDAO = new CourseDAO();
-        List<Course> courseList = courseDAO.getAllCourses();
+      CourseDAO courseDAO = new CourseDAO();
+      List<Course> courseList = courseDAO.getAllCourses();
 
-  //      courseList = courseDAO.findBySubject("CS");
-
-        tableView.getItems().clear();
-        tableView.getItems().addAll(courseList);
-        tableView.refresh();
-    }
-*/
+      tableView.getItems().clear();//not sure if this line is necessary
+      tableView.getItems().addAll(courseList);
+      tableView.setItems(FXCollections.observableList(courseList));
+      tableView.refresh();
+// need to cite McBurneys piazza post here probably
+/*
+    var cell = new TableCell<ReviewTableRow, String>();
+    Text text = new Text();
+    cell.setGraphic(text);
+    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+    text.textProperty().bind(cell.itemProperty());
+    return cell;
+ });*/
+      courseTitleColumn.setCellFactory(column -> {
+          var cell = new TableCell<Course, String>() {
+              final Text text = new Text();
+              @Override
+              protected void updateItem(String item, boolean empty) {
+                  super.updateItem(item, empty);
+                  text.setText(item);
+                  text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+                  setGraphic(text);
+              }
+          };
+          cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+          return cell;
+      });
+  }
     public void selectiveSearchTableFill() {
 
     }
