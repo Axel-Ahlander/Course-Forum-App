@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.Set;
 
 public class CourseDAO {
     public void save(Course course) {
@@ -112,7 +113,7 @@ public class CourseDAO {
 //    }
 
 
-        public ObservableList<Course> getAllCourses() {
+    public ObservableList<Course> getAllCourses() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Course";
             TypedQuery<Course> query = session.createQuery(hql, Course.class);
@@ -123,6 +124,19 @@ public class CourseDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return FXCollections.observableArrayList(); // or return an empty ObservableList
+        }
+    }
+
+    // possible problem from Set to List? make sure uniqueness enforced business layer
+    public List<Review> getAllReviews(Course course) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT r FROM Review r WHERE r.course.id = :courseId";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("courseId", course.getId());
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
