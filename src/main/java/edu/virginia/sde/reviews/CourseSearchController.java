@@ -411,7 +411,8 @@ public class CourseSearchController {
     }
 
     private void selectiveSearchTableView() {
-        ObservableList<Course> courses = tableView.getItems();
+        CourseDAO courseDAO = new CourseDAO();
+        ObservableList<Course> courses = courseDAO.getAllCourses();
         List<Course> filteredCourses = new ArrayList<>();
 
         String searchSubject = searchSubjectTextField.getText().trim().toLowerCase();
