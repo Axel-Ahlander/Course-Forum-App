@@ -53,6 +53,7 @@ public class ReviewDAO {
         }
     }
 
+
     public List<Review> findByCourse(Course course) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "SELECT r FROM Review r WHERE r.course = :course";
@@ -62,6 +63,21 @@ public class ReviewDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public ObservableList<Review> findByCourse2(Course course) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT r FROM Review r WHERE r.course = :course";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("course", course);
+
+            // Convert the result to an ObservableList
+            List<Review> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return FXCollections.observableArrayList(); // or return an empty ObservableList
         }
     }
 

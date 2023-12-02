@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -102,13 +103,17 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
-        selectedCourse.getReviews();
-        ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> courseReviews = reviewDAO.findByCourse(selectedCourse);
-        if(courseReviews.contains(activeUser)){ //user does have a review for selectedCourse
-            courseReviewSceneEditReview(selectedCourse);
+        Set<Review> courseReviews = selectedCourse.getReviews();
+        boolean hasReview = false;
+        for (Review review : courseReviews) {
+            if (review.getUser().equals(activeUser)) {
+                hasReview = true;
+                break;
+            }
         }
-        else{
+        if (hasReview) {
+            courseReviewSceneEditReview(selectedCourse);
+        } else {
             courseReviewSceneAddReview(selectedCourse);
         }
     }

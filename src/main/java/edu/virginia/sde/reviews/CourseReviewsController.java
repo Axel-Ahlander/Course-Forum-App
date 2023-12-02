@@ -63,8 +63,7 @@ public class CourseReviewsController {
 
 
         ReviewDAO reviewDAO = new ReviewDAO();
-
-        List<Review> reviewList = reviewDAO.findByCourse(selectedCourse);
+        List<Review> reviewList = reviewDAO.findByCourse2(selectedCourse);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -108,7 +107,7 @@ public class CourseReviewsController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.findByCourse(selectedCourse);
+        ObservableList<Review> reviewList = reviewDAO.findByCourse2(selectedCourse);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -140,7 +139,6 @@ public class CourseReviewsController {
     }
     public void handleSubmitReviewButton() throws IOException {
             errorLabel.setText("");
-            //submitReviewButton.getText();
             if (ratingChoiceBox.getValue() == null) {
                 errorLabel.setText("Must select a rating!");
             }
@@ -156,14 +154,16 @@ public class CourseReviewsController {
                 createReview.saveReview();
 
                 ReviewDAO reviewDAO = new ReviewDAO();
-                ObservableList<Review> updatedReviews = (ObservableList<Review>) reviewDAO.findByCourse(course);
+                ObservableList<Review> updatedReviews = reviewDAO.findByCourse2(course);
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
             //    addReviewSuccessLabel.setText("Review successfully added.");
                 courseEditTransition(date);
+                userReviewed = true;
             }
             else{ // edit users review
-                /*  fill in logic to change users review-
+
+
                 review.setUser(activeUser);
                 review.setComment(commentTextArea.getText());
                 review.setRating(ratingChoiceBox.getValue());

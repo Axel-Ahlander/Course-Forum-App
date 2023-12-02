@@ -55,7 +55,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.findByCourse(course);
+        ObservableList<Review> reviewList = reviewDAO.findByCourse2(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -93,7 +93,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.findByCourse(course);
+        ObservableList<Review>reviewList = reviewDAO.findByCourse2(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
