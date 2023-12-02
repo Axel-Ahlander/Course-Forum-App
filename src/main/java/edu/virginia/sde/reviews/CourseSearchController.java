@@ -414,18 +414,36 @@ public class CourseSearchController {
 
     public void selectiveSearchTableView() {
         ObservableList<Course> courses = tableView.getItems();
-        List<Course> selectedCourses = new ArrayList<>();
+        List<Course> filteredCourses = new ArrayList<>();
+
+        String searchSubject = searchSubjectTextField.getText().trim().toLowerCase();
+        String searchNumber = searchNumberTextField.getText().trim();
+        String searchTitle = searchTitleTextField.getText().trim().toLowerCase();
+
+        // Empty check flags
+        boolean isSubjectEmpty = searchSubject.isEmpty();
+        boolean isNumberEmpty = searchNumber.isEmpty();
+        boolean isTitleEmpty = searchTitle.isEmpty();
+
         for (Course course : courses) {
-            if (searchSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
-                    Integer.parseInt(searchNumberTextField.getText()) == (course.getNumber())
-                    && searchTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
-                selectedCourses.add(course);
+            boolean subjectMatch = isSubjectEmpty || course.getSubject().equalsIgnoreCase(searchSubject);
+            boolean numberMatch = isNumberEmpty || String.valueOf(course.getNumber()).equals(searchNumber);
+            boolean titleMatch = isTitleEmpty || course.getTitle().toLowerCase().contains(searchTitle);
+
+            if ((subjectMatch && numberMatch && titleMatch) ||
+                    (subjectMatch && numberMatch && isTitleEmpty) ||
+                    (subjectMatch && isNumberEmpty && titleMatch) ||
+                    (isSubjectEmpty && numberMatch && titleMatch) ||
+                    (subjectMatch && isNumberEmpty && isTitleEmpty) ||
+                    (isSubjectEmpty && numberMatch && isTitleEmpty) ||
+                    (isSubjectEmpty && isNumberEmpty && titleMatch)) {
+                filteredCourses.add(course);
             }
         }
-        tableView.getItems().clear();
-        tableView.getItems().addAll(selectedCourses);
-        tableView.setItems(FXCollections.observableList(selectedCourses));
+
+        tableView.setItems(FXCollections.observableList(filteredCourses));
         tableView.refresh();
     }
+
 }
 
