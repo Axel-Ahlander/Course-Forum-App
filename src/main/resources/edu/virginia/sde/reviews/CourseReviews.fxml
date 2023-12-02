@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" style="-fx-font-family: Adelle Sans Devanagari Extrabold;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="961.0" style="-fx-font-family: Adelle Sans Devanagari Extrabold;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewsController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="424.0" layoutX="671.0" layoutY="190.0" stroke="#cf4100a9" strokeType="INSIDE" width="276.0" />
       <AnchorPane layoutX="-2.0" layoutY="267.0" prefHeight="566.0" prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0">
@@ -84,47 +84,12 @@
             <TextArea fx:id="commentTextArea" prefHeight="151.0" prefWidth="221.0" />
          </children>
       </VBox>
-      <Hyperlink fx:id="backLink" layoutX="718.0" layoutY="685.0" onAction="#handleBackLinkClick" text="Back to course search">
+      <Hyperlink fx:id="backLink" layoutX="718.0" layoutY="653.0" onAction="#handleBackLinkClick" text="Back to course search">
          <font>
             <Font name="Andale Mono" size="18.0" />
          </font>
       </Hyperlink>
-      <VBox layoutX="11.0" layoutY="20.0" prefHeight="123.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-         <children>
-            <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" prefHeight="205.0" prefWidth="940.0" text="01234567890123456789012345678901234567890123456789" textFill="#616161">
-               <font>
-                  <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
-            </Label>
-            <AnchorPane prefHeight="118.0" prefWidth="960.0">
-               <children>
-                  <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-12.0" prefHeight="58.0" prefWidth="79.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="621.0">
-                     <font>
-                        <Font name="Adelle Sans Devanagari Extrabold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="132.0" layoutY="-13.0" prefHeight="58.0" prefWidth="97.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="-13.0">
-                     <font>
-                        <Font name="Adelle Sans Devanagari Extrabold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ratingLabel" layoutX="868.0" layoutY="-13.0" prefHeight="83.0" prefWidth="82.0" text="0.00" textFill="#d04200" AnchorPane.bottomAnchor="-1.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="-13.0">
-                     <font>
-                        <Font name="Adelle Sans Devanagari Semibold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="579.0" layoutY="-16.0" prefHeight="83.0" prefWidth="333.0" text="Average rating: " textFill="#d04200" AnchorPane.bottomAnchor="2.0" AnchorPane.topAnchor="-16.0">
-                     <font>
-                        <Font name="Adelle Sans Devanagari Semibold" size="40.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+      <VBox layoutX="11.0" layoutY="20.0" prefHeight="123.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
       <Button fx:id="submitReviewButton" layoutX="719.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleSubmitReviewButton" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #d04200; -fx-text-fill: white;" text="Submit Review" textAlignment="CENTER">
          <font>
             <Font name="Andale Mono" size="14.0" />
@@ -139,5 +104,34 @@
          <font>
             <Font name="Adelle Sans Devanagari Bold" size="14.0" />
          </font></Label>
+      <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="20.0" layoutY="-25.0" prefHeight="85.0" prefWidth="924.0" text="01234567890123456789012345678901234567890123456789" textFill="#616161">
+         <font>
+            <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
+         <children>
+            <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-61.0" prefHeight="58.0" prefWidth="79.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="621.0">
+               <font>
+                  <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="157.0" layoutY="-62.0" prefHeight="132.0" prefWidth="134.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="-62.0">
+               <font>
+                  <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="ratingLabel" layoutX="868.0" layoutY="-77.0" prefHeight="83.0" prefWidth="82.0" text="0.00" textFill="#d04200" AnchorPane.bottomAnchor="63.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="-77.0">
+               <font>
+                  <Font name="Adelle Sans Devanagari Semibold" size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="579.0" layoutY="-81.0" prefHeight="83.0" prefWidth="333.0" text="Average rating: " textFill="#d04200" AnchorPane.bottomAnchor="67.0" AnchorPane.topAnchor="-81.0">
+               <font>
+                  <Font name="Adelle Sans Devanagari Semibold" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
