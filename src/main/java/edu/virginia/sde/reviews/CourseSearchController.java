@@ -410,7 +410,7 @@ public class CourseSearchController {
         });
     }
 
-    public void selectiveSearchTableView() {
+    private void selectiveSearchTableView() {
         ObservableList<Course> courses = tableView.getItems();
         List<Course> filteredCourses = new ArrayList<>();
 
