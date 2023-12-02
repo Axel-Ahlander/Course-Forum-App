@@ -152,7 +152,6 @@ public class CourseSearchController {
         }
     }
 
-
     public void searchSubjectTextField() {
         searchNumberTextField.requestFocus();
     }
@@ -205,7 +204,6 @@ public class CourseSearchController {
     }
 
     public void handleAddCourseButtonClick() {
-        //tableViewAllCourses();
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {

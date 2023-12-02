@@ -140,7 +140,7 @@
                 <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
             </font>
         </Label>
-        <Button layoutX="744.0" layoutY="541.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #d04200; -fx-text-fill: white;" text="Delete Review" textAlignment="CENTER">
+        <Button fx:id="deleteReviewButton" layoutX="744.0" layoutY="541.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #ffffff; -fx-text-fill: #c0c0c0;" text="Delete Review" textAlignment="CENTER">
             <font>
                 <Font name="Andale Mono" size="14.0" />
             </font>

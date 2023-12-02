@@ -21,7 +21,7 @@ import static edu.virginia.sde.reviews.LoginController.activeUser;
 
 public class CourseReviewsEditReviewController {
     @FXML
-    Button editReviewButton;
+    Button editReviewButton, deleteReviewButton;
     @FXML
     Label subjectLabel, numberLabel, ratingLabel, titleLabel, addReviewSuccessLabel, errorLabel, dateLabel;
     @FXML
@@ -59,7 +59,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        ObservableList<Review> reviewList = reviewDAO.findByCourse2(course);
+        ObservableList<Review> reviewList = reviewDAO.findByCourse(course);
 
 
 
@@ -89,18 +89,11 @@ public class CourseReviewsEditReviewController {
 
         //need to access only results with same course
         Review userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
-
-
         reviewComment = userReview.getComment();
-        System.out.println("reviewComment1: " + reviewComment);
-        System.out.println("reviewComment2: " + commentTextArea.getText());
-
         reviewRating = userReview.getRating();
         commentTextArea.setText(reviewComment);
         ratingChoiceBox.setValue(userReview.getRating());
         dateLabel.setText(userReview.getDate().toString());
-
-    //    userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
     }
 
     public void initialize(Course selectedCourse, String comment, int rating, LocalDate date){
@@ -118,7 +111,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        ObservableList<Review>reviewList = reviewDAO.findByCourse2(course);
+        ObservableList<Review>reviewList = reviewDAO.findByCourse(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -145,7 +138,6 @@ public class CourseReviewsEditReviewController {
 
         reviewComment = commentTextArea.getText();
         reviewRating = ratingChoiceBox.getValue();
-
     }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
@@ -157,43 +149,32 @@ public class CourseReviewsEditReviewController {
         stage.show();
     }
 
+    public void handleDeleteButton(){
+        ReviewDAO reviewDAO = new ReviewDAO();
+        Review userReview = reviewDAO.findByUserAndCourse(activeUser, course);
+        reviewDAO.delete(userReview);
+        reviewComment = "";
+        ratingChoiceBox.setValue(null);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CourseReviewsController controller = loader.getController();
+        controller.initialize(course);
+        Stage stage = (Stage) editReviewButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Course Reviews");
+        stage.setScene(scene);
+        stage.show();
+        stage.centerOnScreen();
+    }
+
     public void handleEditButton(){
         courseReviewSceneAddReview(course);
     }
-    /*
-    public void handleEditButton() throws IOException {
-       // errorLabel.setText("");
-        System.out.println("HSDSFDS");
-        courseReviewSceneAddReview(course);
-        //way to change add a review label to edit review
-        //pre set rating selection
-        //make it so textfield has text in it already
-
-     //   int ratingSelection = ratingChoiceBox.getText();
-      //  courseReviewSceneAddReview(course, comment, ratingSelection);
-        /*
-            Review review = new Review();
-            review.setUser(activeUser);
-            review.setComment(commentTextArea.getText());
-      //      review.setRating(ratingChoiceBox.getValue());
-            //need to update this so it's set to the right course
-            CourseDAO courseDAO = new CourseDAO();
-            ObservableList<Course> courseList = courseDAO.getAllCourses();
-            review.setCourse(courseList.get(1));
-            //^
-
-            CourseReviewsService createReview = new CourseReviewsService(review);
-            createReview.saveReview();
-
-            ReviewDAO reviewDAO = new ReviewDAO();
-            // Refresh the TableView with the updated reviews
-            ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
-            tableView.setItems(updatedReviews);
-            tableView.refresh();
-            addReviewSuccessLabel.setText("Review successfully added.");
-
-         */
-    //    }
 
     private void courseReviewSceneAddReview(Course selectedCourse) {
         try {
