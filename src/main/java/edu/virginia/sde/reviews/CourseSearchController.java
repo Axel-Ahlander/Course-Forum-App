@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
@@ -105,11 +106,12 @@ public class CourseSearchController {
         // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
         // Example: Pass selectedCourse to a method that creates a new scene
         setCourseReview(selectedCourse);
-            System.out.println(selectedCourse.getSubject());
-            System.out.println(selectedCourse.getNumber());
-            System.out.println(selectedCourse.getId());
-            openNewScene(selectedCourse);
-        }
+        System.out.println(selectedCourse.getSubject());
+        System.out.println(selectedCourse.getNumber());
+        System.out.println(selectedCourse.getId());
+        openNewScene(selectedCourse);
+    }
+
     public Course getCourseReview() {
         return courseReview;
     }
@@ -149,7 +151,6 @@ public class CourseSearchController {
     }
 
 
-
     public void searchSubjectTextField() {
         searchNumberTextField.requestFocus();
     }
@@ -170,7 +171,9 @@ public class CourseSearchController {
         addCourseTitleTextField.requestFocus();
     }
 
-    public void addCourseTitleTextField() { addCourseButton.fire(); }
+    public void addCourseTitleTextField() {
+        addCourseButton.fire();
+    }
 
     private void selectTab() {
         tabPane.getTabs().stream()
@@ -348,19 +351,19 @@ public class CourseSearchController {
         }
     }
 
-    private void tableViewAllCourses(){
-      courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-      courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-      courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-      courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+    private void tableViewAllCourses() {
+        courseSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        courseNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        courseTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        courseRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-      CourseDAO courseDAO = new CourseDAO();
-      List<Course> courseList = courseDAO.getAllCourses();
+        CourseDAO courseDAO = new CourseDAO();
+        List<Course> courseList = courseDAO.getAllCourses();
 
-      tableView.getItems().clear();//not sure if this line is necessary
-      tableView.getItems().addAll(courseList);
-      tableView.setItems(FXCollections.observableList(courseList));
-      tableView.refresh();
+        tableView.getItems().clear();//not sure if this line is necessary
+        tableView.getItems().addAll(courseList);
+        tableView.setItems(FXCollections.observableList(courseList));
+        tableView.refresh();
 // need to cite McBurneys piazza post here probably
 /*
     var cell = new TableCell<ReviewTableRow, String>();
@@ -371,22 +374,37 @@ public class CourseSearchController {
     text.textProperty().bind(cell.itemProperty());
     return cell;
  });*/
-      courseTitleColumn.setCellFactory(column -> {
-          var cell = new TableCell<Course, String>() {
-              final Text text = new Text();
-              @Override
-              protected void updateItem(String item, boolean empty) {
-                  super.updateItem(item, empty);
-                  text.setText(item);
-                  text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                  setGraphic(text);
-              }
-          };
-          cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-          return cell;
-      });
-  }
-    public void selectiveSearchTableView() {
+        courseTitleColumn.setCellFactory(column -> {
+            var cell = new TableCell<Course, String>() {
+                final Text text = new Text();
 
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+    }
+
+    public void selectiveSearchTableView() {
+        ObservableList<Course> courses = tableView.getItems();
+        List<Course> selectedCourses = new ArrayList<>();
+        for (Course course : courses) {
+            if (searchSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
+                    Integer.parseInt(searchNumberTextField.getText()) == (course.getNumber())
+                    && searchTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
+                selectedCourses.add(course);
+            }
+        }
+        tableView.getItems().clear();
+        tableView.getItems().addAll(selectedCourses);
+        tableView.setItems(FXCollections.observableList(selectedCourses));
+        tableView.refresh();
     }
 }
+
