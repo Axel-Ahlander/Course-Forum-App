@@ -203,6 +203,7 @@ public class CourseSearchController {
     }
 
     public void handleAddCourseButtonClick() {
+        tableViewAllCourses();
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {
@@ -275,9 +276,11 @@ public class CourseSearchController {
     }
 
     private boolean courseExists(){
-        ObservableList<Course> courses = tableView.getItems();
-        List<Course> selectedCourses = new ArrayList<>();
-        for (Course course : courses) {
+        CourseDAO courseDAO = new CourseDAO();
+        ObservableList<Course> allCourses = courseDAO.getAllCourses();
+     //   ObservableList<Course> courses = tableView.getItems();
+       // List<Course> selectedCourses = new ArrayList<>();
+        for (Course course : allCourses) {
             if (addCourseSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
                     Integer.parseInt(addCourseNumberTextField.getText()) == (course.getNumber())
                     && addCourseTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
