@@ -102,74 +102,47 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
-        // Do something with the selected course, for example, pass it to another scene
-        // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
-        // Example: Pass selectedCourse to a method that creates a new scene
+        if(false){ //user does have a review for selectedCourse
+            courseReviewSceneEditReview(selectedCourse);
 
-        setCourseReview(selectedCourse);
-        System.out.println(selectedCourse.getSubject());
-        System.out.println(selectedCourse.getNumber());
-        System.out.println(selectedCourse.getId());
-        openNewScene(selectedCourse);
+        }
+        else{
+            courseReviewSceneAddReview(selectedCourse);
+        }
+
     }
 
-    public Course getCourseReview() {
-        return courseReview;
-    }
-
-    public void setCourseReview(Course courseReview) {
-        this.courseReview = courseReview;
-    }
-
-    private void openNewScene2(Course selectedCourse) {
-        // Implement the logic to create and show a new scene using the selected course
-        // You can use FXMLLoader to load the FXML for the new scene
-        // Example:
-        // FXMLLoader loader = new FXMLLoader(getClass().getResource("NewScene.fxml"));
-        // Parent root = loader.load();
-        // NewSceneController controller = loader.getController();
-        // controller.initialize(selectedCourse);
-        // ...
-        // Show the new scene
-    }
-
-    private void openNewScene(Course selectedCourse) {
+    private void courseReviewSceneAddReview(Course selectedCourse) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
             Parent root = loader.load();
-
-            // If you need to access the controller of the new scene
             CourseReviewsController controller = loader.getController();
             controller.initialize(selectedCourse);
-
-            Stage stage = (Stage) searchButton.getScene().getWindow(); // Adjust this line if the button is not in the same scene
+            Stage stage = (Stage) logOutLink.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Reviews");
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
         }
     }
-
-
-    public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("CourseReviews.fxml"));
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Course Reviews");
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
-
-    private void handleButtonAction(Course selectedCourse) {
-        // Do something with the selected course, for example, pass it to another scene
-        // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
-
-        // Example: Pass selectedCourse to a method that creates a new scene
-        openNewScene(selectedCourse);
+    private void courseReviewSceneEditReview(Course selectedCourse) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+            Parent root = loader.load();
+            CourseReviewsController controller = loader.getController();
+            controller.initialize(selectedCourse);
+            Stage stage = (Stage) logOutLink.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Course Reviews");
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
