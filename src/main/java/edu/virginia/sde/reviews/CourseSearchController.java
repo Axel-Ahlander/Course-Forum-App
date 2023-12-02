@@ -203,6 +203,7 @@ public class CourseSearchController {
     }
 
     public void handleAddCourseButtonClick() {
+        tableViewAllCourses();
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {
@@ -213,7 +214,8 @@ public class CourseSearchController {
                 ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
                 tableView.setItems(updatedCourses);
                 tableView.refresh();
-            } else {
+            }
+            else {
                 addCourseErrorLabel.setText("The course already exists");
             }
         }
@@ -273,10 +275,12 @@ public class CourseSearchController {
         return true;
     }
 
-    private boolean courseExists() {
-        ObservableList<Course> courses = tableView.getItems();
-        List<Course> selectedCourses = new ArrayList<>();
-        for (Course course : courses) {
+    private boolean courseExists(){
+        CourseDAO courseDAO = new CourseDAO();
+        ObservableList<Course> allCourses = courseDAO.getAllCourses();
+     //   ObservableList<Course> courses = tableView.getItems();
+       // List<Course> selectedCourses = new ArrayList<>();
+        for (Course course : allCourses) {
             if (addCourseSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
                     Integer.parseInt(addCourseNumberTextField.getText()) == (course.getNumber())
                     && addCourseTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
@@ -410,37 +414,18 @@ public class CourseSearchController {
 
     public void selectiveSearchTableView() {
         ObservableList<Course> courses = tableView.getItems();
-        List<Course> filteredCourses = new ArrayList<>();
-
-        String searchSubject = searchSubjectTextField.getText().trim().toLowerCase();
-        String searchNumber = searchNumberTextField.getText().trim();
-        String searchTitle = searchTitleTextField.getText().trim().toLowerCase();
-
-        boolean isSubjectEmpty = searchSubject.isEmpty();
-        boolean isNumberEmpty = searchNumber.isEmpty();
-        boolean isTitleEmpty = searchTitle.isEmpty();
-
+        List<Course> selectedCourses = new ArrayList<>();
         for (Course course : courses) {
-            boolean subjectMatch = isSubjectEmpty || course.getSubject().equalsIgnoreCase(searchSubject);
-            boolean numberMatch = isNumberEmpty || String.valueOf(course.getNumber()).equals(searchNumber);
-            boolean titleMatch = isTitleEmpty || course.getTitle().toLowerCase().contains(searchTitle);
-
-            if ((subjectMatch && numberMatch && titleMatch) ||
-                    (subjectMatch && numberMatch && isTitleEmpty) ||
-                    (subjectMatch && isNumberEmpty && titleMatch) ||
-                    (isSubjectEmpty && numberMatch && titleMatch) ||
-                    (subjectMatch && isNumberEmpty && isTitleEmpty) ||
-                    (isSubjectEmpty && numberMatch && isTitleEmpty) ||
-                    (isSubjectEmpty && isNumberEmpty && titleMatch)) {
-                filteredCourses.add(course);
+            if (searchSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
+                    Integer.parseInt(searchNumberTextField.getText()) == (course.getNumber())
+                    && searchTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
+                selectedCourses.add(course);
             }
         }
-
-        tableView.setItems(FXCollections.observableList(filteredCourses));
+        tableView.getItems().clear();
+        tableView.getItems().addAll(selectedCourses);
+        tableView.setItems(FXCollections.observableList(selectedCourses));
         tableView.refresh();
     }
-
-
-
 }
 
