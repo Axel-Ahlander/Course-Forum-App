@@ -135,9 +135,10 @@ public class CourseSearchController {
             e.printStackTrace();
         }
     }
+
     private void courseReviewSceneEditReview(Course selectedCourse) {
         try {
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
             controller.initialize(selectedCourse);
@@ -209,8 +210,7 @@ public class CourseSearchController {
         if (validAddCourseInput()) {
             if (courseExists()) {
                 addCourseErrorLabel.setText("The course already exists");
-            }
-            else {
+            } else {
                 createNewCourse();
                 CourseDAO courseDAO = new CourseDAO();
                 // Refresh the TableView with the updated reviews
@@ -275,7 +275,7 @@ public class CourseSearchController {
         return true;
     }
 
-    private boolean courseExists(){
+    private boolean courseExists() {
         CourseDAO courseDAO = new CourseDAO();
         ObservableList<Course> allCourses = courseDAO.getAllCourses();
         for (Course course : allCourses) {
@@ -441,5 +441,27 @@ public class CourseSearchController {
         tableView.refresh();
     }
 
+    private void addReviewAverage() {
+        float grade = 0;
+        int count = 0;
+        CourseDAO courseDao = new CourseDAO();
+        ObservableList<Course> courses = courseDao.getAllCourses();
+        for (Course course : courses) {
+            List<Review> reviews = courseDao.getAllReviews(course);
+            for (Review review : reviews) {
+                count++;
+                grade += review.getRating();
+            }
+            if (grade != 0){
+                courseRatingColumn.setText(String.valueOf(grade / count));
+            }
+            else {
+                courseRatingColumn.setText(null);
+            }
+            count = 0;
+            grade = 0;
+        }
+    }
 }
+
 
