@@ -206,12 +206,17 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {
-            createNewCourse();
-            CourseDAO courseDAO = new CourseDAO();
-            // Refresh the TableView with the updated reviews
-            ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
-            tableView.setItems(updatedCourses);
-            tableView.refresh();
+            if (!courseExists()) {
+                createNewCourse();
+                CourseDAO courseDAO = new CourseDAO();
+                // Refresh the TableView with the updated reviews
+                ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
+                tableView.setItems(updatedCourses);
+                tableView.refresh();
+            }
+            else {
+                addCourseErrorLabel.setText("The course already exists");
+            }
         }
     }
 
@@ -267,6 +272,19 @@ public class CourseSearchController {
             return false;
         }
         return true;
+    }
+
+    private boolean courseExists(){
+        ObservableList<Course> courses = tableView.getItems();
+        List<Course> selectedCourses = new ArrayList<>();
+        for (Course course : courses) {
+            if (addCourseSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
+                    Integer.parseInt(addCourseNumberTextField.getText()) == (course.getNumber())
+                    && addCourseTitleTextField.getText().equalsIgnoreCase(course.getTitle())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void handleSearchButtonClick() {
