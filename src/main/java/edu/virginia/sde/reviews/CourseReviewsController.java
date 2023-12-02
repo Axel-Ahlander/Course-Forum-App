@@ -47,7 +47,7 @@ public class CourseReviewsController {
     private int reviewRating;
     ObservableList<Review> reviewList;
     public void initialize(Course selectedCourse) {
-        userReviewed = false;//temporary
+        userReviewed = false;//temporary  //only first time opens review page and hasn't reviewed.
         reviewLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
@@ -149,21 +149,32 @@ public class CourseReviewsController {
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
             //    addReviewSuccessLabel.setText("Review successfully added.");
-                courseEditTransition(date);
+            //    courseEditTransition(date);
                 userReviewed = true;
+                reviewComment = commentTextArea.getText();
+                reviewRating = ratingChoiceBox.getValue();
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
+//                Parent root = loader.load();
+//                CourseReviewsEditReviewController controller = loader.getController();
+//                controller.initialize(course, reviewComment, reviewRating, date);
+//                Stage stage = (Stage) submitReviewButton.getScene().getWindow();
+//                Scene scene = new Scene(root);
+//                stage.setTitle("Course Reviews");
+//                stage.setScene(scene);
+//                stage.show();
+//                stage.centerOnScreen();
+                  courseEditTransition(date);
             }
             else{ // edit users review
-
-                System.out.println("HJERE ");
                 CourseReviewsService updateReview = new CourseReviewsService();
-              updateReview.updateReview(activeUser, reviewRating, reviewComment, course);
+                updateReview.updateReview(activeUser, reviewRating, reviewComment, course);
               //  updateReview.updateReview(activeUser, ratingChoiceBox.getValue(), commentTextArea.getText());
                 ReviewDAO reviewDAO = new ReviewDAO();
                 ObservableList<Review> updatedReviews = reviewDAO.findByCourse2(course);
 
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
-
+                //courseEditTransition();
               //  addReviewSuccessLabel.setText("Review successfully added.");
            //     courseEditTransition(date);
             }
