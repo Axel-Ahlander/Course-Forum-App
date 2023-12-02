@@ -44,9 +44,13 @@ public class CourseSearchController {
     TableColumn<Course, String> courseTitleColumn;
     @FXML
     TableColumn<Course, Float> courseRatingColumn;
-
     @FXML
     TableView<Course> tableView;
+
+    @FXML
+    TableColumn<Course, Void> buttonColumn;
+
+    private Course courseReview;
 
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
@@ -57,23 +61,61 @@ public class CourseSearchController {
         searchErrorLabel.setText("");
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Course>() {
+
+        //not sure if this is necessary
+     /*   tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Course>() {
             @Override
             public void changed(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
                 if (newValue != null) {
-                    handleRowSelection(newValue);
+                  //  handleRowSelection(newValue);
+                    handleHyperlinkAction(newValue);
+                }
+            }
+        });
+*/
+        //hyperlink:
+
+        ///will replace with rating once method for calculating the rating is worked out
+        courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
+            Hyperlink hyperlink = new Hyperlink();
+
+            {
+                hyperlink.setOnAction(event -> {
+                    Course selectedCourse = getTableView().getItems().get(getIndex());
+                    handleHyperlinkAction(selectedCourse);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    hyperlink.setText(item);
+                    setGraphic(hyperlink);
                 }
             }
         });
         tableViewAllCourses();
     }
-    private void handleRowSelection(Course selectedCourse) {
+
+    private void handleHyperlinkAction(Course selectedCourse) {
         // Do something with the selected course, for example, pass it to another scene
         // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
-
         // Example: Pass selectedCourse to a method that creates a new scene
-        System.out.println(selectedCourse.getSubject());
-       // openNewScene(selectedCourse);
+        setCourseReview(selectedCourse);
+            System.out.println(selectedCourse.getSubject());
+            System.out.println(selectedCourse.getNumber());
+            System.out.println(selectedCourse.getId());
+            openNewScene(selectedCourse);
+        }
+    public Course getCourseReview() {
+        return courseReview;
+    }
+
+    public void setCourseReview(Course courseReview) {
+        this.courseReview = courseReview;
     }
 
     private void openNewScene(Course selectedCourse) {
@@ -97,6 +139,16 @@ public class CourseSearchController {
         stage.show();
         stage.centerOnScreen();
     }
+
+    private void handleButtonAction(Course selectedCourse) {
+        // Do something with the selected course, for example, pass it to another scene
+        // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
+
+        // Example: Pass selectedCourse to a method that creates a new scene
+        openNewScene(selectedCourse);
+    }
+
+
 
     public void searchSubjectTextField() {
         searchNumberTextField.requestFocus();
