@@ -21,7 +21,7 @@ public class CourseReviewsEditReviewController {
     @FXML
     Button editReviewButton;
     @FXML
-    Label subjectLabel, numberLabel, ratingLabel, titleLabel, addReviewSuccessLabel, errorLabel, dateLabel, dateLabel1;
+    Label subjectLabel, numberLabel, ratingLabel, titleLabel, addReviewSuccessLabel, errorLabel, dateLabel;
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
     @FXML
@@ -43,7 +43,6 @@ public class CourseReviewsEditReviewController {
     public void initialize(Course selectedCourse){
         errorLabel.setText("");//delete?
         addReviewSuccessLabel.setText("");
-        dateLabel.setText("");
         course = selectedCourse;
 
         subjectLabel.setText(selectedCourse.getSubject());
@@ -56,7 +55,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.getAllReviews();
+        List<Review> reviewList = reviewDAO.findByCourse(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -86,7 +85,7 @@ public class CourseReviewsEditReviewController {
         subjectLabel.setText(selectedCourse.getSubject());
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
-    //    dateLabel.setText(date.toString());
+        dateLabel.setText(date.toString());
         //    ratingLabel.setText(selectedCourse.getRating());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
@@ -94,7 +93,7 @@ public class CourseReviewsEditReviewController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.getAllReviews();
+        List<Review> reviewList = reviewDAO.findByCourse(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -118,7 +117,6 @@ public class CourseReviewsEditReviewController {
         commentTextArea.setText(comment);
         ratingChoiceBox.setValue(rating);
         dateLabel.setText("Submitted: " + date.toString());
-        dateLabel1.setText("Submitted: " + date.toString());
 
     }
 

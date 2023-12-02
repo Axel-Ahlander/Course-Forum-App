@@ -41,18 +41,18 @@ public class CourseReviewsController {
     @FXML
     TextArea commentTextArea;
     private Course course;
+    boolean userReviewed;
 
     public void initialize(Course selectedCourse){
+        userReviewed = false;//temporary
         reviewLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
+
         ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
         course = selectedCourse;
-
         subjectLabel.setText(selectedCourse.getSubject());
-
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
-
         titleLabel.setText(selectedCourse.getTitle());
 
     //    ratingLabel.setText(selectedCourse.getRating());
@@ -61,8 +61,10 @@ public class CourseReviewsController {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
+
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.getAllReviews();
+
+        List<Review> reviewList = reviewDAO.findByCourse(selectedCourse);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -87,7 +89,7 @@ public class CourseReviewsController {
 
     public void initialize(Course selectedCourse, String comment, int rating){
         reviewLabel.setText("Edit review");
-
+        userReviewed = true;
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
 
@@ -98,7 +100,7 @@ public class CourseReviewsController {
         ratingChoiceBox.setValue(rating);
         commentTextArea.setText(comment);
 
-
+      //  submitReviewButton.isVisible();
         //    ratingLabel.setText(selectedCourse.getRating());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
@@ -106,7 +108,7 @@ public class CourseReviewsController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
         ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.getAllReviews();
+        List<Review> reviewList = reviewDAO.findByCourse(selectedCourse);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -138,14 +140,35 @@ public class CourseReviewsController {
     }
     public void handleSubmitReviewButton() throws IOException {
             errorLabel.setText("");
+            //submitReviewButton.getText();
             if (ratingChoiceBox.getValue() == null) {
                 errorLabel.setText("Must select a rating!");
-            } else {
+            }
+            else if (!userReviewed){ //makes a new review
                 Review review = new Review();
                 review.setUser(activeUser);
                 review.setComment(commentTextArea.getText());
                 review.setRating(ratingChoiceBox.getValue());
                 review.setCourse(course);
+
+                LocalDate date = review.getDate();
+                CourseReviewsService createReview = new CourseReviewsService(review);
+                createReview.saveReview();
+
+                ReviewDAO reviewDAO = new ReviewDAO();
+                ObservableList<Review> updatedReviews = (ObservableList<Review>) reviewDAO.findByCourse(course);
+                tableView.setItems(updatedReviews);
+                tableView.refresh();
+            //    addReviewSuccessLabel.setText("Review successfully added.");
+                courseEditTransition(date);
+            }
+            else{ // edit users review
+                /*  fill in logic to change users review-
+                review.setUser(activeUser);
+                review.setComment(commentTextArea.getText());
+                review.setRating(ratingChoiceBox.getValue());
+                review.setCourse(course);
+
                 LocalDate date = review.getDate();
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
@@ -154,9 +177,9 @@ public class CourseReviewsController {
                 ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
-
-                addReviewSuccessLabel.setText("Review successfully added.");
-                courseEditTransition(date);
+            */
+              //  addReviewSuccessLabel.setText("Review successfully added.");
+           //     courseEditTransition(date);
             }
         }
 

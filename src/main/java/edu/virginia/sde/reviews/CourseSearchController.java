@@ -102,9 +102,11 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
-        if(false){ //user does have a review for selectedCourse
+        selectedCourse.getReviews();
+        ReviewDAO reviewDAO = new ReviewDAO();
+        List<Review> courseReviews = reviewDAO.findByCourse(selectedCourse);
+        if(courseReviews.contains(activeUser)){ //user does have a review for selectedCourse
             courseReviewSceneEditReview(selectedCourse);
-
         }
         else{
             courseReviewSceneAddReview(selectedCourse);

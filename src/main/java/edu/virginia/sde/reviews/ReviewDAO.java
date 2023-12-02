@@ -92,4 +92,19 @@ public class ReviewDAO {
             return FXCollections.observableArrayList(); // or return an empty ObservableList
         }
     }
+    public ObservableList<Review> getAllReviews(Course course) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Review r WHERE r.course = :course";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("course", course);
+
+            List<Review> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return FXCollections.observableArrayList(); // or return an empty ObservableList
+        }
+    }
+
+
 }
