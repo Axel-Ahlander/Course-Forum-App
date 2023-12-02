@@ -109,7 +109,6 @@ public class CourseSearchController {
         else{
             courseReviewSceneAddReview(selectedCourse);
         }
-
     }
 
     private void courseReviewSceneAddReview(Course selectedCourse) {
@@ -130,8 +129,7 @@ public class CourseSearchController {
     }
     private void courseReviewSceneEditReview(Course selectedCourse) {
         try {
-          //FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews2.fxml"));
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
             controller.initialize(selectedCourse);
@@ -287,9 +285,6 @@ public class CourseSearchController {
     public void handleSearchButtonClick() {
         searchErrorLabel.setText("");
         if (validSearchInput()) {
-            //code to search for and display courses that fit search criteria
-            //for title look for matching substrings (i.e., don't require exact titles
-            //for subject and number, require exact letter matches
             selectiveSearchTableView();
         }
     }

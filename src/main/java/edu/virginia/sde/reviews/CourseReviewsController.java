@@ -23,7 +23,7 @@ public class CourseReviewsController {
     @FXML
     Button submitReviewButton;
     @FXML
-    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewAddLabel;
+    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewLabel;
 
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
@@ -43,7 +43,7 @@ public class CourseReviewsController {
     private Course course;
 
     public void initialize(Course selectedCourse){
-        reviewAddLabel.setText("Add a Review");
+        reviewLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
         ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
@@ -86,16 +86,18 @@ public class CourseReviewsController {
     }
 
     public void initialize(Course selectedCourse, String comment, int rating){
-        reviewAddLabel.setText("Edit review");
+        reviewLabel.setText("Edit review");
+
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
-        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
 
         subjectLabel.setText(selectedCourse.getSubject());
-
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
-
         titleLabel.setText(selectedCourse.getTitle());
+        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
+        ratingChoiceBox.setValue(rating);
+        commentTextArea.setText(comment);
+
 
         //    ratingLabel.setText(selectedCourse.getRating());
 
@@ -144,7 +146,7 @@ public class CourseReviewsController {
                 review.setComment(commentTextArea.getText());
                 review.setRating(ratingChoiceBox.getValue());
                 review.setCourse(course);
-
+                LocalDate date = review.getDate();
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
 
@@ -154,16 +156,16 @@ public class CourseReviewsController {
                 tableView.refresh();
 
                 addReviewSuccessLabel.setText("Review successfully added.");
-                courseEditTransition();
+                courseEditTransition(date);
             }
         }
 
-    private void courseEditTransition() {
+    private void courseEditTransition(LocalDate date) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
-          controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue());
+          controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
             controller.initialize(course);
             Stage stage = (Stage) submitReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);
