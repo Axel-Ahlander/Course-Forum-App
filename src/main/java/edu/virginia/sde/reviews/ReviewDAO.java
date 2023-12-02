@@ -152,24 +152,18 @@ public class ReviewDAO {
 
 
     public Review findByCourseAndUser(Course course, User user) {
-        List<Review> reviews = findByCourse(course);
-
-        for (Review review : reviews) {
-            if (review.getUser().equals(user)) {
-                return review;
-            }
-        }
-
-        return null; // User hasn't submitted a review for this course
-    }
-
-    public void update(Review review) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.merge(review); // Use merge for updating detached entities
-            session.getTransaction().commit();
+            String hql = "FROM Review R WHERE R.course = :course AND R.user = :user";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("course", course);
+            query.setParameter("user", user);
+
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // User hasn't submitted a review for this course
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -189,5 +183,15 @@ public class ReviewDAO {
         }
     }
 
+
+    public void update(Review review) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.merge(review); // Use merge for updating detached entities
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

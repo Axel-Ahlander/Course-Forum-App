@@ -77,6 +77,8 @@ public class CourseReviewsController {
         ratingChoiceBox.setValue(rating);
         commentTextArea.setText(comment);
 
+         reviewComment = comment;
+       reviewRating = rating;
         //    ratingLabel.setText(selectedCourse.getRating());
         reviewTable();
 
@@ -151,6 +153,8 @@ public class CourseReviewsController {
                 userReviewed = true;
             }
             else{ // edit users review
+
+                System.out.println("HJERE ");
                 CourseReviewsService updateReview = new CourseReviewsService();
               updateReview.updateReview(activeUser, reviewRating, reviewComment, course);
               //  updateReview.updateReview(activeUser, ratingChoiceBox.getValue(), commentTextArea.getText());
@@ -170,9 +174,7 @@ public class CourseReviewsController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
-     //     controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
-            controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
-            controller.initialize(course);
+            controller.initialize(course, reviewComment, reviewRating, date);
             Stage stage = (Stage) submitReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Reviews");

@@ -63,6 +63,7 @@ public class CourseReviewsEditReviewController {
         ObservableList<Review> reviewList = reviewDAO.findByCourse2(course);
 
 
+
 //        Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
 //        reviewComment = userReview.getComment();
 //        reviewRating = userReview.getRating();
@@ -89,15 +90,30 @@ public class CourseReviewsEditReviewController {
 
         //need to access only results with same course
 
-        Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
+        Review userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
+
+
         reviewComment = userReview.getComment();
         System.out.println("REview comment: " + reviewComment);
         reviewRating = userReview.getRating();
-
+        System.out.println("REview rating: " + reviewRating);
         commentTextArea.setText(reviewComment);
         ratingChoiceBox.setValue(userReview.getRating());
 
         dateLabel.setText(userReview.getDate().toString());
+
+        userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
+
+        if (userReview != null) {
+            // Access review properties
+            reviewComment = userReview.getComment();
+            reviewRating = userReview.getRating();
+            // ...
+        } else {
+            // Handle the case where the user hasn't submitted a review
+            System.out.println("User hasn't submitted a review for this course");
+        }
+
     }
 
     public void initialize(Course selectedCourse, String comment, int rating, LocalDate date){
@@ -152,12 +168,7 @@ public class CourseReviewsEditReviewController {
     }
 
     public void handleEditButton(){
-
-        System.out.println(ratingChoiceBox.getValue());
-        System.out.println(commentTextArea.getText());
         courseReviewSceneAddReview(course);
-
-
     }
     /*
     public void handleEditButton() throws IOException {
