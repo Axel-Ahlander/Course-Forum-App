@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static edu.virginia.sde.reviews.LoginController.activeUser;
-
 public class CourseReviewsEditReviewController {
     @FXML
     Button editReviewButton;
@@ -85,6 +83,52 @@ public class CourseReviewsEditReviewController {
         });
     }
 
+    public void initialize(Course selectedCourse, String comment, int rating){
+   //     errorLabel.setText("");
+   //     addReviewSuccessLabel.setText("");
+        subjectLabel.setText(selectedCourse.getSubject());
+        course = selectedCourse;
+
+        numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
+
+        titleLabel.setText(selectedCourse.getTitle());
+
+        //    ratingLabel.setText(selectedCourse.getRating());
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+
+        ReviewDAO reviewDAO = new ReviewDAO();
+        List<Review> reviewList = reviewDAO.getAllReviews();
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(reviewList);
+        tableView.setItems(FXCollections.observableList(reviewList));
+        tableView.refresh();
+
+        commentColumn.setCellFactory(column -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+
+
+        commentTextArea.setText(comment);
+        ratingChoiceBox.setValue(rating);
+
+
+    }
+
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -101,7 +145,7 @@ public class CourseReviewsEditReviewController {
         //make it so textfield has text in it already
 
         String comment = commentTextArea.getText();
-       // int ratingSelection = ratingChoiceBox.getText();
+     //   int ratingSelection = ratingChoiceBox.getText();
       //  courseReviewSceneAddReview(course, comment, ratingSelection);
         /*
             Review review = new Review();

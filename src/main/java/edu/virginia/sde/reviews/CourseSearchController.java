@@ -102,7 +102,7 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
-        if(true){ //user does have a review for selectedCourse
+        if(false){ //user does have a review for selectedCourse
             courseReviewSceneEditReview(selectedCourse);
 
         }
@@ -130,7 +130,8 @@ public class CourseSearchController {
     }
     private void courseReviewSceneEditReview(Course selectedCourse) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
+          //FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews2.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
             controller.initialize(selectedCourse);

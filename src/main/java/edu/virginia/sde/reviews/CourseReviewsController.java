@@ -40,13 +40,14 @@ public class CourseReviewsController {
     ChoiceBox<Integer> ratingChoiceBox;
     @FXML
     TextArea commentTextArea;
-
+    private Course course;
 
     public void initialize(Course selectedCourse){
         reviewAddLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
         ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
+        course = selectedCourse;
 
         subjectLabel.setText(selectedCourse.getSubject());
 
@@ -142,22 +143,37 @@ public class CourseReviewsController {
                 review.setUser(activeUser);
                 review.setComment(commentTextArea.getText());
                 review.setRating(ratingChoiceBox.getValue());
-                //need to update this so it's set to the right course
-                CourseDAO courseDAO = new CourseDAO();
-                ObservableList<Course> courseList = courseDAO.getAllCourses();
-                review.setCourse(courseList.get(1));
-                //^
+                review.setCourse(course);
 
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
 
                 ReviewDAO reviewDAO = new ReviewDAO();
-                // Refresh the TableView with the updated reviews
                 ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
+
                 addReviewSuccessLabel.setText("Review successfully added.");
+                courseEditTransition();
             }
         }
+
+    private void courseEditTransition() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews2.fxml"));
+            Parent root = loader.load();
+            CourseReviewsEditReviewController controller = loader.getController();
+          controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue());
+            controller.initialize(course);
+            Stage stage = (Stage) submitReviewButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Course Reviews");
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
