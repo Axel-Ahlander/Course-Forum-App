@@ -1,5 +1,6 @@
 package edu.virginia.sde.reviews;
 
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,12 +42,18 @@ public class ReviewDAO {
         return review;
     }
 
-    public List<Review> findByUser(User user) {
+    public Review findByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "SELECT r FROM Review r WHERE r.user = :user";
             TypedQuery<Review> query = session.createQuery(hql, Review.class);
             query.setParameter("user", user);
-            return query.getResultList();
+
+            try {
+                return query.getSingleResult();
+            } catch (NoResultException e) {
+                // User has no reviews
+                return null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -119,6 +126,66 @@ public class ReviewDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return FXCollections.observableArrayList(); // or return an empty ObservableList
+        }
+    }
+
+//    public void updateReview(User user, int newRating, String newComment, Course course) {
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            session.beginTransaction();
+//
+//            ReviewDAO reviewDAO = new ReviewDAO(); // Pass the session to the DAO
+//            Review existingReview = reviewDAO.findByCourseAndUser(course, user);
+//
+//            if (existingReview != null) {
+//                existingReview.setRating(newRating);
+//                existingReview.setComment(newComment);
+//
+//                // Use merge instead of persist
+//                session.merge(existingReview);
+//
+//                session.getTransaction().commit();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    public Review findByCourseAndUser(Course course, User user) {
+        List<Review> reviews = findByCourse(course);
+
+        for (Review review : reviews) {
+            if (review.getUser().equals(user)) {
+                return review;
+            }
+        }
+
+        return null; // User hasn't submitted a review for this course
+    }
+
+    public void update(Review review) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.merge(review); // Use merge for updating detached entities
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Review findByUserAndCourse(User user, Course course) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Review R WHERE R.user = :user AND R.course = :course";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("user", user);
+            query.setParameter("course", course);
+
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Return null if no result is found
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

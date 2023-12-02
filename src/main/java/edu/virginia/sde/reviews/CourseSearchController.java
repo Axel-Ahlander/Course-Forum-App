@@ -103,6 +103,7 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
+        //probably better way to do this..
         Set<Review> courseReviews = selectedCourse.getReviews();
         boolean hasReview = false;
         for (Review review : courseReviews) {

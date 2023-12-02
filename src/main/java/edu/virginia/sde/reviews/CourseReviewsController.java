@@ -43,7 +43,10 @@ public class CourseReviewsController {
     private Course course;
     boolean userReviewed;
 
-    public void initialize(Course selectedCourse){
+    private String reviewComment;
+    private int reviewRating;
+    ObservableList<Review> reviewList;
+    public void initialize(Course selectedCourse) {
         userReviewed = false;//temporary
         reviewLabel.setText("Add a Review");
         errorLabel.setText("");
@@ -55,38 +58,13 @@ public class CourseReviewsController {
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
 
-    //    ratingLabel.setText(selectedCourse.getRating());
+        //    ratingLabel.setText(selectedCourse.getRating());
+        reviewTable();
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
-        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
-
-
-        ReviewDAO reviewDAO = new ReviewDAO();
-        List<Review> reviewList = reviewDAO.findByCourse2(selectedCourse);
-
-        tableView.getItems().clear();
-        tableView.getItems().addAll(reviewList);
-        tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.refresh();
-
-        commentColumn.setCellFactory(column -> {
-            TableCell<Review, String> cell = new TableCell<>() {
-                final Text text = new Text();
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    text.setText(item);
-                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
-                    setGraphic(text);
-                }
-            };
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            return cell;
-        });
     }
-
     public void initialize(Course selectedCourse, String comment, int rating){
+        course = selectedCourse;
+
         reviewLabel.setText("Edit review");
         userReviewed = true;
         errorLabel.setText("");
@@ -99,15 +77,25 @@ public class CourseReviewsController {
         ratingChoiceBox.setValue(rating);
         commentTextArea.setText(comment);
 
-      //  submitReviewButton.isVisible();
         //    ratingLabel.setText(selectedCourse.getRating());
+        reviewTable();
 
+        /*
+                Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
+       reviewComment = userReview.getComment();
+      reviewRating = userReview.getRating();
+         */
+
+    }
+
+    private void reviewTable(){
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
+
         ReviewDAO reviewDAO = new ReviewDAO();
-        ObservableList<Review> reviewList = reviewDAO.findByCourse2(selectedCourse);
+        reviewList = reviewDAO.findByCourse2(course);
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -129,6 +117,7 @@ public class CourseReviewsController {
             return cell;
         });
     }
+
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -162,22 +151,15 @@ public class CourseReviewsController {
                 userReviewed = true;
             }
             else{ // edit users review
-
-
-                review.setUser(activeUser);
-                review.setComment(commentTextArea.getText());
-                review.setRating(ratingChoiceBox.getValue());
-                review.setCourse(course);
-
-                LocalDate date = review.getDate();
-                CourseReviewsService createReview = new CourseReviewsService(review);
-                createReview.saveReview();
-
+                CourseReviewsService updateReview = new CourseReviewsService();
+              updateReview.updateReview(activeUser, reviewRating, reviewComment, course);
+              //  updateReview.updateReview(activeUser, ratingChoiceBox.getValue(), commentTextArea.getText());
                 ReviewDAO reviewDAO = new ReviewDAO();
-                ObservableList<Review> updatedReviews = reviewDAO.getAllReviews();
+                ObservableList<Review> updatedReviews = reviewDAO.findByCourse2(course);
+
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
-            */
+
               //  addReviewSuccessLabel.setText("Review successfully added.");
            //     courseEditTransition(date);
             }
@@ -188,7 +170,8 @@ public class CourseReviewsController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
-          controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
+     //     controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
+            controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue(), date);
             controller.initialize(course);
             Stage stage = (Stage) submitReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -200,5 +183,4 @@ public class CourseReviewsController {
             e.printStackTrace();
         }
     }
-
 }

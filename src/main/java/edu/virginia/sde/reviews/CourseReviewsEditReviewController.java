@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static edu.virginia.sde.reviews.LoginController.activeUser;
+
 public class CourseReviewsEditReviewController {
     @FXML
     Button editReviewButton;
@@ -39,8 +41,11 @@ public class CourseReviewsEditReviewController {
     ChoiceBox<Integer> ratingChoiceBox;
 
     private Course course;
+    private String reviewComment;
+    private int reviewRating;
 
     public void initialize(Course selectedCourse){
+
         errorLabel.setText("");//delete?
         addReviewSuccessLabel.setText("");
         course = selectedCourse;
@@ -56,6 +61,11 @@ public class CourseReviewsEditReviewController {
 
         ReviewDAO reviewDAO = new ReviewDAO();
         ObservableList<Review> reviewList = reviewDAO.findByCourse2(course);
+
+
+//        Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
+//        reviewComment = userReview.getComment();
+//        reviewRating = userReview.getRating();
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
@@ -76,6 +86,18 @@ public class CourseReviewsEditReviewController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
+
+        //need to access only results with same course
+
+        Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
+        reviewComment = userReview.getComment();
+        System.out.println("REview comment: " + reviewComment);
+        reviewRating = userReview.getRating();
+
+        commentTextArea.setText(reviewComment);
+        ratingChoiceBox.setValue(userReview.getRating());
+
+        dateLabel.setText(userReview.getDate().toString());
     }
 
     public void initialize(Course selectedCourse, String comment, int rating, LocalDate date){
@@ -128,8 +150,19 @@ public class CourseReviewsEditReviewController {
         stage.setScene(scene);
         stage.show();
     }
-    public void handleEditReviewButton() throws IOException {
-        errorLabel.setText("");
+
+    public void handleEditButton(){
+
+        System.out.println(ratingChoiceBox.getValue());
+        System.out.println(commentTextArea.getText());
+        courseReviewSceneAddReview(course);
+
+
+    }
+    /*
+    public void handleEditButton() throws IOException {
+       // errorLabel.setText("");
+        System.out.println("HSDSFDS");
         courseReviewSceneAddReview(course);
         //way to change add a review label to edit review
         //pre set rating selection
@@ -159,7 +192,7 @@ public class CourseReviewsEditReviewController {
             addReviewSuccessLabel.setText("Review successfully added.");
 
          */
-        }
+    //    }
 
     private void courseReviewSceneAddReview(Course selectedCourse) {
         try {
@@ -167,7 +200,7 @@ public class CourseReviewsEditReviewController {
             Parent root = loader.load();
             CourseReviewsController controller = loader.getController();
             //controller.initialize(selectedCourse);
-            controller.initialize(selectedCourse, commentTextArea.getText(), ratingChoiceBox.getValue());
+            controller.initialize(selectedCourse, reviewComment, reviewRating);
             Stage stage = (Stage) editReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Reviews");
