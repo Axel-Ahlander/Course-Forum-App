@@ -88,11 +88,13 @@ public class CourseReviewsEditReviewController {
         });
 
         //need to access only results with same course
-
         Review userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
 
 
         reviewComment = userReview.getComment();
+        System.out.println("reviewComment1: " + reviewComment);
+        System.out.println("reviewComment2: " + commentTextArea.getText());
+
         reviewRating = userReview.getRating();
         commentTextArea.setText(reviewComment);
         ratingChoiceBox.setValue(userReview.getRating());
@@ -198,7 +200,6 @@ public class CourseReviewsEditReviewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
             Parent root = loader.load();
             CourseReviewsController controller = loader.getController();
-            //controller.initialize(selectedCourse);
             controller.initialize(selectedCourse, reviewComment, reviewRating);
             Stage stage = (Stage) editReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);

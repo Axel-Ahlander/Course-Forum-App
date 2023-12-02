@@ -78,7 +78,12 @@ public class CourseReviewsController {
         commentTextArea.setText(comment);
 
          reviewComment = comment;
-       reviewRating = rating;
+         reviewRating = rating;
+
+
+        reviewRating = ratingChoiceBox.getValue();
+        commentTextArea.setText(reviewComment);
+    //    ratingChoiceBox.setValue(userReview.getRating());
         //    ratingLabel.setText(selectedCourse.getRating());
         reviewTable();
 
@@ -166,6 +171,12 @@ public class CourseReviewsController {
                   courseEditTransition(date);
             }
             else{ // edit users review
+
+                reviewComment =  commentTextArea.getText();
+                reviewRating = ratingChoiceBox.getValue();;
+
+                //    ratingChoiceBox.setValue(userReview.getRating());
+                //    ratingLabel.setText(selectedCourse.getRating());
                 CourseReviewsService updateReview = new CourseReviewsService();
                 updateReview.updateReview(activeUser, reviewRating, reviewComment, course);
               //  updateReview.updateReview(activeUser, ratingChoiceBox.getValue(), commentTextArea.getText());
@@ -177,6 +188,16 @@ public class CourseReviewsController {
                 //courseEditTransition();
               //  addReviewSuccessLabel.setText("Review successfully added.");
            //     courseEditTransition(date);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
+                Parent root = loader.load();
+                CourseReviewsEditReviewController controller = loader.getController();
+                controller.initialize(course);
+                Stage stage = (Stage) submitReviewButton.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setTitle("Course Reviews");
+                stage.setScene(scene);
+                stage.show();
+                stage.centerOnScreen();
             }
         }
 
