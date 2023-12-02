@@ -105,6 +105,7 @@ public class CourseSearchController {
         // Do something with the selected course, for example, pass it to another scene
         // You can use selectedCourse.getSubject(), selectedCourse.getNumber(), etc.
         // Example: Pass selectedCourse to a method that creates a new scene
+
         setCourseReview(selectedCourse);
         System.out.println(selectedCourse.getSubject());
         System.out.println(selectedCourse.getNumber());
@@ -120,7 +121,7 @@ public class CourseSearchController {
         this.courseReview = courseReview;
     }
 
-    private void openNewScene(Course selectedCourse) {
+    private void openNewScene2(Course selectedCourse) {
         // Implement the logic to create and show a new scene using the selected course
         // You can use FXMLLoader to load the FXML for the new scene
         // Example:
@@ -131,6 +132,27 @@ public class CourseSearchController {
         // ...
         // Show the new scene
     }
+
+    private void openNewScene(Course selectedCourse) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+            Parent root = loader.load();
+
+            // If you need to access the controller of the new scene
+            CourseReviewsController controller = loader.getController();
+            controller.initialize(selectedCourse);
+
+            Stage stage = (Stage) searchButton.getScene().getWindow(); // Adjust this line if the button is not in the same scene
+            Scene scene = new Scene(root);
+            stage.setTitle("Course Reviews");
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+    }
+
 
     public void temporaryCourseReviewsButton(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseReviews.fxml"));
@@ -203,20 +225,20 @@ public class CourseSearchController {
     }
 
     public void handleAddCourseButtonClick() {
-        tableViewAllCourses();
+        //tableViewAllCourses();
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
         if (validAddCourseInput()) {
-            if (!courseExists()) {
+            if (courseExists()) {
+                addCourseErrorLabel.setText("The course already exists");
+            }
+            else {
                 createNewCourse();
                 CourseDAO courseDAO = new CourseDAO();
                 // Refresh the TableView with the updated reviews
                 ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
                 tableView.setItems(updatedCourses);
                 tableView.refresh();
-            }
-            else {
-                addCourseErrorLabel.setText("The course already exists");
             }
         }
     }

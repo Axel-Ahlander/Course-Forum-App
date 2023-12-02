@@ -23,7 +23,7 @@ public class CourseReviewsController {
     @FXML
     Button submitReviewButton;
     @FXML
-    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel;
+    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel;
 
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
@@ -42,14 +42,19 @@ public class CourseReviewsController {
     TextArea commentTextArea;
 
 
-    public void initialize(){
+    public void initialize(Course selectedCourse){
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
         ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
 
-        //subjectLabel = (course subject)
-        //numberLabel = (course label)
-        //ratingLabel = (calculateRating
+        subjectLabel.setText(selectedCourse.getSubject());
+
+        numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
+
+        titleLabel.setText(selectedCourse.getTitle());
+
+    //    ratingLabel.setText(selectedCourse.getRating());
+
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
