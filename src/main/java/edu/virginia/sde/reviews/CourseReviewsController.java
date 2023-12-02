@@ -160,7 +160,7 @@ public class CourseReviewsController {
 
     private void courseEditTransition() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews2.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
           controller.initialize(course, commentTextArea.getText(), ratingChoiceBox.getValue());

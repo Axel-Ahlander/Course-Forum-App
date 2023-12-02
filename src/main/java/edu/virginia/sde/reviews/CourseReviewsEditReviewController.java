@@ -1,5 +1,3 @@
-
-
 package edu.virginia.sde.reviews;
 
 import javafx.collections.FXCollections;
