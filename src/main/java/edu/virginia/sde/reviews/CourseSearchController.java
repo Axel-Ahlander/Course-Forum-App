@@ -278,8 +278,6 @@ public class CourseSearchController {
     private boolean courseExists(){
         CourseDAO courseDAO = new CourseDAO();
         ObservableList<Course> allCourses = courseDAO.getAllCourses();
-     //   ObservableList<Course> courses = tableView.getItems();
-       // List<Course> selectedCourses = new ArrayList<>();
         for (Course course : allCourses) {
             if (addCourseSubjectTextField.getText().equalsIgnoreCase(course.getSubject()) &&
                     Integer.parseInt(addCourseNumberTextField.getText()) == (course.getNumber())
