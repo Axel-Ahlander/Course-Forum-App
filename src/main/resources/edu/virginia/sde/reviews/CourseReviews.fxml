@@ -64,7 +64,7 @@
       </AnchorPane>
       <VBox layoutX="699.0" layoutY="180.0" prefHeight="301.0" prefWidth="221.0">
          <children>
-            <Label alignment="CENTER" prefHeight="24.0" prefWidth="196.0" text="Add a Review" textAlignment="CENTER" textFill="#d04200">
+            <Label fx:id="reviewAddLabel" alignment="CENTER" prefHeight="24.0" prefWidth="196.0" text="Add a Review" textAlignment="CENTER" textFill="#d04200">
                <font>
                   <Font name="Adelle Sans Devanagari Semibold" size="24.0" />
                </font>

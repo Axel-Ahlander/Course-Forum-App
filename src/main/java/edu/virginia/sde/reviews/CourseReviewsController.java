@@ -23,7 +23,7 @@ public class CourseReviewsController {
     @FXML
     Button submitReviewButton;
     @FXML
-    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel;
+    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewAddLabel;
 
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
@@ -43,6 +43,7 @@ public class CourseReviewsController {
 
 
     public void initialize(Course selectedCourse){
+        reviewAddLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
         ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
@@ -83,6 +84,47 @@ public class CourseReviewsController {
         });
     }
 
+    public void initialize(Course selectedCourse, String comment, int rating){
+        reviewAddLabel.setText("Edit review");
+        errorLabel.setText("");
+        addReviewSuccessLabel.setText("");
+        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
+
+        subjectLabel.setText(selectedCourse.getSubject());
+
+        numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
+
+        titleLabel.setText(selectedCourse.getTitle());
+
+        //    ratingLabel.setText(selectedCourse.getRating());
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+
+        ReviewDAO reviewDAO = new ReviewDAO();
+        List<Review> reviewList = reviewDAO.getAllReviews();
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(reviewList);
+        tableView.setItems(FXCollections.observableList(reviewList));
+        tableView.refresh();
+
+        commentColumn.setCellFactory(column -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+    }
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
