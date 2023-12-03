@@ -54,13 +54,13 @@ public class MyReviewsController {
 
     private void reviewTable(){
         subject.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        number.setCellValueFactory(new PropertyValueFactory<Review, Integer>("number"));
-        rating.setCellValueFactory(new PropertyValueFactory<Review, Integer>("number"));
-        comment.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        rating.setCellValueFactory(new PropertyValueFactory<>("number"));
+        comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
-        reviewList = reviewDAO.findByUser(activeUser).get;
+        reviewList = displayReviews();
 
-        tableView.getItems().clear(); kk
+        tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
@@ -91,33 +91,11 @@ public class MyReviewsController {
         stage.centerOnScreen();
     }
 
-    public Set<Review> displayReviews() {
-        LoginController currUser = new LoginController();
-        UserDAO dao = new UserDAO();
-        Set<Review> ret = null;
-        for (User user : dao.getAllUsers()) {
-            if (user.getName().equalsIgnoreCase(currUser.usernameTextField.getText())) {
-                Set<Review> reviews = user.getReviews();
-                ret = reviews;
-            }
-        }
-        return ret;
+    public ObservableList<Review> displayReviews() {
+        ReviewDAO dao = new ReviewDAO();
+        ObservableList<Review>reviews = dao.findReviewsByUser(activeUser);
+        return reviews;
     }
-
-    public void setReview(Review review){
-        subject.setText(review.getCourse().getSubject());
-        number.setText(String.valueOf(review.getCourse().getNumber()));
-        rating.setText(String.valueOf(review.getRating()));
-        comment.setText(review.getComment());
-    }
-
-    public void addReviews(){
-        Set<Review>reviews = displayReviews();
-        for (Review rev : reviews){
-            setReview(rev);
-        }
-    }
-
 
 
 }
