@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,11 +45,22 @@ public class MyReviewsController {
 
     }
 
+
+
     private void reviewTable(){
-        subject.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        number.setCellValueFactory(new PropertyValueFactory<>("number"));
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        subject.setCellValueFactory(column -> {
+            Course course = column.getValue().getCourse();
+            return new ReadOnlyStringWrapper(course != null ? course.getSubject() : ""); //ChatGPT - Debugging for how I can access fields in review class and display them.
+        });
+
+        number.setCellValueFactory(column -> {
+            Course course = column.getValue().getCourse();
+            return new ReadOnlyObjectWrapper<>(course != null ? course.getNumber() : 0);
+        });
+
 
 
         tableView.getItems().clear();
