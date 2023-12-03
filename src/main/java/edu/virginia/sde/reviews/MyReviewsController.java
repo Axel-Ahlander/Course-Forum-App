@@ -38,16 +38,7 @@ public class MyReviewsController {
 
 
     public void initialize() {
-        Set<Review>reviews = activeUser.getReviews();
-
-        for (Review review : reviews){
-            subject.setText(review.getCourse().getSubject());
-            number.setText(String.valueOf(review.getCourse().getNumber()));
-            rating.setText(String.valueOf(review.getRating()));
-            comment.setText(review.getComment());
-
-        }
-
+        reviewList = displayReviews();
         reviewTable();
 
     }
@@ -55,15 +46,14 @@ public class MyReviewsController {
     private void reviewTable(){
         subject.setCellValueFactory(new PropertyValueFactory<>("subject"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
-        rating.setCellValueFactory(new PropertyValueFactory<>("number"));
+        rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
-        reviewList = displayReviews();
 
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.refresh();
+        //tableView.refresh();
 
         comment.setCellFactory(column -> {
             TableCell<Review, String> cell = new TableCell<>() {
