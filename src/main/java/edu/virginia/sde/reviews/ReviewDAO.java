@@ -20,6 +20,16 @@ public class ReviewDAO {
         }
     }
 
+    public void update(Review review) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.merge(review);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void delete(Review review) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -100,13 +110,16 @@ public class ReviewDAO {
         }
     }
 
-    public void update(Review review) {
+    public ObservableList<Review> findReviewsByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.merge(review);
-            session.getTransaction().commit();
+            String hql = "FROM Review r WHERE user = :user";
+            TypedQuery<Review> query = session.createQuery(hql, Review.class);
+            query.setParameter("user", user);
+            List<Review> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
         } catch (Exception e) {
             e.printStackTrace();
+            return FXCollections.observableArrayList();
         }
     }
 }
