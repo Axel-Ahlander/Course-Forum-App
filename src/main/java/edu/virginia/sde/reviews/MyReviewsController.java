@@ -13,6 +13,17 @@ import java.io.IOException;
 public class MyReviewsController {
 
     @FXML
+    TableColumn<Course, String> subject;
+    @FXML
+    TableColumn<Course, Integer> number;
+    @FXML
+    TableColumn<Course, Integer> rating;
+    @FXML
+    TableColumn<Course, String> courseReviewsPage;
+    @FXML
+    TableColumn<Course, String> comment;
+
+    @FXML
     private Hyperlink backLink;
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
