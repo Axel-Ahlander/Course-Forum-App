@@ -378,7 +378,7 @@ public class CourseSearchController {
     private void createNewCourse() {
         try {
             Course course = new Course();
-            course.setSubject(addCourseSubjectTextField.getText());
+            course.setSubject(addCourseSubjectTextField.getText().toUpperCase());
             course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
             course.setTitle(addCourseTitleTextField.getText());
             CreateCourseService createCourse = new CreateCourseService(course);
