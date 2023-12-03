@@ -61,6 +61,29 @@ public class MyReviewsController {
             return new ReadOnlyObjectWrapper<>(course != null ? course.getNumber() : 0);
         });
 
+        courseReviewsPage.setCellFactory(column -> new TableCell<>() {
+            Hyperlink hyperlink = new Hyperlink();
+
+            {
+                hyperlink.setOnAction(event -> {
+                    Review selectedReview = getTableView().getItems().get(getIndex());
+                    Course selectedCourse = selectedReview.getCourse(); // Assuming Review has a getCourse method
+                    handleHyperlinkAction(selectedCourse);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    // Assuming item is the text you want to display in the hyperlink
+                    hyperlink.setText(item != null ? item : "---");
+                    setGraphic(hyperlink);
+                }
+            }
+        });
 
 
         tableView.getItems().clear();
@@ -84,6 +107,26 @@ public class MyReviewsController {
         });
     }
 
+    private void handleHyperlinkAction(Course selectedCourse) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+            Parent root = loader.load();
+
+            CourseReviewsController reviewsController = loader.getController();
+            reviewsController.initialize(selectedCourse);
+
+            Scene scene = new Scene(root);
+
+            Stage stage = (Stage) tableView.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -99,6 +142,8 @@ public class MyReviewsController {
         ObservableList<Review>reviews = dao.findReviewsByUser(activeUser);
         return reviews;
     }
+
+
 
 
 }
