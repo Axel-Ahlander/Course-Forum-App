@@ -10,7 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Set;
+
+import static edu.virginia.sde.reviews.LoginController.activeUser;
 
 public class MyReviewsController {
 
@@ -50,6 +52,27 @@ public class MyReviewsController {
     private String reviewComment;
     private int reviewRating;
 
+
+    public void initialize() {
+        Set<Review>reviews = activeUser.getReviews();
+
+        for (Review review : reviews){
+            subject.setText(review.getCourse().getSubject());
+            number.setText(String.valueOf(review.getCourse().getNumber()));
+            rating.setText(String.valueOf(review.getRating()));
+            comment.setText(review.getComment());
+
+        }
+
+
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
+//        ratingLabel.setText(selectedCourse.getRating());
+        reviewTable();
+
+    }
+
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -60,37 +83,31 @@ public class MyReviewsController {
         stage.centerOnScreen();
     }
 
-    public void initialize(Course selectedCourse) {
-        userReviewed = false;//temporary  //only first time opens review page and hasn't reviewed.
-        reviewLabel.setText("Add a Review");
-        errorLabel.setText("");
-        addReviewSuccessLabel.setText("");
+    public Set<Review> displayReviews() {
+        LoginController currUser = new LoginController();
+        UserDAO dao = new UserDAO();
+        Set<Review> ret = null;
+        for (User user : dao.getAllUsers()) {
+            if (user.getName().equalsIgnoreCase(currUser.usernameTextField.getText())) {
+                Set<Review> reviews = user.getReviews();
+                ret = reviews;
+            }
+        }
+        return ret;
+    }
 
-        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
-        course = selectedCourse;
-        subjectLabel.setText(selectedCourse.getSubject());
-        numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
-        titleLabel.setText(selectedCourse.getTitle());
+    public void setReview(Review review){
+        subject.setText(review.getCourse().getSubject());
+        number.setText(String.valueOf(review.getCourse().getNumber()));
+        rating.setText(String.valueOf(review.getRating()));
+        comment.setText(review.getComment());
+    }
 
-        CourseReviewsService courseReviewsService = new CourseReviewsService();
-        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
-        ratingLabel.setText(String.format("%.2f", avgRating));
-
-// filter part that should find what reviews a user has
-
-        ReviewDAO reviewDAO = new ReviewDAO();
-        ObservableList<Review> userReviews = reviewDAO.findReviewsByUser();
-//        reviewList = userReviews;
-        userReviews = reviewDAO.findReviewsByUser(activeUser);
-        tableView.getItems().clear();
-        tableView.getItems().addAll(reviewList);
-        tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.refresh();
-//        ratingLabel.setText(selectedCourse.getRating());
-
-
-        reviewTable();
-
+    public void addReviews(){
+        Set<Review>reviews = displayReviews();
+        for (Review rev : reviews){
+            setReview(rev);
+        }
     }
 
 
