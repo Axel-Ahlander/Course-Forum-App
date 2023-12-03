@@ -78,6 +78,29 @@ public class CourseSearchController {
         //hyperlink:
 
         ///will replace with rating once method for calculating the rating is worked out
+
+        courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
+            Hyperlink hyperlink = new Hyperlink();
+
+            {
+                hyperlink.setOnAction(event -> {
+                    Course selectedCourse = getTableView().getItems().get(getIndex());
+                    handleHyperlinkAction(selectedCourse);
+                });
+            }
+
+            @Override
+            protected void updateItem(Float item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    hyperlink.setText(String.format("%.2f", item));
+                    setGraphic(hyperlink);
+                }
+            }
+        });
+
         courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
             Hyperlink hyperlink = new Hyperlink();
 
@@ -99,6 +122,7 @@ public class CourseSearchController {
                 }
             }
         });
+        addReviewAverage();
         tableViewAllCourses();
     }
 
@@ -441,6 +465,16 @@ public class CourseSearchController {
         tableView.refresh();
     }
 
+//    private void SetCourseAvgRatings() {
+//        CourseDAO courseDao = new CourseDAO();
+//        CourseReviewsService courseReviewsService = new CourseReviewsService();
+//        ObservableList<Course> courses = courseDao.getAllCourses();
+//        for (Course course : courses) {
+//            float avgRating = courseReviewsService.calculateReviewAverage(course);
+//            course.setRating(avgRating);
+//        }
+//    }
+
     private void addReviewAverage() {
         float grade = 0;
         int count = 0;
@@ -452,7 +486,7 @@ public class CourseSearchController {
                 count++;
                 grade += review.getRating();
             }
-            if (grade != 0){
+            if (grade != 0) {
                 courseRatingColumn.setText(String.valueOf(grade / count));
             }
             else {
@@ -462,6 +496,7 @@ public class CourseSearchController {
             grade = 0;
         }
     }
+
 }
 
 
