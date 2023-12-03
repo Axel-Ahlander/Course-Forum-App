@@ -1,6 +1,5 @@
 package edu.virginia.sde.reviews;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,20 @@ import java.io.IOException;
 import java.util.Set;
 
 public class MyReviewsController {
+
+    @FXML
+    TableColumn<Course, String> subject;
+    @FXML
+    TableColumn<Course, Integer> number;
+    @FXML
+    TableColumn<Course, Integer> rating;
+    @FXML
+    TableColumn<Course, String> courseReviewsPage;
+    @FXML
+    TableColumn<Course, String> comment;
+
+    @FXML
+    private Hyperlink backLink;
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));

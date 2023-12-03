@@ -42,7 +42,6 @@ public class CourseReviewsController {
     TextArea commentTextArea;
     private Course course;
     boolean userReviewed;
-
     private String reviewComment;
     private int reviewRating;
     ObservableList<Review> reviewList;
