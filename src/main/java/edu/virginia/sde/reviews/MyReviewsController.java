@@ -30,9 +30,9 @@ public class MyReviewsController {
     TableColumn<Review, String> courseReviewsPage;
     @FXML
     TableColumn<Review, String> comment;
-
     ObservableList<Review> reviewList;
-
+    @FXML
+    TableView<Review> tableView;
     @FXML
     private Hyperlink backLink;
 
