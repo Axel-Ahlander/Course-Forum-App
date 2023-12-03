@@ -100,7 +100,6 @@ public class CourseReviewsController {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
-
         ReviewDAO reviewDAO = new ReviewDAO();
         reviewList = reviewDAO.findByCourse(course);
 
@@ -158,17 +157,7 @@ public class CourseReviewsController {
                 userReviewed = true;
                 reviewComment = commentTextArea.getText();
                 reviewRating = ratingChoiceBox.getValue();
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
-//                Parent root = loader.load();
-//                CourseReviewsEditReviewController controller = loader.getController();
-//                controller.initialize(course, reviewComment, reviewRating, date);
-//                Stage stage = (Stage) submitReviewButton.getScene().getWindow();
-//                Scene scene = new Scene(root);
-//                stage.setTitle("Course Reviews");
-//                stage.setScene(scene);
-//                stage.show();
-//                stage.centerOnScreen();
-                  courseEditTransition(date);
+                courseEditTransition(date);
             }
             else{ // edit users review
                 reviewComment =  commentTextArea.getText();

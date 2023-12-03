@@ -49,9 +49,6 @@ public class CourseSearchController {
     @FXML
     TableView<Course> tableView;
 
-    @FXML
-    TableColumn<Course, Void> buttonColumn;
-
     private Course courseReview;
 
     public void initialize() {
@@ -79,6 +76,8 @@ public class CourseSearchController {
 
         ///will replace with rating once method for calculating the rating is worked out
 
+        //The average course review rating of the course - this should be blank if the course has no reviews,
+// otherwise show as a number with two decimal places (i.e., 2.73, 5.00, etc.)
         courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
             Hyperlink hyperlink = new Hyperlink();
 
@@ -94,11 +93,11 @@ public class CourseSearchController {
                 super.updateItem(item, empty);
                 // set blank if rating is null or default(0)
                 if (empty || item == null || item == 0.0f) {
-                    setGraphic(null);
+                    hyperlink.setText("___");
                 } else {
                     hyperlink.setText(String.format("%.2f", item));
-                    setGraphic(hyperlink);
                 }
+                setGraphic(hyperlink);
             }
         });
         // may need if change hyperlink to be other than rating since blank if no ratings
@@ -381,7 +380,7 @@ public class CourseSearchController {
     private void createNewCourse() {
         try {
             Course course = new Course();
-            course.setSubject(addCourseSubjectTextField.getText());
+            course.setSubject(addCourseSubjectTextField.getText().toUpperCase());
             course.setNumber(Integer.parseInt(addCourseNumberTextField.getText()));
             course.setTitle(addCourseTitleTextField.getText());
             CreateCourseService createCourse = new CreateCourseService(course);
