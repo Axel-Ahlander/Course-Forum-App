@@ -60,7 +60,7 @@ public class MyReviewsController {
 
         reviewList = reviewDAO.findByUser(activeUser).get;
 
-        tableView.getItems().clear();
+        tableView.getItems().clear(); kk
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
