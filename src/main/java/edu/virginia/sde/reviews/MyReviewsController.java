@@ -50,7 +50,7 @@ public class MyReviewsController {
         return ret;
     }
 
-    public void setTextLabels(){
+    public void setReview(){
 
     }
 }
