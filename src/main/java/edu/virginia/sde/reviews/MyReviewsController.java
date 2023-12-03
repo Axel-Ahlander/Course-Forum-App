@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Set;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
@@ -16,15 +21,17 @@ import static edu.virginia.sde.reviews.LoginController.activeUser;
 public class MyReviewsController {
 
     @FXML
-    TableColumn<Course, String> subject;
+    TableColumn<Review, String> subject;
     @FXML
-    TableColumn<Course, Integer> number;
+    TableColumn<Review, Integer> number;
     @FXML
-    TableColumn<Course, Integer> rating;
+    TableColumn<Review, Integer> rating;
     @FXML
-    TableColumn<Course, String> courseReviewsPage;
+    TableColumn<Review, String> courseReviewsPage;
     @FXML
-    TableColumn<Course, String> comment;
+    TableColumn<Review, String> comment;
+
+    ObservableList<Review> reviewList;
 
     @FXML
     private Hyperlink backLink;
@@ -41,13 +48,37 @@ public class MyReviewsController {
 
         }
 
-
-        CourseReviewsService courseReviewsService = new CourseReviewsService();
-        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
-        ratingLabel.setText(String.format("%.2f", avgRating));
-//        ratingLabel.setText(selectedCourse.getRating());
         reviewTable();
 
+    }
+
+    private void reviewTable(){
+        subject.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        number.setCellValueFactory(new PropertyValueFactory<Review, Integer>("number"));
+        rating.setCellValueFactory(new PropertyValueFactory<Review, Integer>("number"));
+        comment.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+
+        reviewList = reviewDAO.findByUser(activeUser).get;
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(reviewList);
+        tableView.setItems(FXCollections.observableList(reviewList));
+        tableView.refresh();
+
+        commentColumn.setCellFactory(column -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
     }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
