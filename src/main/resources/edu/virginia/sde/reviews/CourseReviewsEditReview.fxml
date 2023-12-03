@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="961.0" style="-fx-font-family: Adelle Sans Devanagari Extrabold;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewsEditReviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="961.0" style="-fx-font-family: Adelle Sans Devanagari Extrabold;" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewsEditReviewController">
     <children>
         <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
             <children>
@@ -101,7 +101,7 @@
                         </ChoiceBox>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="15.0" />
                     </VBox.margin>
                 </HBox>
                 <Label prefHeight="21.0" prefWidth="92.0" text="Comment:" textFill="#d04200">
@@ -121,7 +121,7 @@
             </font>
         </Hyperlink>
         <VBox layoutX="11.0" layoutY="20.0" prefHeight="123.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-        <Button fx:id="editReviewButton" layoutX="744.0" layoutY="497.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #d04200; -fx-text-fill: white;" text="Edit Review" textAlignment="CENTER">
+        <Button fx:id="editReviewButton" layoutX="744.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #d04200; -fx-text-fill: white;" text="Edit Review" textAlignment="CENTER">
             <font>
                 <Font name="Andale Mono" size="14.0" />
             </font>
@@ -131,7 +131,7 @@
                 <Font name="Adelle Sans Devanagari Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="addReviewSuccessLabel" layoutX="725.0" layoutY="129.0" text="Course sucessfully added." textFill="#00805e">
+        <Label fx:id="addReviewSuccessLabel" layoutX="725.0" layoutY="129.0" text="Review sucessfully added." textFill="#00805e">
             <font>
                 <Font name="Adelle Sans Devanagari Bold" size="14.0" />
             </font></Label>
@@ -140,7 +140,7 @@
                 <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
             </font>
         </Label>
-        <Button fx:id="deleteReviewButton" layoutX="744.0" layoutY="541.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #ffffff; -fx-text-fill: #c0c0c0;" text="Delete Review" textAlignment="CENTER">
+        <Button fx:id="deleteReviewButton" layoutX="744.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #ffffff; -fx-text-fill: #808080;" text="Delete Review" textAlignment="CENTER">
             <font>
                 <Font name="Andale Mono" size="14.0" />
             </font>

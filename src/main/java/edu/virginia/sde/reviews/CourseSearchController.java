@@ -49,9 +49,6 @@ public class CourseSearchController {
     @FXML
     TableView<Course> tableView;
 
-    @FXML
-    TableColumn<Course, Void> buttonColumn;
-
     private Course courseReview;
 
     public void initialize() {
