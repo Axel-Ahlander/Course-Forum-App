@@ -437,7 +437,28 @@ public class CourseSearchController {
         tableView.setItems(FXCollections.observableList(filteredCourses));
         tableView.refresh();
     }
+
+    public void calcRevAvg() {
+        CourseDAO dao = new CourseDAO();
+        ObservableList<Course> courses = dao.getAllCourses();
+        float grade = 0;
+        int count = 0;
+        for (Course course : courses) {
+            List<Review> reviews = dao.getAllReviews(course);
+            for (Review review : reviews) {
+                count++;
+                grade += review.getRating();
+            }
+            if (count != 0) {
+                courseRatingColumn.setText(String.valueOf(grade / count));
+            } else {
+                courseRatingColumn.setText(Integer.toString(0));
+            }
+            grade = 0;
+            count = 0;
+        }
     }
+}
 
 
 
