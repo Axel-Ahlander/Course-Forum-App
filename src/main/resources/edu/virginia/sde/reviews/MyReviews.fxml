@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
    <children>
       <Hyperlink fx:id="backLink" layoutX="754.0" layoutY="8.0" onAction="#handleBackLinkClick" text="Back to Course Search">
          <font>
@@ -19,11 +19,11 @@
          <content>
             <TableView prefHeight="605.0" prefWidth="960.0" style="-fx-background-color: #d2e2e8;" styleClass="-">
               <columns>
-                <TableColumn prefWidth="115.5" text="Subject" />
-                <TableColumn minWidth="0.0" prefWidth="116.5" text="Number" />
-                  <TableColumn prefWidth="126.5" text="Rating" />
-                  <TableColumn prefWidth="130.0" text="Course Page" />
-                  <TableColumn prefWidth="325.5" text="(*Message)" />
+                <TableColumn fx:id="subject" prefWidth="115.5" text="Subject" />
+                <TableColumn fx:id="number" minWidth="0.0" prefWidth="116.5" text="Number" />
+                  <TableColumn fx:id="rating" prefWidth="126.5" text="Rating" />
+                  <TableColumn fx:id="courseReviewsPage" prefWidth="206.0" text="Course Reviews Page" />
+                  <TableColumn fx:id="comment" prefWidth="381.5" text="Comment " />
               </columns>
             </TableView>
          </content>
