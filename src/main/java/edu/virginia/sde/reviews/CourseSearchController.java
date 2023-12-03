@@ -92,7 +92,8 @@ public class CourseSearchController {
             @Override
             protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
+                // set blank if rating is null or default(0)
+                if (empty || item == null || item == 0.0f) {
                     setGraphic(null);
                 } else {
                     hyperlink.setText(String.format("%.2f", item));
@@ -100,29 +101,31 @@ public class CourseSearchController {
                 }
             }
         });
-
-        courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
-            Hyperlink hyperlink = new Hyperlink();
-
-            {
-                hyperlink.setOnAction(event -> {
-                    Course selectedCourse = getTableView().getItems().get(getIndex());
-                    handleHyperlinkAction(selectedCourse);
-                });
-            }
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    hyperlink.setText(item);
-                    setGraphic(hyperlink);
-                }
-            }
-        });
-        addReviewAverage();
+        // may need if change hyperlink to be other than rating since blank if no ratings
+        // or just access using myReviews to add to a course that doesn't yet have a review?
+//
+//        courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
+//            Hyperlink hyperlink = new Hyperlink();
+//
+//            {
+//                hyperlink.setOnAction(event -> {
+//                    Course selectedCourse = getTableView().getItems().get(getIndex());
+//                    handleHyperlinkAction(selectedCourse);
+//                });
+//            }
+//
+//            @Override
+//            protected void updateItem(String item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty) {
+//                    setGraphic(null);
+//                } else {
+//                    hyperlink.setText(item);
+//                    setGraphic(hyperlink);
+//                }
+//            }
+//        });
+        calcRevAvg();
         tableViewAllCourses();
     }
 
@@ -465,38 +468,31 @@ public class CourseSearchController {
         tableView.refresh();
     }
 
-//    private void SetCourseAvgRatings() {
-//        CourseDAO courseDao = new CourseDAO();
-//        CourseReviewsService courseReviewsService = new CourseReviewsService();
-//        ObservableList<Course> courses = courseDao.getAllCourses();
-//        for (Course course : courses) {
-//            float avgRating = courseReviewsService.calculateReviewAverage(course);
-//            course.setRating(avgRating);
-//        }
-//    }
+    public void calcRevAvg() {
+        CourseDAO dao = new CourseDAO();
+        ObservableList<Course> courses = dao.getAllCourses();
 
-    private void addReviewAverage() {
-        float grade = 0;
-        int count = 0;
-        CourseDAO courseDao = new CourseDAO();
-        ObservableList<Course> courses = courseDao.getAllCourses();
         for (Course course : courses) {
-            List<Review> reviews = courseDao.getAllReviews(course);
+            List<Review> reviews = dao.getAllReviews(course);
+            float gradeTotal = 0;
+            int count = 0;
+
             for (Review review : reviews) {
                 count++;
-                grade += review.getRating();
+                gradeTotal += review.getRating();
             }
-            if (grade != 0) {
-                courseRatingColumn.setText(String.valueOf(grade / count));
+            if (count != 0) { // if course has review
+                float avgRating = gradeTotal / count;
+                course.setRating(avgRating);
+                dao.merge(course);
+            } else { // if course doesn't have review set to 0 since user can only set 1-5
+                course.setRating(0);
+                dao.merge(course);
             }
-            else {
-                courseRatingColumn.setText(null);
-            }
-            count = 0;
-            grade = 0;
         }
+        tableView.refresh();
     }
-
 }
+
 
 
