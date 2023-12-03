@@ -75,7 +75,8 @@ public class CourseSearchController {
         //hyperlink:
 
         ///will replace with rating once method for calculating the rating is worked out
-        courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
+
+        courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
             Hyperlink hyperlink = new Hyperlink();
 
             {
@@ -86,16 +87,42 @@ public class CourseSearchController {
             }
 
             @Override
-            protected void updateItem(String item, boolean empty) {
+            protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                // set blank if rating is null or default(0)
+                if (empty || item == null || item == 0.0f) {
                     setGraphic(null);
                 } else {
-                    hyperlink.setText(item);
+                    hyperlink.setText(String.format("%.2f", item));
                     setGraphic(hyperlink);
                 }
             }
         });
+        // may need if change hyperlink to be other than rating since blank if no ratings
+        // or just access using myReviews to add to a course that doesn't yet have a review?
+//
+//        courseSubjectColumn.setCellFactory(column -> new TableCell<Course, String>() {
+//            Hyperlink hyperlink = new Hyperlink();
+//
+//            {
+//                hyperlink.setOnAction(event -> {
+//                    Course selectedCourse = getTableView().getItems().get(getIndex());
+//                    handleHyperlinkAction(selectedCourse);
+//                });
+//            }
+//
+//            @Override
+//            protected void updateItem(String item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty) {
+//                    setGraphic(null);
+//                } else {
+//                    hyperlink.setText(item);
+//                    setGraphic(hyperlink);
+//                }
+//            }
+//        });
+        calcRevAvg();
         tableViewAllCourses();
     }
 
@@ -441,22 +468,26 @@ public class CourseSearchController {
     public void calcRevAvg() {
         CourseDAO dao = new CourseDAO();
         ObservableList<Course> courses = dao.getAllCourses();
-        float grade = 0;
-        int count = 0;
+
         for (Course course : courses) {
             List<Review> reviews = dao.getAllReviews(course);
+            float gradeTotal = 0;
+            int count = 0;
+
             for (Review review : reviews) {
                 count++;
-                grade += review.getRating();
+                gradeTotal += review.getRating();
             }
-            if (count != 0) {
-                courseRatingColumn.setText(String.valueOf(grade / count));
-            } else {
-                courseRatingColumn.setText(Integer.toString(0));
+            if (count != 0) { // if course has review
+                float avgRating = gradeTotal / count;
+                course.setRating(avgRating);
+                dao.merge(course);
+            } else { // if course doesn't have review set to 0 since user can only set 1-5
+                course.setRating(0);
+                dao.merge(course);
             }
-            grade = 0;
-            count = 0;
         }
+        tableView.refresh();
     }
 }
 
