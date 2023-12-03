@@ -52,6 +52,10 @@ public class CourseReviewsEditReviewController {
         subjectLabel.setText(selectedCourse.getSubject());
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
+
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
         //    ratingLabel.setText(selectedCourse.getRating());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
@@ -104,6 +108,10 @@ public class CourseReviewsEditReviewController {
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
         dateLabel.setText(date.toString());
+
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
         //    ratingLabel.setText(selectedCourse.getRating());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));

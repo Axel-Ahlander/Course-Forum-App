@@ -58,7 +58,10 @@ public class CourseReviewsController {
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
 
-        //    ratingLabel.setText(selectedCourse.getRating());
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
+//        ratingLabel.setText(selectedCourse.getRating());
         reviewTable();
 
     }
@@ -84,6 +87,9 @@ public class CourseReviewsController {
 
     //    ratingChoiceBox.setValue(userReview.getRating());
         //    ratingLabel.setText(selectedCourse.getRating());
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
         reviewTable();
     }
 
