@@ -23,6 +23,9 @@ public class Course {
     @Column(name = "Title", nullable = false)
     private String title;
 
+    @Column(name = "Rating")
+    private Float rating; //use wrapper to allow null
+
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
@@ -30,11 +33,12 @@ public class Course {
         // required by Hibernate, do not delete
     }
 
-    public Course(int id, String subject, int number, String title) {
+    public Course(int id, String subject, int number, String title, Float rating) {
         this.subject = subject;
         this.number = number;
         this.title = title;
         this.id = id;
+        this.rating = rating;
     }
 
     public long getId() {
@@ -65,6 +69,14 @@ public class Course {
         this.title = title;
     }
 
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -84,6 +96,7 @@ public class Course {
                 ", subject='" + subject + '\'' +
                 ", number=" + number +
                 ", title='" + title + '\'' +
+                ", rating=" + rating +
                 ", reviews=" + reviews +
                 '}';
     }
