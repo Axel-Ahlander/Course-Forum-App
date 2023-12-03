@@ -1,5 +1,6 @@
 package edu.virginia.sde.reviews;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Set;
 
 public class MyReviewsController {
-
-    @FXML
-    private Hyperlink backLink;
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
@@ -23,5 +22,22 @@ public class MyReviewsController {
         stage.setScene(scene);
         stage.show();
         stage.centerOnScreen();
+    }
+
+    public Set<Review> displayReviews() {
+        LoginController currUser = new LoginController();
+        UserDAO dao = new UserDAO();
+        Set<Review> ret = null;
+        for (User user : dao.getAllUsers()) {
+            if (user.getName().equalsIgnoreCase(currUser.usernameTextField.getText())) {
+                Set<Review> reviews = user.getReviews();
+                ret = reviews;
+            }
+        }
+        return ret;
+    }
+
+    public void setTextLabels(){
+
     }
 }

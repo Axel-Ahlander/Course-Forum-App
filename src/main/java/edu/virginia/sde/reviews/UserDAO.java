@@ -1,6 +1,8 @@
 package edu.virginia.sde.reviews;
 
 import jakarta.persistence.TypedQuery;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -63,5 +65,19 @@ public class UserDAO {
             return null;
         }
         // not a list since username should be unique and case insensitive
+    }
+
+    public ObservableList<User> getAllUsers() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM User";
+            TypedQuery<User> query = session.createQuery(hql, User.class);
+
+            // Convert the result to an ObservableList
+            List<User> resultList = query.getResultList();
+            return FXCollections.observableArrayList(resultList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return FXCollections.observableArrayList(); // or return an empty ObservableList
+        }
     }
 }
