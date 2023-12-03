@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Set;
 
+import static edu.virginia.sde.reviews.LoginController.activeUser;
+
 public class MyReviewsController {
 
     @FXML
@@ -26,6 +28,27 @@ public class MyReviewsController {
 
     @FXML
     private Hyperlink backLink;
+
+
+    public void initialize() {
+        Set<Review>reviews = activeUser.getReviews();
+
+        for (Review review : reviews){
+            subject.setText(review.getCourse().getSubject());
+            number.setText(String.valueOf(review.getCourse().getNumber()));
+            rating.setText(String.valueOf(review.getRating()));
+            comment.setText(review.getComment());
+
+        }
+
+
+        CourseReviewsService courseReviewsService = new CourseReviewsService();
+        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
+        ratingLabel.setText(String.format("%.2f", avgRating));
+//        ratingLabel.setText(selectedCourse.getRating());
+        reviewTable();
+
+    }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
@@ -50,7 +73,20 @@ public class MyReviewsController {
         return ret;
     }
 
-    public void setReview(){
-
+    public void setReview(Review review){
+        subject.setText(review.getCourse().getSubject());
+        number.setText(String.valueOf(review.getCourse().getNumber()));
+        rating.setText(String.valueOf(review.getRating()));
+        comment.setText(review.getComment());
     }
+
+    public void addReviews(){
+        Set<Review>reviews = displayReviews();
+        for (Review rev : reviews){
+            setReview(rev);
+        }
+    }
+
+
+
 }
