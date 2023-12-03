@@ -22,6 +22,18 @@ public class CourseDAO {
         }
     }
 
+    public void merge(Course course) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start transaction
+            session.beginTransaction();
+            // save the course object
+            session.merge(course);
+            // commit transaction
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void delete(Course course) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start transaction
