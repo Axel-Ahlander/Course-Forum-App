@@ -65,14 +65,14 @@ public class MyReviewsController {
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
 
-        commentColumn.setCellFactory(column -> {
+        comment.setCellFactory(column -> {
             TableCell<Review, String> cell = new TableCell<>() {
                 final Text text = new Text();
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
                     text.setText(item);
-                    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+                    text.wrappingWidthProperty().bind(comment.widthProperty());
                     setGraphic(text);
                 }
             };
