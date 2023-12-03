@@ -67,7 +67,7 @@ public class MyReviewsController {
             {
                 hyperlink.setOnAction(event -> {
                     Review selectedReview = getTableView().getItems().get(getIndex());
-                    Course selectedCourse = selectedReview.getCourse(); // Assuming Review has a getCourse method
+                    Course selectedCourse = selectedReview.getCourse();
                     handleHyperlinkAction(selectedCourse);
                 });
             }
@@ -78,7 +78,6 @@ public class MyReviewsController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    // Assuming item is the text you want to display in the hyperlink
                     hyperlink.setText(item != null ? item : "---");
                     setGraphic(hyperlink);
                 }
