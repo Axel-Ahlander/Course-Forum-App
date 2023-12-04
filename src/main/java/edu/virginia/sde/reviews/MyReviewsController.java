@@ -108,10 +108,10 @@ public class MyReviewsController {
 
     private void handleHyperlinkAction(Course selectedCourse) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
 
-            CourseReviewsController reviewsController = loader.getController();
+            CourseReviewsEditReviewController reviewsController = loader.getController();
             reviewsController.initialize(selectedCourse);
 
             Scene scene = new Scene(root);
