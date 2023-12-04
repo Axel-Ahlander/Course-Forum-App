@@ -49,6 +49,8 @@ public class CourseSearchController {
     @FXML
     TableView<Course> tableView;
 
+    private Course courseReview;
+
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
@@ -59,26 +61,57 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
 
-        courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
-            Hyperlink hyperlink = new Hyperlink();
-
-            {
-                hyperlink.setOnAction(event -> {
-                    Course selectedCourse = getTableView().getItems().get(getIndex());
-                    handleHyperlinkAction(selectedCourse);
-                });
+        //not sure if this is necessary
+     /*   tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Course>() {
+            @Override
+            public void changed(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
+                if (newValue != null) {
+                  //  handleRowSelection(newValue);
+                    handleHyperlinkAction(newValue);
+                }
             }
+        });
+*/
+        //hyperlink:
 
+        ///will replace with rating once method for calculating the rating is worked out
+
+//        courseTitleColumn.setCellFactory(column -> new TableCell<Course, String>() {
+//            Hyperlink hyperlink = new Hyperlink();
+//            {
+//                hyperlink.setOnAction(event -> {
+//                    Course selectedCourse = getTableView().getItems().get(getIndex());
+//                    handleHyperlinkAction(selectedCourse);
+//                });
+//            }
+//
+//            @Override
+//            protected void updateItem(String item, boolean empty) {
+//                System.out.println(empty);
+//                super.updateItem(item, empty);
+//                // are these checks needed? should never be empty as enforced by adding
+//                // set blank if rating is null or default(0)
+//                if (empty || item == null) {
+//                    hyperlink.setText(null);
+//                } else {
+//                    hyperlink.setText(item);
+//                }
+//                setGraphic(hyperlink);
+//            }
+//        });
+
+        //The average course review rating of the course - this should be blank if the course has no reviews,
+        // otherwise show as a number with two decimal places (i.e., 2.73, 5.00, etc.)
+        courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
             @Override
             protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);
                 // set blank if rating is null or default(0)
                 if (empty || item == null || item == 0.0f) {
-                    hyperlink.setText("___");
+                    setText(null);
                 } else {
-                    hyperlink.setText(String.format("%.2f", item));
+                    setText(String.format("%.2f", item));
                 }
-                setGraphic(hyperlink);
             }
         });
         // may need if change hyperlink to be other than rating since blank if no ratings
@@ -220,7 +253,7 @@ public class CourseSearchController {
             } else {
                 createNewCourse();
                 CourseDAO courseDAO = new CourseDAO();
-
+                // Refresh the TableView with the updated reviews
                 ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
                 tableView.setItems(updatedCourses);
                 tableView.refresh();
@@ -387,10 +420,26 @@ public class CourseSearchController {
         tableView.getItems().addAll(courseList);
         tableView.setItems(FXCollections.observableList(courseList));
         tableView.refresh();
-//  Person: Professor McBurney
-//  Description: wrapping text in the column of a table view, lines 392-403 (from Piazza post 784)
+// need to cite McBurneys piazza post here probably
+/*
+    var cell = new TableCell<ReviewTableRow, String>();
+    Text text = new Text();
+    cell.setGraphic(text);
+    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
+    text.textProperty().bind(cell.itemProperty());
+    return cell;
+ });*/
         courseTitleColumn.setCellFactory(column -> {
+
             var cell = new TableCell<Course, String>() {
+                Hyperlink hyperlink = new Hyperlink();
+                {
+                    hyperlink.setOnAction(event -> {
+                        Course selectedCourse = getTableView().getItems().get(getIndex());
+                        handleHyperlinkAction(selectedCourse);
+                    });
+                }
                 final Text text = new Text();
 
                 @Override
@@ -399,6 +448,14 @@ public class CourseSearchController {
                     text.setText(item);
                     text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
                     setGraphic(text);
+
+                    if (empty || item == null) {
+                        hyperlink.setText(null);
+                    } else {
+                        hyperlink.setText(item);
+                    }
+                    setGraphic(hyperlink);
+
                 }
             };
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
