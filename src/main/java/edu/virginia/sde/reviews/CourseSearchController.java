@@ -49,8 +49,6 @@ public class CourseSearchController {
     @FXML
     TableView<Course> tableView;
 
-    private Course courseReview;
-
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
@@ -143,7 +141,6 @@ public class CourseSearchController {
     }
 
     private void handleHyperlinkAction(Course selectedCourse) {
-        //probably better way to do this..
         Set<Review> courseReviews = selectedCourse.getReviews();
         boolean hasReview = false;
         for (Review review : courseReviews) {
@@ -253,7 +250,6 @@ public class CourseSearchController {
             } else {
                 createNewCourse();
                 CourseDAO courseDAO = new CourseDAO();
-                // Refresh the TableView with the updated reviews
                 ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
                 tableView.setItems(updatedCourses);
                 tableView.refresh();
@@ -420,49 +416,65 @@ public class CourseSearchController {
         tableView.getItems().addAll(courseList);
         tableView.setItems(FXCollections.observableList(courseList));
         tableView.refresh();
-// need to cite McBurneys piazza post here probably
-/*
-    var cell = new TableCell<ReviewTableRow, String>();
-    Text text = new Text();
-    cell.setGraphic(text);
-    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
-    text.textProperty().bind(cell.itemProperty());
-    return cell;
- });*/
         courseTitleColumn.setCellFactory(column -> {
 
             var cell = new TableCell<Course, String>() {
                 Hyperlink hyperlink = new Hyperlink();
+
                 {
                     hyperlink.setOnAction(event -> {
                         Course selectedCourse = getTableView().getItems().get(getIndex());
                         handleHyperlinkAction(selectedCourse);
                     });
                 }
+                //                   // hyperlink.getStyleClass().add("hyperlink");
+//              //     hyperlink.setStyle("-fx-text-fill: blue; -fx-underline: true;");
                 final Text text = new Text();
 
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
                     text.setText(item);
-                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                    setGraphic(text);
+               //     text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+                //    setGraphic(text);
 
                     if (empty || item == null) {
                         hyperlink.setText(null);
+                 //       setGraphic(hyperlink);
                     } else {
+                      //  text.setText(item);
+                        text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
                         hyperlink.setText(item);
+                        text.setStyle("-fx-fill: blue; -fx-underline: true;");
+                        hyperlink.setGraphic(text);
+                     // setGraphic(hyperlink);
                     }
                     setGraphic(hyperlink);
-
                 }
             };
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+          //  cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
     }
 
+////                    } else {
+////                        text.setText(item);
+////                        text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
+////                        text.setStyle("-fx-fill: blue; -fx-underline: true;");
+////                        hyperlink.setGraphic(text);
+////                        setGraphic(hyperlink);
+////                        hyperlink.setText(item);
+////                    }
+////                    setGraphic(hyperlink);
+
+////                    } else {
+////                        text.setText(item);
+////                        text.setStyle("-fx-fill: blue; -fx-underline: true;");
+////                        hyperlink.setGraphic(text);
+////                        setGraphic(hyperlink);
+////                        hyperlink.setText(item);
+////                    }
+//                    setGraphic(hyperlink);
     private void selectiveSearchTableView() {
         CourseDAO courseDAO = new CourseDAO();
         ObservableList<Course> courses = courseDAO.getAllCourses();

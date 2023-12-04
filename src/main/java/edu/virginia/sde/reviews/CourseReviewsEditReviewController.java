@@ -31,7 +31,6 @@ public class CourseReviewsEditReviewController {
     TableColumn<Review, String> commentColumn;
     @FXML
     TableView<Review> tableView;
-
     @FXML
     Hyperlink backLink;
     @FXML

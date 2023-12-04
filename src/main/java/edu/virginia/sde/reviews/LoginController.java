@@ -39,13 +39,7 @@ public class LoginController {
     public void loginButton(ActionEvent e) throws IOException {
         if (validLogin()) {
             UserDAO dao = new UserDAO();
-          //  CourseSearchController csc = new CourseSearchController();
-          //  System.out.println("THIS: " + dao.findByName(usernameTextField.getText()));
             setActiveUser(dao.findByName(usernameTextField.getText()));
-
-       //     System.out.println("USer: " + csc.getActiveUser().getName() + activeUser.getName());
-
-
             Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -110,9 +104,6 @@ public class LoginController {
         }
     }
 
-    //why not just use a static variable for user? prof did an instance var, and said singleton would
-    //also work...
-    //temporary way to keep track of the active user
     public static void setActiveUser(User user){
         activeUser = user;
     }

@@ -35,8 +35,6 @@ public class MyReviewsController {
     ObservableList<Review> reviewList;
     @FXML
     TableView<Review> tableView;
-    @FXML
-    private Hyperlink backLink;
 
 
     public void initialize() {
