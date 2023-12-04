@@ -12,11 +12,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Set;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -29,7 +28,7 @@ public class MyReviewsController {
     @FXML
     TableColumn<Review, Integer> rating;
     @FXML
-    TableColumn<Review, String> courseReviewsPage;
+    TableColumn<Review, String> title;
     @FXML
     TableColumn<Review, String> comment;
     ObservableList<Review> reviewList;
@@ -45,8 +44,6 @@ public class MyReviewsController {
 
     }
 
-
-
     private void reviewTable(){
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -58,11 +55,20 @@ public class MyReviewsController {
 
         number.setCellValueFactory(column -> {
             Course course = column.getValue().getCourse();
-            return new ReadOnlyObjectWrapper<>(course != null ? course.getNumber() : 0);
+            return new ReadOnlyObjectWrapper<>(course != null ? course.getNumber() : 0);//ChatGPT - Debugging for how I can access fields in review class and display them.
         });
 
-        courseReviewsPage.setCellFactory(column -> new TableCell<>() {
+        // TODO: need to wrap columns see next method where tried
+        // access and populate the cells with title information
+        title.setCellValueFactory(column -> {
+            Course course = column.getValue().getCourse();
+            return new ReadOnlyStringWrapper(course != null ? course.getTitle() : "");
+        });
+
+        // separately add hyperlink to each title
+        title.setCellFactory(column -> new TableCell<>() {
             Hyperlink hyperlink = new Hyperlink();
+//            Text text = new Text();
 
             {
                 hyperlink.setOnAction(event -> {
@@ -74,15 +80,57 @@ public class MyReviewsController {
 
             @Override
             protected void updateItem(String item, boolean empty) {
+                final Text text = new Text();
                 super.updateItem(item, empty);
-                if (empty) {
+                text.setText(item);
+//                text.wrappingWidthProperty().bind(title.widthProperty());
+//                setGraphic(text);
+
+                if (empty || item == null) {
                     setGraphic(null);
                 } else {
-                    hyperlink.setText(item != null ? item : "---");
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(title.widthProperty());
+
+                    hyperlink.setText(item);
+                    hyperlink.setWrapText(true);
                     setGraphic(hyperlink);
+
                 }
             }
         });
+
+//        title.setCellFactory(column -> {
+//
+//            var cell = new TableCell<Review, String>() {
+//                Hyperlink hyperlink = new Hyperlink();
+//                {
+//                    hyperlink.setOnAction(event -> {
+//                        Review selectedReview = getTableView().getItems().get(getIndex());
+//                        Course selectedCourse = selectedReview.getCourse();
+//                        handleHyperlinkAction(selectedCourse);
+//                    });
+//                }
+//                final Text text = new Text();
+//
+//                @Override
+//                protected void updateItem(String item, boolean empty) {
+//                    super.updateItem(item, empty);
+//                    text.setText(item);
+//                    text.wrappingWidthProperty().bind(title.widthProperty());
+//                    setGraphic(text);
+//
+//                    if (empty || item == null) {
+//                        hyperlink.setText(null);
+//                    } else {
+//                        hyperlink.setText(item);
+//                    }
+//                    setGraphic(hyperlink);
+//                }
+//            };
+//            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+//            return cell;
+//        });
 
 
         tableView.getItems().clear();
