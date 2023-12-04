@@ -20,7 +20,7 @@
     <children>
         <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
             <children>
-                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-61.0" prefHeight="58.0" prefWidth="79.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="621.0">
+                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-62.0" prefHeight="58.0" prefWidth="79.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="621.0">
                     <font>
                         <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
                     </font>
@@ -135,7 +135,7 @@
             <font>
                 <Font name="Adelle Sans Devanagari Bold" size="14.0" />
             </font></Label>
-        <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="20.0" layoutY="-25.0" prefHeight="85.0" prefWidth="924.0" text="01234567890123456789012345678901234567890123456789" textFill="#808080">
+        <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="20.0" layoutY="-38.0" prefHeight="85.0" prefWidth="924.0" text="01234567890123456789012345678901234567890123456789" textFill="#808080">
             <font>
                 <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
             </font>
