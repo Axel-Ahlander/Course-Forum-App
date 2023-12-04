@@ -49,8 +49,6 @@ public class CourseSearchController {
     @FXML
     TableView<Course> tableView;
 
-    private Course courseReview;
-
     public void initialize() {
         addCourseTabButton.setOnAction(e -> selectTab());
         selectSearchTabButton.setOnAction(e -> tabPane.getSelectionModel().select(0));
@@ -61,23 +59,6 @@ public class CourseSearchController {
         addCourseErrorLabel.setText("");
         addCourseSuccessLabel.setText("");
 
-        //not sure if this is necessary
-     /*   tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Course>() {
-            @Override
-            public void changed(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
-                if (newValue != null) {
-                  //  handleRowSelection(newValue);
-                    handleHyperlinkAction(newValue);
-                }
-            }
-        });
-*/
-        //hyperlink:
-
-        ///will replace with rating once method for calculating the rating is worked out
-
-        //The average course review rating of the course - this should be blank if the course has no reviews,
-// otherwise show as a number with two decimal places (i.e., 2.73, 5.00, etc.)
         courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
             Hyperlink hyperlink = new Hyperlink();
 
@@ -239,7 +220,7 @@ public class CourseSearchController {
             } else {
                 createNewCourse();
                 CourseDAO courseDAO = new CourseDAO();
-                // Refresh the TableView with the updated reviews
+
                 ObservableList<Course> updatedCourses = courseDAO.getAllCourses();
                 tableView.setItems(updatedCourses);
                 tableView.refresh();
@@ -406,16 +387,8 @@ public class CourseSearchController {
         tableView.getItems().addAll(courseList);
         tableView.setItems(FXCollections.observableList(courseList));
         tableView.refresh();
-// need to cite McBurneys piazza post here probably
-/*
-    var cell = new TableCell<ReviewTableRow, String>();
-    Text text = new Text();
-    cell.setGraphic(text);
-    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-    text.wrappingWidthProperty().bind(commentColumn.widthProperty());
-    text.textProperty().bind(cell.itemProperty());
-    return cell;
- });*/
+//  Person: Professor McBurney
+//  Description: wrapping text in the column of a table view, lines 392-403 (from Piazza post 784)
         courseTitleColumn.setCellFactory(column -> {
             var cell = new TableCell<Course, String>() {
                 final Text text = new Text();
