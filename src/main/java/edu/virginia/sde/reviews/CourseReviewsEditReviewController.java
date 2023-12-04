@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -45,7 +44,7 @@ public class CourseReviewsEditReviewController {
     private int reviewRating;
 
     public void initialize(Course selectedCourse){
-        errorLabel.setText("");//delete?
+        errorLabel.setText("");
         addReviewSuccessLabel.setText("");
         course = selectedCourse;
 
@@ -56,8 +55,6 @@ public class CourseReviewsEditReviewController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
-        //    ratingLabel.setText(selectedCourse.getRating());
-
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
@@ -65,17 +62,12 @@ public class CourseReviewsEditReviewController {
         ReviewDAO reviewDAO = new ReviewDAO();
         ObservableList<Review> reviewList = reviewDAO.findByCourse(course);
 
-
-
-//        Review userReview = reviewDAO.findByCourseAndUser(selectedCourse, activeUser);
-//        reviewComment = userReview.getComment();
-//        reviewRating = userReview.getRating();
-
         tableView.getItems().clear();
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
-
+//  Person: Professor McBurney
+//  Description: wrapping text in the column of a table view, lines 71-84 (from Piazza post 784)
         commentColumn.setCellFactory(column -> {
             TableCell<Review, String> cell = new TableCell<>() {
                 final Text text = new Text();
@@ -90,7 +82,6 @@ public class CourseReviewsEditReviewController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
-
         //need to access only results with same course
         Review userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
         reviewComment = userReview.getComment();
@@ -102,7 +93,6 @@ public class CourseReviewsEditReviewController {
 
     public void initialize(Course selectedCourse, String comment, int rating, LocalDate date){
         errorLabel.setText("");
-   //     addReviewSuccessLabel.setText("");
         course = selectedCourse;
         subjectLabel.setText(selectedCourse.getSubject());
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
@@ -112,7 +102,6 @@ public class CourseReviewsEditReviewController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
-        //    ratingLabel.setText(selectedCourse.getRating());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));

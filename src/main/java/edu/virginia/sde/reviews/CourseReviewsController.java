@@ -26,7 +26,6 @@ public class CourseReviewsController {
     Button submitReviewButton;
     @FXML
     Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewLabel;
-
     @FXML
     TableColumn<Review, LocalDate> dateColumn;
     @FXML
@@ -35,7 +34,6 @@ public class CourseReviewsController {
     TableColumn<Review, String> commentColumn;
     @FXML
     TableView<Review> tableView;
-
     @FXML
     Hyperlink backLink;
     @FXML
@@ -48,7 +46,7 @@ public class CourseReviewsController {
     private int reviewRating;
     ObservableList<Review> reviewList;
     public void initialize(Course selectedCourse) {
-        userReviewed = false;//temporary  //only first time opens review page and hasn't reviewed.
+        userReviewed = false;
         reviewLabel.setText("Add a Review");
         errorLabel.setText("");
         addReviewSuccessLabel.setText("");
@@ -62,9 +60,7 @@ public class CourseReviewsController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
-//        ratingLabel.setText(selectedCourse.getRating());
         reviewTable();
-
     }
     public void initialize(Course selectedCourse, String comment, int rating){
         course = selectedCourse;
@@ -81,13 +77,6 @@ public class CourseReviewsController {
         ratingChoiceBox.setValue(rating);
         commentTextArea.setText(comment);
 
-//        reviewRating = ratingChoiceBox.getValue();
-//        commentTextArea.setText(reviewComment);
-//        reviewComment = comment;
-//        reviewRating = rating;
-
-    //    ratingChoiceBox.setValue(userReview.getRating());
-        //    ratingLabel.setText(selectedCourse.getRating());
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
@@ -106,7 +95,8 @@ public class CourseReviewsController {
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
-
+//  Person: Professor McBurney
+//  Description: wrapping text in the column of a table view, lines 100-113 (from Piazza post 784)
         commentColumn.setCellFactory(column -> {
             TableCell<Review, String> cell = new TableCell<>() {
                 final Text text = new Text();
@@ -151,8 +141,6 @@ public class CourseReviewsController {
                 ObservableList<Review> updatedReviews = reviewDAO.findByCourse(course);
                 tableView.setItems(updatedReviews);
                 tableView.refresh();
-            //    addReviewSuccessLabel.setText("Review successfully added.");
-            //    courseEditTransition(date);
                 userReviewed = true;
                 reviewComment = commentTextArea.getText();
                 reviewRating = ratingChoiceBox.getValue();
