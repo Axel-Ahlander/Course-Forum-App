@@ -76,28 +76,42 @@ public class CourseSearchController {
 
         ///will replace with rating once method for calculating the rating is worked out
 
+//        courseTitleColumn.setCellFactory(column -> new TableCell<Course, String>() {
+//            Hyperlink hyperlink = new Hyperlink();
+//            {
+//                hyperlink.setOnAction(event -> {
+//                    Course selectedCourse = getTableView().getItems().get(getIndex());
+//                    handleHyperlinkAction(selectedCourse);
+//                });
+//            }
+//
+//            @Override
+//            protected void updateItem(String item, boolean empty) {
+//                System.out.println(empty);
+//                super.updateItem(item, empty);
+//                // are these checks needed? should never be empty as enforced by adding
+//                // set blank if rating is null or default(0)
+//                if (empty || item == null) {
+//                    hyperlink.setText(null);
+//                } else {
+//                    hyperlink.setText(item);
+//                }
+//                setGraphic(hyperlink);
+//            }
+//        });
+
         //The average course review rating of the course - this should be blank if the course has no reviews,
-// otherwise show as a number with two decimal places (i.e., 2.73, 5.00, etc.)
+        // otherwise show as a number with two decimal places (i.e., 2.73, 5.00, etc.)
         courseRatingColumn.setCellFactory(column -> new TableCell<Course, Float>() {
-            Hyperlink hyperlink = new Hyperlink();
-
-            {
-                hyperlink.setOnAction(event -> {
-                    Course selectedCourse = getTableView().getItems().get(getIndex());
-                    handleHyperlinkAction(selectedCourse);
-                });
-            }
-
             @Override
             protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);
                 // set blank if rating is null or default(0)
                 if (empty || item == null || item == 0.0f) {
-                    hyperlink.setText("___");
+                    setText(null);
                 } else {
-                    hyperlink.setText(String.format("%.2f", item));
+                    setText(String.format("%.2f", item));
                 }
-                setGraphic(hyperlink);
             }
         });
         // may need if change hyperlink to be other than rating since blank if no ratings
@@ -417,7 +431,15 @@ public class CourseSearchController {
     return cell;
  });*/
         courseTitleColumn.setCellFactory(column -> {
+
             var cell = new TableCell<Course, String>() {
+                Hyperlink hyperlink = new Hyperlink();
+                {
+                    hyperlink.setOnAction(event -> {
+                        Course selectedCourse = getTableView().getItems().get(getIndex());
+                        handleHyperlinkAction(selectedCourse);
+                    });
+                }
                 final Text text = new Text();
 
                 @Override
@@ -426,6 +448,14 @@ public class CourseSearchController {
                     text.setText(item);
                     text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
                     setGraphic(text);
+
+                    if (empty || item == null) {
+                        hyperlink.setText(null);
+                    } else {
+                        hyperlink.setText(item);
+                    }
+                    setGraphic(hyperlink);
+
                 }
             };
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
