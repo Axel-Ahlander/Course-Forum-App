@@ -42,7 +42,7 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="637.0">
                         <children>
-                            <TableView fx:id="tableView" prefHeight="575.0" prefWidth="621.0" style="-fx-background-color: #000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <TableView fx:id="tableView" prefHeight="575.0" prefWidth="621.0" style="-fx-background-color: #d2e2e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                     <TableColumn fx:id="courseSubjectColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Subject" />
                                     <TableColumn fx:id="courseNumberColumn" prefWidth="100.0" styleClass="-fx-alignment: CENTER;" text="Number" />
