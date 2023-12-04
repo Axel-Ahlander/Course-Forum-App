@@ -1,6 +1,9 @@
 package edu.virginia.sde.reviews;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,47 +11,120 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Set;
+
+import static edu.virginia.sde.reviews.LoginController.activeUser;
 
 public class MyReviewsController {
 
     @FXML
-    TableColumn<Course, String> subject;
+    TableColumn<Review, String> subject;
     @FXML
-    TableColumn<Course, Integer> number;
+    TableColumn<Review, Integer> number;
     @FXML
-    TableColumn<Course, Integer> rating;
+    TableColumn<Review, Integer> rating;
     @FXML
-    TableColumn<Course, String> courseReviewsPage;
+    TableColumn<Review, String> courseReviewsPage;
     @FXML
-    TableColumn<Course, String> comment;
-
-    @FXML
-    private Hyperlink backLink;
-    @FXML
-    Button submitReviewButton;
-    @FXML
-    Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewLabel;
-
-    @FXML
-    TableColumn<Review, LocalDate> dateColumn;
-    @FXML
-    TableColumn<Review, Integer> ratingColumn;
-    @FXML
-    TableColumn<Review, String> commentColumn;
+    TableColumn<Review, String> comment;
+    ObservableList<Review> reviewList;
     @FXML
     TableView<Review> tableView;
     @FXML
-    ChoiceBox<Integer> ratingChoiceBox;
-    @FXML
-    TextArea commentTextArea;
-    private Course course;
-    boolean userReviewed;
+    private Hyperlink backLink;
 
-    private String reviewComment;
-    private int reviewRating;
+
+    public void initialize() {
+        reviewList = displayReviews();
+        reviewTable();
+
+    }
+
+
+
+    private void reviewTable(){
+        rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        subject.setCellValueFactory(column -> {
+            Course course = column.getValue().getCourse();
+            return new ReadOnlyStringWrapper(course != null ? course.getSubject() : ""); //ChatGPT - Debugging for how I can access fields in review class and display them.
+        });
+
+        number.setCellValueFactory(column -> {
+            Course course = column.getValue().getCourse();
+            return new ReadOnlyObjectWrapper<>(course != null ? course.getNumber() : 0);
+        });
+
+        courseReviewsPage.setCellFactory(column -> new TableCell<>() {
+            Hyperlink hyperlink = new Hyperlink();
+
+            {
+                hyperlink.setOnAction(event -> {
+                    Review selectedReview = getTableView().getItems().get(getIndex());
+                    Course selectedCourse = selectedReview.getCourse();
+                    handleHyperlinkAction(selectedCourse);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    hyperlink.setText(item != null ? item : "---");
+                    setGraphic(hyperlink);
+                }
+            }
+        });
+
+
+        tableView.getItems().clear();
+        tableView.getItems().addAll(reviewList);
+        tableView.setItems(FXCollections.observableList(reviewList));
+        //tableView.refresh();
+
+        comment.setCellFactory(column -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    text.setText(item);
+                    text.wrappingWidthProperty().bind(comment.widthProperty());
+                    setGraphic(text);
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+    }
+
+    private void handleHyperlinkAction(Course selectedCourse) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviews.fxml"));
+            Parent root = loader.load();
+
+            CourseReviewsController reviewsController = loader.getController();
+            reviewsController.initialize(selectedCourse);
+
+            Scene scene = new Scene(root);
+
+            Stage stage = (Stage) tableView.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CourseSearch.fxml"));
@@ -60,38 +136,12 @@ public class MyReviewsController {
         stage.centerOnScreen();
     }
 
-    public void initialize(Course selectedCourse) {
-        userReviewed = false;//temporary  //only first time opens review page and hasn't reviewed.
-        reviewLabel.setText("Add a Review");
-        errorLabel.setText("");
-        addReviewSuccessLabel.setText("");
-
-        ratingChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
-        course = selectedCourse;
-        subjectLabel.setText(selectedCourse.getSubject());
-        numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
-        titleLabel.setText(selectedCourse.getTitle());
-
-        CourseReviewsService courseReviewsService = new CourseReviewsService();
-        float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
-        ratingLabel.setText(String.format("%.2f", avgRating));
-
-// filter part that should find what reviews a user has
-
-        ReviewDAO reviewDAO = new ReviewDAO();
-        ObservableList<Review> userReviews = reviewDAO.findReviewsByUser();
-//        reviewList = userReviews;
-        userReviews = reviewDAO.findReviewsByUser(activeUser);
-        tableView.getItems().clear();
-        tableView.getItems().addAll(reviewList);
-        tableView.setItems(FXCollections.observableList(reviewList));
-        tableView.refresh();
-//        ratingLabel.setText(selectedCourse.getRating());
-
-
-        reviewTable();
-
+    public ObservableList<Review> displayReviews() {
+        ReviewDAO dao = new ReviewDAO();
+        ObservableList<Review>reviews = dao.findReviewsByUser(activeUser);
+        return reviews;
     }
+
 
 
 
