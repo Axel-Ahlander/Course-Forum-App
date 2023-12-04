@@ -22,7 +22,7 @@
                 <TableColumn fx:id="subject" prefWidth="115.5" text="Subject" />
                 <TableColumn fx:id="number" minWidth="0.0" prefWidth="116.5" text="Number" />
                   <TableColumn fx:id="rating" prefWidth="126.5" text="Rating" />
-                  <TableColumn fx:id="courseReviewsPage" prefWidth="206.0" text="Course Reviews Page" />
+                  <TableColumn fx:id="title" prefWidth="206.0" text="Title" />
                   <TableColumn fx:id="comment" prefWidth="381.5" text="Comment " />
               </columns>
             </TableView>
