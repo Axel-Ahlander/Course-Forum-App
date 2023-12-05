@@ -65,6 +65,9 @@ public class CourseReviewsController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
+        if(avgRating == 0.00F){
+            ratingLabel.setText("");
+        }
         reviewTable();
     }
     public void initialize(Course selectedCourse, String comment, int rating){
