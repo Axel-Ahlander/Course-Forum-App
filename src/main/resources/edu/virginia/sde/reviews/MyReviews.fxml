@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
    <children>
       <Hyperlink fx:id="backLink" layoutX="754.0" layoutY="8.0" onAction="#handleBackLinkClick" text="Back to Course Search">
          <font>
@@ -19,11 +15,11 @@
          <content>
             <TableView fx:id="tableView" prefHeight="605.0" prefWidth="960.0" style="-fx-background-color: #d2e2e8;" styleClass="-">
               <columns>
-                <TableColumn fx:id="subject" prefWidth="115.5" text="Subject" />
-                <TableColumn fx:id="number" minWidth="0.0" prefWidth="116.5" text="Number" />
-                  <TableColumn fx:id="rating" prefWidth="126.5" text="Rating" />
-                  <TableColumn fx:id="title" prefWidth="206.0" text="Title" />
-                  <TableColumn fx:id="comment" prefWidth="381.5" text="Comment " />
+                <TableColumn fx:id="subject" prefWidth="93" text="Subject" />
+                <TableColumn fx:id="number" minWidth="0.0" prefWidth="93" text="Number" />
+                  <TableColumn fx:id="rating" prefWidth="93" text="Rating" />
+                  <TableColumn fx:id="title" prefWidth="288.6000061035156" text="Title" />
+                  <TableColumn fx:id="comment" prefWidth="371.5999755859375" text="Comment " />
               </columns>
             </TableView>
          </content>
