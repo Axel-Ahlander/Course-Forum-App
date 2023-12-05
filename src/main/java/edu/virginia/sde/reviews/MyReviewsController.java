@@ -87,14 +87,13 @@ public class MyReviewsController {
                 if (empty || item == null) {
                     setGraphic(null);
                 } else {
-                    text.setText(item);
-                    text.wrappingWidthProperty().bind(title.widthProperty());
-
+                    text.wrappingWidthProperty().bind(title.widthProperty().subtract(11));
                     hyperlink.setText(item);
-                    hyperlink.setWrapText(true);
-                    setGraphic(hyperlink);
+                    text.setStyle("-fx-fill: blue; -fx-underline: true;");
 
+                    hyperlink.setGraphic(text);
                 }
+                setGraphic(hyperlink);
             }
         });
 

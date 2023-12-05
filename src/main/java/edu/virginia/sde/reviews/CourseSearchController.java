@@ -1,5 +1,6 @@
 package edu.virginia.sde.reviews;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -416,45 +418,86 @@ public class CourseSearchController {
         tableView.getItems().addAll(courseList);
         tableView.setItems(FXCollections.observableList(courseList));
         tableView.refresh();
-        courseTitleColumn.setCellFactory(column -> {
 
-            var cell = new TableCell<Course, String>() {
-                Hyperlink hyperlink = new Hyperlink();
-
-                {
-                    hyperlink.setOnAction(event -> {
-                        Course selectedCourse = getTableView().getItems().get(getIndex());
-                        handleHyperlinkAction(selectedCourse);
-                    });
-                }
-                //                   // hyperlink.getStyleClass().add("hyperlink");
-//              //     hyperlink.setStyle("-fx-text-fill: blue; -fx-underline: true;");
-                final Text text = new Text();
-
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    text.setText(item);
-               //     text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                //    setGraphic(text);
-
-                    if (empty || item == null) {
-                        hyperlink.setText(null);
-                 //       setGraphic(hyperlink);
-                    } else {
-                      //  text.setText(item);
-                        text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty());
-                        hyperlink.setText(item);
-                        text.setStyle("-fx-fill: blue; -fx-underline: true;");
-                        hyperlink.setGraphic(text);
-                     // setGraphic(hyperlink);
-                    }
-                    setGraphic(hyperlink);
-                }
-            };
-          //  cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            return cell;
+        // populate title cells data
+        courseTitleColumn.setCellValueFactory(column -> {
+            Course course = column.getValue();
+            return new ReadOnlyStringWrapper(course != null ? course.getTitle() : "");
         });
+
+        // separately add hyperlink to each title
+        courseTitleColumn.setCellFactory(column -> new TableCell<>() {
+            Hyperlink hyperlink = new Hyperlink();
+            {
+                hyperlink.setOnAction(event -> {
+                    Course selectedCourse = getTableView().getItems().get(getIndex());
+                    handleHyperlinkAction(selectedCourse);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                final Text text = new Text();
+                super.updateItem(item, empty);
+                text.setText(item);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty().subtract(11)); // add padding
+                    hyperlink.setText(item);
+                    text.setStyle("-fx-fill: blue; -fx-underline: true;");
+
+                    hyperlink.setGraphic(text);
+                }
+                setGraphic(hyperlink);
+            }
+        });
+
+
+    // this part until } works, just broken up to match MyReviewsController setup in hopes of similar display
+//        courseTitleColumn.setCellFactory(column -> {
+//
+//            var cell = new TableCell<Course, String>() {
+//                Hyperlink hyperlink = new Hyperlink();
+//
+//                {
+//                    hyperlink.setOnAction(event -> {
+//                        Course selectedCourse = getTableView().getItems().get(getIndex());
+//                        handleHyperlinkAction(selectedCourse);
+//                    });
+//                }
+//                //                   // hyperlink.getStyleClass().add("hyperlink");
+////              //     hyperlink.setStyle("-fx-text-fill: blue; -fx-underline: true;");
+//                final Text text = new Text();
+//
+//                @Override
+//                protected void updateItem(String item, boolean empty) {
+//                    super.updateItem(item, empty);
+//                    System.out.println(item);
+//                    text.setText(item);
+//
+//
+//                    if (empty || item == null) {
+//                        setGraphic(null);
+//                        hyperlink.setText(null);
+//
+//
+//                    } else {
+//
+//                        text.wrappingWidthProperty().bind(courseTitleColumn.widthProperty().subtract(11));
+//                        hyperlink.setText(item);
+//                        text.setStyle("-fx-fill: blue; -fx-underline: true;");
+//
+//                        hyperlink.setGraphic(text);
+//
+//                    }
+//                    setGraphic(hyperlink);
+//                }
+//            };
+////            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+//            return cell;
+//        });
     }
 
 ////                    } else {
