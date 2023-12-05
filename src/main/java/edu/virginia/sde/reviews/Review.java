@@ -1,7 +1,10 @@
 package edu.virginia.sde.reviews;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -12,7 +15,7 @@ public class Review {
     private int id;
 
     @Column(name = "DATE", nullable = false)
-    private LocalDate date;
+    private Timestamp date;
 
     @Column(name = "RATING", nullable = false)
     private int rating;
@@ -45,12 +48,20 @@ public class Review {
         return id;
     }
 
-    public LocalDate getDate() {
+    // used in db
+    public Timestamp getDate() {
         return date;
     }
 
+    // used in GUI
+    public String getFormattedDate() {
+        LocalDateTime localDateTime = date.toLocalDateTime(); // required to cast using .format()
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy-dd HH:mm");
+        return localDateTime.format(formatter);
+    }
+
     public void setDate() {
-        this.date = LocalDate.now();
+        this.date = new Timestamp(System.currentTimeMillis());
     }
 
     public int getRating() {

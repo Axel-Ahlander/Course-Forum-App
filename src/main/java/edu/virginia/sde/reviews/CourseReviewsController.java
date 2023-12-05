@@ -1,5 +1,6 @@
 package edu.virginia.sde.reviews;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +15,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +32,7 @@ public class CourseReviewsController {
     @FXML
     Label subjectLabel, numberLabel, ratingLabel, addReviewSuccessLabel, errorLabel, titleLabel, reviewLabel;
     @FXML
-    TableColumn<Review, LocalDate> dateColumn;
+    TableColumn<Review, Timestamp> dateColumn;
     @FXML
     TableColumn<Review, Integer> ratingColumn;
     @FXML
@@ -84,7 +89,7 @@ public class CourseReviewsController {
     }
 
     private void reviewTable(){
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
@@ -95,6 +100,28 @@ public class CourseReviewsController {
         tableView.getItems().addAll(reviewList);
         tableView.setItems(FXCollections.observableList(reviewList));
         tableView.refresh();
+//        cellData -> new SimpleObjectProperty<> (cellData)
+
+        dateColumn.setCellFactory(column -> {
+            TableCell<Review, Timestamp> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(Timestamp item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                    }
+                    else {
+                        Review review = (Review) getTableRow().getItem();
+//                        String formattedDate = review.getFormattedDate(item);
+                        text.setText("----");
+                        setGraphic(text);
+                    }
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
 //  Person: Professor McBurney
 //  Description: wrapping text in the column of a table view, lines 100-113 (from Piazza post 784)
         commentColumn.setCellFactory(column -> {
@@ -133,7 +160,7 @@ public class CourseReviewsController {
                 review.setRating(ratingChoiceBox.getValue());
                 review.setCourse(course);
 
-                LocalDate date = review.getDate();
+                Timestamp date = review.getDate();
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
 
@@ -170,7 +197,7 @@ public class CourseReviewsController {
             }
         }
 
-    private void courseEditTransition(LocalDate date) {
+    private void courseEditTransition(Timestamp date) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();

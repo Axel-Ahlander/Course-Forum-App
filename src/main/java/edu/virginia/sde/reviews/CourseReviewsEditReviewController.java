@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -24,7 +24,7 @@ public class CourseReviewsEditReviewController {
     @FXML
     Label subjectLabel, numberLabel, ratingLabel, titleLabel, addReviewSuccessLabel, errorLabel, dateLabel;
     @FXML
-    TableColumn<Review, LocalDate> dateColumn;
+    TableColumn<Review, Timestamp> dateColumn;
     @FXML
     TableColumn<Review, Integer> ratingColumn;
     @FXML
@@ -54,7 +54,7 @@ public class CourseReviewsEditReviewController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
@@ -90,7 +90,7 @@ public class CourseReviewsEditReviewController {
         dateLabel.setText(userReview.getDate().toString());
     }
 
-    public void initialize(Course selectedCourse, String comment, int rating, LocalDate date){
+    public void initialize(Course selectedCourse, String comment, int rating, Timestamp date){
         errorLabel.setText("");
         course = selectedCourse;
         subjectLabel.setText(selectedCourse.getSubject());
@@ -102,7 +102,7 @@ public class CourseReviewsEditReviewController {
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, LocalDate>("date"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
 
