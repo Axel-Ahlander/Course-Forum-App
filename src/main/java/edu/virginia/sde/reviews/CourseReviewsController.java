@@ -110,6 +110,31 @@ public class CourseReviewsController {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
+                        setGraphic(null);
+                    }
+                    else {
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                        String formattedDate = dateFormat.format(item);
+                        text.setText(formattedDate);
+                        setGraphic(text);
+                    }
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+
+
+
+        /*dateColumn.setCellFactory(column -> {
+            TableCell<Review, Timestamp> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(Timestamp item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
                     }
                     else {
                         Review review = (Review) getTableRow().getItem();
@@ -121,7 +146,7 @@ public class CourseReviewsController {
             };
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
-        });
+        });*/
 //  Person: Professor McBurney
 //  Description: wrapping text in the column of a table view, lines 100-113 (from Piazza post 784)
         commentColumn.setCellFactory(column -> {
