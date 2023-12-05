@@ -14,7 +14,7 @@ public class CourseReviewsApplication extends Application{
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("courseTitleColumn.css").toExternalForm());
+//        scene.getStylesheets().add(getClass().getResource("courseTitleColumn.css").toExternalForm());
 
         stage.setTitle("Log in");
         stage.setScene(scene);
