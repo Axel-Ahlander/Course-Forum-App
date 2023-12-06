@@ -88,6 +88,7 @@ public class CourseReviewsController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
+
         reviewTable();
     }
 
@@ -130,26 +131,6 @@ public class CourseReviewsController {
 
 
 
-        /*dateColumn.setCellFactory(column -> {
-            TableCell<Review, Timestamp> cell = new TableCell<>() {
-                final Text text = new Text();
-                @Override
-                protected void updateItem(Timestamp item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null || empty) {
-                        setText(null);
-                    }
-                    else {
-                        Review review = (Review) getTableRow().getItem();
-//                        String formattedDate = review.getFormattedDate(item);
-                        text.setText("----");
-                        setGraphic(text);
-                    }
-                }
-            };
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            return cell;
-        });*/
 //  Person: Professor McBurney
 //  Description: wrapping text in the column of a table view, lines 100-113 (from Piazza post 784)
         commentColumn.setCellFactory(column -> {
@@ -188,7 +169,8 @@ public class CourseReviewsController {
                 review.setRating(ratingChoiceBox.getValue());
                 review.setCourse(course);
 
-                Timestamp date = review.getDate();
+
+                //Timestamp date = review.getDate();
                 CourseReviewsService createReview = new CourseReviewsService(review);
                 createReview.saveReview();
 
@@ -199,9 +181,37 @@ public class CourseReviewsController {
                 userReviewed = true;
                 reviewComment = commentTextArea.getText();
                 reviewRating = ratingChoiceBox.getValue();
-                courseEditTransition(date);
+
+                dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
+
+                dateColumn.setCellFactory(column -> {
+                    TableCell<Review, Timestamp> cell = new TableCell<>() {
+                        final Text text = new Text();
+                        @Override
+                        protected void updateItem(Timestamp item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item == null || empty) {
+                                setText(null);
+                                setGraphic(null);
+                            }
+                            else {
+
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                                String formattedDate = dateFormat.format(item);
+                                text.setText(formattedDate);
+                                setGraphic(text);
+                            }
+                        }
+                    };
+                    cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                    return cell;
+                });
+
+                courseEditTransition();
+
             }
             else{ // edit users review
+
                 reviewComment =  commentTextArea.getText();
                 reviewRating = ratingChoiceBox.getValue();;
                 CourseReviewsService updateReview = new CourseReviewsService();
@@ -225,12 +235,12 @@ public class CourseReviewsController {
             }
         }
 
-    private void courseEditTransition(Timestamp date) {
+    private void courseEditTransition() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseReviewsEditReview.fxml"));
             Parent root = loader.load();
             CourseReviewsEditReviewController controller = loader.getController();
-            controller.initialize(course, reviewComment, reviewRating, date);
+            controller.initialize(course, reviewComment, reviewRating);
             Stage stage = (Stage) submitReviewButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Course Reviews");

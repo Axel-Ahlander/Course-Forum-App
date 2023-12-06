@@ -2,6 +2,7 @@ package edu.virginia.sde.reviews;
 
 import javafx.collections.ObservableList;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class CourseReviewsService {
@@ -24,6 +25,8 @@ public class CourseReviewsService {
         if (existingReview != null) {
             existingReview.setRating(newRating);
             existingReview.setComment(newComment);
+            existingReview.setDate();
+
 
             reviewDAO.update(existingReview);
         }

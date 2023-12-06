@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import static edu.virginia.sde.reviews.LoginController.activeUser;
 
@@ -54,9 +55,10 @@ public class CourseReviewsEditReviewController {
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
-        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+
+
+        setupTableColumns();
+
 
         ReviewDAO reviewDAO = new ReviewDAO();
         ObservableList<Review> reviewList = reviewDAO.findByCourse(course);
@@ -81,30 +83,54 @@ public class CourseReviewsEditReviewController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
+
+
+
+
+        dateColumn.setCellFactory(column -> {
+            TableCell<Review, Timestamp> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(Timestamp item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setGraphic(null);
+                    }
+                    else {
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                        String formattedDate = dateFormat.format(item);
+                        text.setText(formattedDate);
+                        setGraphic(text);
+                    }
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
         //need to access only results with same course
         Review userReview = reviewDAO.findByUserAndCourse(activeUser, selectedCourse);
         reviewComment = userReview.getComment();
         reviewRating = userReview.getRating();
         commentTextArea.setText(reviewComment);
         ratingChoiceBox.setValue(userReview.getRating());
-        dateLabel.setText(userReview.getDate().toString());
+        //dateLabel.setText(userReview.getDate().toString());
     }
 
-    public void initialize(Course selectedCourse, String comment, int rating, Timestamp date){
+    public void initialize(Course selectedCourse, String comment, int rating){
         errorLabel.setText("");
         course = selectedCourse;
         subjectLabel.setText(selectedCourse.getSubject());
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
-        dateLabel.setText(date.toString());
+        //dateLabel.setText(date.toString());
 
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
         ratingLabel.setText(String.format("%.2f", avgRating));
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
-        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
+        setupTableColumns();
 
         ReviewDAO reviewDAO = new ReviewDAO();
         ObservableList<Review>reviewList = reviewDAO.findByCourse(course);
@@ -128,12 +154,42 @@ public class CourseReviewsEditReviewController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
+
+        dateColumn.setCellFactory(column -> {
+            TableCell<Review, Timestamp> cell = new TableCell<>() {
+                final Text text = new Text();
+                @Override
+                protected void updateItem(Timestamp item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setGraphic(null);
+                    }
+                    else {
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                        String formattedDate = dateFormat.format(item);
+                        text.setText(formattedDate);
+                        setGraphic(text);
+                    }
+                }
+            };
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            return cell;
+        });
+
         commentTextArea.setText(comment);
         ratingChoiceBox.setValue(rating);
-        dateLabel.setText("Submitted: " + date);
+        //dateLabel.setText("Submitted: " + date);
 
         reviewComment = commentTextArea.getText();
         reviewRating = ratingChoiceBox.getValue();
+    }
+
+    private void setupTableColumns() {
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Review, Timestamp>("date"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<Review, Integer>("rating"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("comment"));
     }
 
     public void handleBackLinkClick(ActionEvent e) throws IOException {
