@@ -102,6 +102,7 @@ public class CourseReviewsEditReviewController {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
                         String formattedDate = dateFormat.format(item);
                         text.setText(formattedDate);
+                        dateLabel.setText(formattedDate);
                         setGraphic(text);
                     }
                 }
@@ -125,6 +126,7 @@ public class CourseReviewsEditReviewController {
         numberLabel.setText(String.valueOf(selectedCourse.getNumber()));
         titleLabel.setText(selectedCourse.getTitle());
         //dateLabel.setText(date.toString());
+
 
         CourseReviewsService courseReviewsService = new CourseReviewsService();
         float avgRating = courseReviewsService.calculateReviewAverage(selectedCourse);
@@ -170,6 +172,7 @@ public class CourseReviewsEditReviewController {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
                         String formattedDate = dateFormat.format(item);
                         text.setText(formattedDate);
+                        dateLabel.setText(formattedDate);
                         setGraphic(text);
                     }
                 }
@@ -177,7 +180,6 @@ public class CourseReviewsEditReviewController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             return cell;
         });
-
         commentTextArea.setText(comment);
         ratingChoiceBox.setValue(rating);
         //dateLabel.setText("Submitted: " + date);
