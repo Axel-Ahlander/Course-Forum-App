@@ -20,12 +20,12 @@
    <children>
       <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
          <children>
-            <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="8.0" layoutY="-53.0" prefHeight="90.0" prefWidth="146.0" text="SUBJ" textAlignment="RIGHT" textFill="NAVY" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="806.0">
+            <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="8.0" layoutY="-49.0" prefHeight="90.0" prefWidth="146.0" text="SUBJ" textAlignment="RIGHT" textFill="NAVY" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="806.0">
                <font>
                   <Font name="Adelle Sans Devanagari Extrabold" size="46.0" />
                </font>
             </Label>
-            <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="157.0" layoutY="-53.0" prefHeight="132.0" prefWidth="168.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="-53.0">
+            <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="164.0" layoutY="-48.0" prefHeight="132.0" prefWidth="168.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="164.0" AnchorPane.topAnchor="-48.0">
                <font>
                   <Font name="Adelle Sans Devanagari Extrabold" size="46.0" />
                </font>
@@ -127,7 +127,7 @@
          <font>
             <Font name="Adelle Sans Devanagari Bold" size="14.0" />
          </font></Label>
-      <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="9.0" layoutY="-22.0" prefHeight="85.0" prefWidth="933.0" text="01234567890123456789012345678901234567890123456789" textFill="#616161">
+      <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="9.0" layoutY="-25.0" prefHeight="85.0" prefWidth="933.0" text="01234567890123456789012345678901234567890123456789" textFill="#616161">
          <font>
             <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
          </font>
