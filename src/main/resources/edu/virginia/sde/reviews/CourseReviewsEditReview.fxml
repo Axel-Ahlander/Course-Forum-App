@@ -20,14 +20,14 @@
     <children>
         <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
             <children>
-                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-58.0" prefHeight="93.0" prefWidth="144.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="796.0">
+                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="13.0" layoutY="-58.0" prefHeight="93.0" prefWidth="169.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="778.0">
                     <font>
-                        <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
+                        <Font name="Adelle Sans Devanagari Extrabold" size="46.0" />
                     </font>
                 </Label>
                 <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="168.0" layoutY="-57.0" prefHeight="132.0" prefWidth="181.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="168.0" AnchorPane.topAnchor="-57.0">
                     <font>
-                        <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
+                        <Font name="Adelle Sans Devanagari Extrabold" size="46.0" />
                     </font>
                 </Label>
                 <Label fx:id="ratingLabel" layoutX="868.0" layoutY="-77.0" prefHeight="83.0" prefWidth="82.0" text="0.00" textFill="#d04200" AnchorPane.bottomAnchor="63.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="-77.0">
