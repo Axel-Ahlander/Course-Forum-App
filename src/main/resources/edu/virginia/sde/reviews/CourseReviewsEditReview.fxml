@@ -20,12 +20,12 @@
     <children>
         <AnchorPane layoutY="90.0" prefHeight="118.0" prefWidth="960.0">
             <children>
-                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-62.0" prefHeight="93.0" prefWidth="144.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="796.0">
+                <Label fx:id="subjectLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="-58.0" prefHeight="93.0" prefWidth="144.0" text="SUBJ" textFill="NAVY" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="796.0">
                     <font>
                         <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
                     </font>
                 </Label>
-                <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="168.0" layoutY="-62.0" prefHeight="132.0" prefWidth="163.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="168.0" AnchorPane.topAnchor="-62.0">
+                <Label fx:id="numberLabel" alignment="TOP_LEFT" layoutX="168.0" layoutY="-57.0" prefHeight="132.0" prefWidth="181.0" text="0000" textFill="NAVY" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="168.0" AnchorPane.topAnchor="-57.0">
                     <font>
                         <Font name="Adelle Sans Devanagari Extrabold" size="48.0" />
                     </font>
@@ -134,7 +134,7 @@
             <font>
                 <Font name="Adelle Sans Devanagari Bold" size="14.0" />
             </font></Label>
-        <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="20.0" layoutY="-38.0" prefHeight="85.0" prefWidth="924.0" text="01234567890123456789012345678901234567890123456789" textFill="#808080">
+        <Label fx:id="titleLabel" alignment="BOTTOM_LEFT" layoutX="20.0" layoutY="-39.0" prefHeight="85.0" prefWidth="924.0" text="01234567890123456789012345678901234567890123456789" textFill="#808080">
             <font>
                 <Font name="Adelle Sans Devanagari Semibold" size="34.0" />
             </font>
