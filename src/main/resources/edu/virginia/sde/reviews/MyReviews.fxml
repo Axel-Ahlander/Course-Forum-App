@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+   <children>
+      <Hyperlink fx:id="backLink" layoutX="754.0" layoutY="8.0" onAction="#handleBackLinkClick" text="Back to Course Search">
+         <font>
+            <Font name="Andale Mono" size="14.0" />
+         </font></Hyperlink>
+      <ScrollPane layoutX="-2.0" layoutY="125.0" prefHeight="618.0" prefWidth="960.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
+         <content>
+            <TableView fx:id="tableView" prefHeight="605.0" prefWidth="960.0" style="-fx-background-color: #d2e2e8;" styleClass="-">
+              <columns>
+                <TableColumn fx:id="subject" prefWidth="93" text="Subject" />
+                <TableColumn fx:id="number" minWidth="0.0" prefWidth="93" text="Number" />
+                  <TableColumn fx:id="rating" prefWidth="93" text="Rating" />
+                  <TableColumn fx:id="title" prefWidth="288.6000061035156" text="Title" />
+                  <TableColumn fx:id="comment" prefWidth="371.5999755859375" text="Comment " />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <Label layoutX="20.0" layoutY="19.0" lineSpacing="1.5" text="My Reviews" textFill="NAVY">
+         <font>
+            <Font name="Adelle Sans Devanagari Semibold" size="36.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="155.0" layoutY="86.0" startX="-135.00001525878906" startY="7.62939453125E-6" stroke="NAVY" />
+   </children>
+</AnchorPane>

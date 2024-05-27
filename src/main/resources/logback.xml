@@ -1,0 +1,6 @@
+<configuration>
+    <!-- determined hibernate using slf4j for logging not java.util.logging -->
+    <!-- AI agent: ChatGPT: "why does this not work to silence my hibernate logger? java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);" -->
+    <logger name="org.hibernate" level="WARN" />
+
+</configuration>
